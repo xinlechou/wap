@@ -1,0 +1,69 @@
+<!--底部-->
+<div style="clear:both;"></div>
+<div class="flex_footer" id="footer">
+    <ul>
+        <li><a href="{url_wap r="index"}"><img id="home" src="{$TMPL}/images/home.png" height=40 border=0  data-src="{$TMPL}/images/home_hover.png"></a></li>
+        <li><a href="{url_wap r="deals"}"><img id="tui" src="{$TMPL}/images/tui.png" height=40 border=0 data-src="{$TMPL}/images/tui_hover.png"></a></li>
+        <!--<li><a href="{url_wap r="deals" p="isap=1"}"><img id="ap" src="{$TMPL}/images/city.png" height=40 border=0 data-src="{$TMPL}/images/city_hover.png"></a></li>-->
+        <li><a href="{url_wap r="settings"}"><img id="zhong" src="{$TMPL}/images/zhong.png" height=40 border=0  data-src="{$TMPL}/images/zhong_hover.png"></a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    /*选择当前所在频道，并给每个频道增加touchstart事件*/
+    var url = window.location.href,$footer = document.getElementById('footer').children[0],clt = url.query("ctl"),id="";
+    var ali = $footer.getElementsByTagName('img');
+
+    for(var i=0;i<ali.length;i++){
+        ali[i].addEventListener("touchend", function(e){
+            footer_change(this);
+        })
+    }
+    function footer_change(e){
+        if(e!==null)
+        e.src = e.getAttribute('data-src');
+    }
+    function _id(id,obj){
+        return obj.getElementById(id);
+    }
+    switch (clt){
+        case "deals":
+            var isap = url.query('isap');
+            id= isap?"ap":"tui";
+            break;
+        case "settings":
+        case "user":
+        case "account":
+            id = "zhong";
+            break;
+        case "index":
+        default :
+            id = "home";
+            break;
+    };
+    footer_change(_id(id,document));
+/*绑定翻页事件*/
+    $(function(){
+        var $pageValue = $('#select_page'),pageUpBtn = $('.page_up>button'),pageDownBtn = $('.page_down>button'),page = url.query("p");
+        if(page==null||page==1||page==""){pageUpBtn.attr('disabled',true);page=1;}
+        if(page>=$pageValue.find('option').length){pageDownBtn.attr('disabled',true);}
+        pageUpBtn.bind("click",function(){
+            page--;page_change(page);
+        });
+        pageDownBtn.bind("click",function(){
+            page++;page_change(page);
+        })
+        $pageValue.live('change',function(){
+            page_change($(this).val());
+        });
+        $("#pageValue").html($pageValue.val()?$pageValue.val():1);
+    })
+    function page_change(p){
+        var url = window.location.href,key="p";
+        if(url.query("p")==null){
+            url+="&p="+p;
+        }else{
+            url = url.replace(/(^\?|&)p=[^&]*(&)?/g,"$1"+key+"="+p+"$2");
+        }
+        window.location.href = url;
+    }
+</script>

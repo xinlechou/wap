@@ -1,0 +1,132 @@
+/*ap_login*/
+.loginbg{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+	position:relative;
+}
+.login_bg{
+	width:100%;
+	height:100%;
+    background-image: url("http://localhost:8888/htdocs/wap/tpl/default/images/bg_login.jpg");
+}
+.login_bg img{
+	width:100%;
+	height:100%;
+	position:fixed;
+}
+.login_log{
+	position:absolute;
+	width:240px;
+	height:240px;
+	right:0;
+    left: 0;
+    margin: auto;
+	top:100px;
+	background:rgba(255,255,255,0.8)!important;
+	background-color:#fff;
+	/*opacity:0.8;
+	filter:alpha(opacity:80);*/
+}
+.login_loga{
+	width:80%;
+	margin:10% auto;
+	text-align:center;
+	
+}
+.login_loga ul{
+	width:100%;
+	margin:0 auto;
+	
+}
+.login_loga ul li{
+	float:left;
+	list-style:none;
+	width:33%;
+	
+	
+}
+
+.login_loga p{
+	margin-top:8%;
+	display:block;
+	line-height:20px;
+	
+}
+.login_loga span{
+	width:70%;
+	border:1px solid #000;
+	display:block;
+	margin:0 auto;
+	text-align:center;
+	padding:4% 8%;
+	border-radius:3px;
+	
+}
+.login_loga span a{
+	text-decoration:none;
+	color:#000;
+}
+.login_pa{
+	margin:0 auto;
+	text-align:center;
+    font-size: 12px;
+}
+/*��¼��*/
+.login_logb{
+	width:80%;
+	margin:10% auto;
+	text-align:center;
+	
+}
+.login_logb table{
+	width:100%;
+	border:none;
+}
+.login_logb table tr td{
+	line-height:50px;
+	margin-top:5px;
+}
+.login_logb table tr td input{
+	width:100%;
+	background:none;
+	border:1px solid #000;
+	height:40px;
+	padding-left:2%;
+    line-height: 40px;
+}
+.login_logb p{
+	
+	display:block;
+	line-height:20px;
+	
+}
+.login_logb p.login_tips{
+    font-size:12px ;
+    /*color: #5b4411;*/
+    margin-top: -5px;
+}
+.login_span{
+	width:70%;
+	border:1px solid #000;
+	display:block;
+	margin:0 auto;
+	text-align:center;
+	
+	border-radius:3px;
+	line-height:40px;
+}
+.login_tdspan{
+	height:65px;
+}
+.login_span a{
+	text-decoration:none;
+	color:#000;
+}
+.login_span button,.login_loga button{
+    border: none;
+    background: transparent;
+    width: 100%;
+}
+.left{float: left;}
+.right{float: right;}

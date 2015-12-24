@@ -1,0 +1,314 @@
+
+    {include file="inc/header.html"}
+
+    <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
+    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+
+    <title>个人中心-修改信息</title>
+    <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
+    <script type="text/javascript" src="../system/region.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/avatar.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+
+</head>
+ <body id="body">
+ <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
+   <div class="box"></div>
+   <div class="conper">
+      <img width="100%" height=200 src="{$TMPL}/images/bg.png" style="position:absolute;top:0;display:block;"/>
+       <a onClick="javascript:upd_file(this,'avatar_file');">
+       <div class="conper_pic">
+           <img id="avatar" src="{function name="get_user_avatar" uid=$user_info.id type="middle"}" width="100%" onClick="javascript:upd_file(this,'avatar_file');">
+           <h4>修改头像</h4>
+           <input type="file" class="filebox" name="avatar_file" id="avatar_file"  style=" position:absolute;top:0;left:0;cursor:pointer;padding: 0;height:100%;width:100%;filter: alpha(opacity=0);-moz-opacity: 0;-khtml-opacity: 0;opacity: 0;"/>
+       </div></a>
+   </div>
+	 <div class="con_self" style="margin-top:3%;">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/zhichi1.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right">
+            <span class="con_self_right_font">我的账号</span>
+
+            <a href="#" class="con_self_right_img">{$user_info.user_name}</a>
+		</div>
+	 </div>
+     <div class="con_self">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/faqi.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right">
+            <span class="con_self_right_font">我的姓名</span>
+		   <a href="#" class="con_self_right_img">{if $user_info.identify_name}{$user_info.identify_name}{else}&nbsp{/if}</a>
+		</div>
+	 </div>
+ 	 <div class="con_self" style="margin-bottom:3%;">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/attention1.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right" style="border-bottom:none;">
+            <span class="con_self_right_font">手机号码</span>
+		   <a href="#" class="con_self_right_img" id="mobile">{$user_info.mobile}</a>
+		</div>
+	 </div> 
+	 <div class="con_self">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/infor1.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right">
+            <span class="con_self_right_font">我的性别</span>
+		   <a href="#" class="con_self_right_img" id="sex" data-sex="{$user_info.sex}">
+               <em>
+               {if $user_info.sex eq 1}男{/if}
+               {if $user_info.sex eq 0}女{/if}
+               {if $user_info.sex eq -1}未知{/if}
+               </em></a>
+		</div>
+	 </div>	
+	 	 <!--性别end-->
+
+ 	 <div class="con_self" style="margin-bottom:3%;">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/edit1.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right" style="border-bottom:none;">
+            <span class="con_self_right_font">所在地区</span>
+		   <a href="#" class="con_self_right_img" id="area" data-province="{$user_info.province}" data-city="{$user_info.city}"><em>{if $user_info.province neq ''}{$user_info.province} {$user_info.city} {else}未填写{/if}</em></a>
+		     <!--所在地区end-->
+
+		</div>
+	 </div>
+     <!--address editor-->
+     <div class="con_self" style="margin-bottom:3%;">
+         <div class="con_self_left">
+             <img src="{$TMPL}/images/edit1.png" border=0 width=50 height=50/>
+         </div>
+         <div class="con_self_right" style="border-bottom:none;">
+             <span class="con_self_right_font">地址管理</span>
+             <a href="{url_wap r="settings#consignee"}" class="con_self_right_img" id="address"><em></em></a>
+             <!--地址管理end-->
+         </div>
+     </div>
+	 	<div class="con_self">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/infor2.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right">
+            <span class="con_self_right_font">我的邮箱</span>
+		   <a href="#" class="con_self_right_img" id="email" data-email="{$user_info.email}"><em>{if $user_info.email eq ''}未填写{/if}{function name="msubstr" v=$user_info.email b=0 e=10}</em></a>
+		</div>
+	 </div>
+		     <!--邮箱end-->
+
+ 	 <div class="con_self" style="margin-bottom:3%;">
+	   <div class="con_self_left">
+	      <img src="{$TMPL}/images/edit2.png" border=0 width=50 height=50/>
+	   </div>
+	    <div class="con_self_right" style="border-bottom:none;">
+		   <span class="con_self_right_font">个人简介</span>
+		   <a href="#" class="con_self_right_img" id="intro"><em>{if $user_info.intro eq ''}未填写{/if}
+               {function name="msubstr" v=$user_info.intro b=0 e=10}
+           </em></a>
+            <input hidden="hidden" id="introText" value="{$user_info.intro}"/><!--保存用户填写的个人简介-->
+		</div>
+	 </div>
+        <!--简介end-->
+
+	<div class="per">  
+      <button class="butn1" type="button" onClick="javascript:save_modify();">保存</button>
+    </div>
+<!--以下为弹框display none的部分-->
+   <!--选择地区弹框-->
+   <div id="areabox" style="display: none;">
+       <div class="con_direct_top">选择地区
+           <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+       </div>
+       <div class="con_direct_bottom">
+           <ul id="areaList">
+               <li><span>请选择省份</span><span id="provinceValue" class="selectValue">请选择省份</span>
+                   <select name="province" id="province" class="selectStyle">
+                       <option value="" rel="0">请选择省份</option>
+                       {foreach from=$region_lv2 item=region}
+                       <option value="{$region.name}" rel="{$region.id}" {if $region.selected}selected="selected"{/if}>{$region.name}</option>
+                       {/foreach}
+                   </select>
+               </li>
+               <li><span>请选择城市</span><span id="cityValue"  class="selectValue">请选择城市</span>
+                   <select name="city" id="city" class="selectStyle">
+                       <option value="" rel="0">请选择城市</option>
+                       {foreach from=$region_lv3 item=region}
+                       <option value="{$region.name}" rel="{$region.id}" {if $region.selected}selected="selected"{/if}>{$region.name}</option>
+                       {/foreach}
+                   </select>
+               </li>
+           </ul>
+
+
+       </div>
+   </div>
+   <!--选择性别弹框-->
+   <div id="sexbox" style="display:none;">
+       <div class="con_direct_top">
+           选择性别
+           <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+       </div>
+       <div class="con_direct_bottom">
+           <ul id="sexlist">
+               <li {if $user_info.sex eq 1}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq 1}checked="checked"{/if} value="1" name="sex" style="margin-left:3%;">男</li>
+               <li {if $user_info.sex eq 0}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq 0}checked="checked"{/if} value="0" name="sex" style="margin-left:3%;">女</li>
+               <li {if $user_info.sex eq -1}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq -1}checked="checked"{/if} value="-1" name="sex" style="margin-left:3%;">未知</li>
+               </li>
+
+           </ul>
+
+       </div>
+   </div>
+   <!--邮箱弹框-->
+   <div id="emailbox" style="display:none;">
+           <h5 class="con_direct_top">
+               填写邮箱
+               <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+           </h5>
+           <div class="con_direct_bottom">
+               <input type="text" value="{$user_info.email}" class="input_mail" placeholder="请输入邮箱" id="emailValue">
+           </div>
+   </div>
+    <!--简介弹框-->
+   <div id="introbox" style="display:none;">
+       <div class="con_direct_top">
+           填写简介
+           <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+       </div>
+       <div class="con_direct_bottom">
+           <textarea class="htextarea" rows="3" cols="20" id="introValue">{$user_info.intro}</textarea>
+       </div>
+   </div>
+   <!--底部-->
+   {include file="inc/footer.html"}
+ <script>
+     $(function(){
+         $("#email").click(editEmail);
+         $("#intro").click(editIntro);
+         $("#sex").click(editSex);
+         $("#area").click(editArea);
+
+         $(".closebox").live("click",bindClose);
+     });
+     function editEmail(){
+         $.weeboxs.open("#emailbox",{type:'box',width:300,showTitle: false,showCancel: false,clickClose:true,focus:"#emailValue",position:"element",trigger:"#body",onok:function(){
+             var v = $("#emailValue").val();
+             if($.checkEmail($.trim(v))){
+                 $("#email>em").html(v);
+                 $("#email").attr("data-email",v);
+                 $.weeboxs.close();
+
+             }else{
+                 $.showErr("请填写正确的Email");
+             }
+
+         }});
+     }
+     function editIntro(){
+         $.weeboxs.open("#introbox",{type:'box',width:300,showTitle: false,showCancel: false,clickClose:true,focus: "#introValue",position:"element",trigger:"#body",onok:function(){
+             $("#intro>em").html("已填写");
+
+             $("#introText").val($.trim($("#introValue").val()));
+//             $("#introText").val("ss")
+             $.weeboxs.close();
+         }});
+
+     }
+     function editSex(){
+         $.weeboxs.open("#sexbox",{type:'box',width:300,showTitle: false,showButton:false,clickClose:true});
+         $("#sexlist>li").live("click",function(){
+             var $this =  $(this),$dataSex = $("#sex"),$checked = $.trim($this.find("input[name='sex']").val()),str = "";
+             //选择性别后填入#sex的data-sex中，把选择结果填入#sex>em中显示在页面上
+             $dataSex.attr("data-sex",$checked);
+             switch ($checked){
+                 case "1":str = "男";break;
+                 case "0":str = "女";break;
+                 default :str = "未知";break;
+             }
+             $dataSex.find("em").html(str);
+             //交替选中样式
+             if(!$this.hasClass("onchecked")){
+                 $this.addClass("onchecked").siblings().removeClass("onchecked");
+             }
+
+         });
+     }
+     function editArea(){
+         $.weeboxs.open("#areabox",{type:'box',width:300,showTitle: false,showCancel: false,clickClose:true,onok:function(){
+             $("#area>em").html($("#provinceValue").html()+"&nbsp;&nbsp;"+$("#cityValue").html());
+             $.weeboxs.close();
+         }});
+
+     }
+     function bindClose(){
+         $.weeboxs.close();
+     }
+     //提交信息
+     function save_modify(){
+         var param = {
+             province:$("#area").attr("data-province"),
+             city:$("#area").attr("data-city"),
+             intro:$("#introText").val(),
+             mobile:$("#mobile").html(),
+             sex:$("#sex").attr("data-sex"),
+             email:$("#email").attr("data-email")
+         };
+         var post_url='{url_wap r="settings#save_modify"}';
+
+//         alert(param.province+"---"+param.city+"---"+param.mobile+"---"+param.sex+"---"+param.intro+"---"+param.email)
+         $.ajax({
+             url:post_url,
+             dataType:"json",
+             data:param,
+             type:"post",
+             cache:false,
+             success:function(data){
+                     $.showSuccess(data.info,function() {
+                         window.location.reload();
+                     });
+                 },
+             error:function(){
+                 $.showErr("服务器繁忙，请您稍后再试！");
+             }
+         });
+         return false;
+     }
+     //上传头像
+     function upd_file(obj,file_id){
+         var $loading = $("#loading");
+         $("input[name='"+file_id+"']").live("change",function(){
+//             $(obj).hide();
+             $loading.show();
+             $.ajaxFileUpload(
+                     {
+                         url:'{url_wap r="avatar#upload"}&uid={$user_info.id}',
+                         secureuri:false,
+                         fileElementId:file_id,
+                         dataType: 'json',
+                         success: function (data, status) {
+//                             $(obj).show();
+                             $loading.hide();
+                             if(data.status==1)
+                             {
+                                 document.getElementById("avatar").src = data.middle_url+"?r="+Math.random();
+                             }else{
+                                 $.showErr(data.msg);
+                             }
+                         },error: function (data, status, e) {
+                             $loading.hide();
+                             $.showErr(data.responseText);
+                                 $(obj).show();
+                             }
+                     }
+             );
+             $("input[name='"+file_id+"']").unbind("change");
+         });
+     }
+ </script>
+ </body>
+</html>

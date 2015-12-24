@@ -1,0 +1,89 @@
+    {include file="inc/header.html"}
+    <title>{$page_title}</title>
+
+    <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
+    <script type="text/javascript" src="{$TMPL}/js/order_list.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/deals.css"/>
+    <!--搜索-->
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/search.css"/>
+    <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
+    </head>
+
+<body>
+     <div class="top">
+	       <span>{$page_title}</span>
+		  <!-- <span class="top_exit"><a href="#"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>-->
+		   <span class="search" id="showLayerBtn"><a href="javascript:void(0);"><img src="{$TMPL}/images/search.png" width=30 height=30></a></span>
+	 </div>
+     {if $page_title eq '搜索结果'}{if $result_count neq 0}<div class="search_bottom">为您搜索到{$result_count}条数据</div>{/if}{/if}
+     {if $result_count eq 0}
+     <div class="pay_sucsss">
+         <img src="{$TMPL}/images/pay_error.png">
+         <p>没有搜索结果</p>
+     </div>
+     {/if}
+     <div class="xm_list">
+	     <!--Foreach list-->
+
+         {if $deal_list}
+         {foreach from=$deal_list item=deal_info key=keyd}
+	     <div class="xm_list_li">
+		    <div class="xm_list_li_title">
+			   <span>{$deal_info.cate_name}</span><!--项目标签-->
+                <a href="{url_wap r="deal" p="id=$deal_info.id"}">{$deal_info.name}</a>
+			</div>
+			<div class="xm_list_li_img">
+                <a href="{url_wap r="deal" p="id=$deal_info.id"}"><img original="{$TMPL}/images/list.jpg" src="{$deal_info.image}" border=0 width=100% /></a>
+			    <span>{if $deal_info.showtype==1}未开始{elseif $deal_info.showtype==2}已结束{else}筹资中{/if}</span>
+			</div>
+			<div class="xm_list_money">
+			   筹资金额 <span>￥{function name="round" v=$deal_info.support_amount e=2}/￥{function name="round" v=$deal_info.limit_price e=2}</span>
+			</div>
+			<div class="xm_list_pay">
+			   <table>
+			        <tr>
+					   <td>支持人数</td>
+					   <td>项目进度</td>
+					   <td>剩余天数</td>
+					</tr>
+					<tr class="xm_list_pay_cout">
+					   <td>{$deal_info.support_count}</td>
+					   <td>{$deal_info.percent}%</td>
+					   <td>{$deal_info.show}</td>
+					</tr>
+			   </table>
+			</div>
+			<!--<div class="progress pro_bar">
+            <div class="progress-bar progress-bar-success pro_bar_color" role="progressbar" 
+             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+           style="width: 97%;">
+             <span class="sr-only">97% 完成（成功）</span>
+            </div>
+            </div>-->
+			<div class="xm_list_font">
+                <p><a href="{url_wap r="deal" p="id=$deal_info.id"}">{$deal_info.brief|msubstr=0,3,'utf-8′,true}</a></p>
+
+            </div>
+		 </div>
+         {/foreach}
+         <!--分页-->
+         <div class="page">
+             <div class="page_up"><button type="button">上一页</button></div>
+             <div class="select_page">
+                 <span>
+                     <em id="pageValue"></em>
+                     <select id="select_page">
+                         {$page}
+                     </select>
+                 </span>
+             </div>
+             <div class="page_down"><button type="button">下一页</button></div>
+         </div>
+         {/if}
+
+	 </div>
+	 <!--底部-->
+     {include file="inc/footer.html"}
+
+     {include file="inc/searchLayer.html"}
+</body></html>

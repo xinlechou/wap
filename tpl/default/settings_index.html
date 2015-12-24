@@ -1,0 +1,76 @@
+{include file="inc/header.html"}
+    <title>个人中心-个人中心</title>
+
+    <script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+
+</head>
+ <body>
+   <div class="conper">
+      <img width="100%" height=200 src="{$TMPL}/images/bg.png" style="position:absolute;top:0;display:block;"/>
+	  <div class="conper_pic">
+	     <img src="{function name="get_user_avatar" uid=$user_info.id type="middle"}" >
+		  <h4>{$userinfo.name}</h4>
+		  <span>发起：{$userinfo.build_count} &nbsp;&nbsp;&nbsp;&nbsp; 支持：{$userinfo.support_count}</span>
+	  </div>
+   </div>
+   <div class="s_index">
+       <div class="con_self" style="margin-top:3%;">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/zhichi.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right">
+               <a href="{url_wap r="account#index"}" class="con_self_right_font next">我的支持</a>
+           </div>
+       </div>
+       <div class="con_self">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/faqi.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right">
+               <a href="{url_wap r="account#project"}" class="con_self_right_font next">我的发起</a>
+           </div>
+       </div>
+       <div class="con_self" style="margin-bottom:3%;">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/attention.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right" style="border-bottom:none;">
+               <a href="{url_wap r="account#focus"}" class="con_self_right_font next">我的收藏</a>
+           </div>
+       </div>
+       {if $is_ap}
+       <div class="con_self" style="margin-bottom:3%;">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/attention.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right" style="border-bottom:none;">
+               <a href="{url_wap r="account#focus"}" class="con_self_right_font">我的积分</a>
+               <a href="#" class="con_self_right_img" id="mobile" style="  text-align: right;">{$ap}</a>
+           </div>
+       </div>
+       {/if}
+       <div class="con_self">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/infor.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right">
+               <a href="{url_wap r="settings#modify"}" class="con_self_right_font next">我的信息</a>
+           </div>
+       </div>
+       <div class="con_self" style="margin-bottom:3%;">
+           <div class="con_self_left">
+               <img src="{$TMPL}/images/edit.png" border=0 width=50 height=50/>
+           </div>
+           <div class="con_self_right" style="border-bottom:none;">
+               <a href="{url_wap r="settings#password"}" class="con_self_right_font next">修改密码</a>
+           </div>
+       </div>
+
+   </div>
+
+	<div class="per">  
+      <a href="{url_wap r="user#loginout"}" class="butn1">退出登录</a>
+    </div>
+   {include file="inc/footer.html"}
+ </body>
+</html>

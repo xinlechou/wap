@@ -1,0 +1,218 @@
+{include file="inc/header.html"}
+<title>微信自动支付</title>
+<!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
+
+<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/cart_pay.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+
+</head>
+<style>
+    .form_login {
+        width: 90%;
+        height: 50px;
+        display: block;
+        background: #FF7800 none repeat scroll 0% 0%;
+        line-height: 50px;
+        margin: 4% auto 0px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #FFF;
+        font-size: 18px;
+        text-align: center;
+    }
+    .pay_info{height: 50px;line-height: 50px;border-bottom: 1px solid #dddddd;color:#977f85;}
+    .pay_info span{float: right;}
+    #pay_error,#pay_success{display: none;}
+</style>
+<script type="text/javascript">
+    var deal_id = {$data.deal_id};
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+    }
+    //调用微信JS api 支付
+    function jsApiCall()
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {$jsApiParameters},
+                function(res){
+                    if(res.err_msg=='get_brand_wcpay_request:fail'){
+                        //alert(res.err_code+res.err_desc+res.err_msg);
+//                        $.showSuccess('支付失败',function(){
+                            $("#pay_error").show();
+//                        });
+                    }
+                    if(res.err_msg=='get_brand_wcpay_request:cancel '){
+//                        $.showSuccess('支付取消',function(){
+                            $("#pay_error").show();
+//                        });
+                    }
+                    if(res.err_msg=='get_brand_wcpay_request:ok'){
+//                        $.showSuccess('恭喜您支付成功',function(){
+                            $("#pay_success").css("display","block");
+//                        });
+                    }else{
+//                        $.showSuccess(res.err_msg);
+                        $("#pay_error").css("display","block");
+                    }
+                    $("#pay_info").hide();
+                }
+        );
+    }
+
+    function callpay()
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+    function  callpay_1() {
+        wx.chooseWXPay({$jsApiParameters});
+    }
+
+</script>
+<body>
+<div class="top">
+    <span>微信支付</span>
+   <!-- <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>-->
+</div>
+<div class="pay_sucsss" id="pay_info">
+    <p>付款金额</p>
+    <p style="border-bottom:1px solid #dddddd;padding-bottom:5%;"><font style="font-weight:bold;font-size:36px;">{$data.money}</font></p>
+    {if $data.notice_sn}<div class="pay_info">订单编号<span>{$data.notice_sn}</span></div>{/if}
+    <div class="pay_info">自动进入支付<span>{$data.money}</span></div>
+    <!--<table>
+        <tr >
+            &lt;!&ndash;{if $data.notice_sn}<td align=left class="pad_left font_colora">订单编号</td>
+            <td align=right class="pad_right font_colora">{$data.notice_sn}</td>{/if}&ndash;&gt;
+        </tr>
+        <tr class="tr_border">
+            <td align=left  class="pad_left font_colorb">自动进入支付</td>
+            <td align=right class="pad_right font_colora">{$data.money}</td>
+        </tr>
+    </table>-->
+    <ul id="buttom_div">
+        <li><a href="{url_wap r="index"}">返回首页</a></li>
+    </ul>
+
+</div>
+<!--支付错误时显示-->
+<div class="pay_sucsss" id="pay_error">
+    <img src="{$TMPL}/images/pay_error.png" border=0 width=40>
+    <p>支付遇到问题</p>
+    <ul>
+        <li><a href="{url_wap r="account"}">继续支付</a></li>
+        <li><a href="{url_wap r="deal" p="id=$data.deal_id"}">查看项目</a></li>
+        <li><a href="{url_wap r="index"}">返回首页</a></li>
+    </ul>
+</div>
+<!--支付成功时显示-->
+<div class="pay_sucsss" id="pay_success">
+    <img src="{$TMPL}/images/pay_sus.png" border=0 width=40>
+    <p>支付完成</p>
+    <ul>
+        <li><a href="{url_wap r="account"}">查看订单</a></li>
+        <li><a href="{url_wap r="deal" p="id=$data.deal_id"}">查看项目</a></li>
+        <li><a href="{url_wap r="index"}">返回首页</a></li>
+    </ul>
+</div>
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+                debug: false,
+                appId: '{$signPackage.appId}',
+                timestamp: {$signPackage.timestamp},
+            nonceStr: '{$signPackage.nonceStr}',
+            signature: '{$signPackage.signature}',
+            jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'shareTimeline',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+    ]
+    });
+    wx.checkJsApi({
+        jsApiList: [
+            'getLocation',
+            'shareTimeline',
+            'onMenuShareAppMessage'
+        ],
+        success: function (res) {
+            alert(JSON.stringify(res));
+        }
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            // title: '{$page_title}', // 分享标题
+            link: '{$wx_url}', // 分享链接
+            imgUrl: '{$wx_image}', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            //title: '', // 分享标题
+            desc: '{$wx_desc}', // 分享描述
+            link:'{$wx_url}',  // 分享链接
+            imgUrl: '{$wx_image}', // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+</html>

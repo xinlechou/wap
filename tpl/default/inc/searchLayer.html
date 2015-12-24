@@ -1,0 +1,93 @@
+<!--搜索-->
+<!--<link rel="stylesheet" type="text/css" href="{$TMPL}/css/search.css"/>-->
+<!--<script type="text/javascript" src="{$TMPL}/js/search.js"></script>-->
+<!--搜索层-->
+<div id="searchLayer">
+    <div class="search_bg">
+        <div class="search_left">
+            <input type="text" value="" placeholder="搜索项目名称" name="keyword">
+            <img src="{$TMPL}/images/icon-cancel.png" width=15 height=15 id="del">
+        </div>
+        <div class="search_right"><a href="javascript:void(0);" id="searchBtn">搜索</a></div>
+    </div>
+    <div class="search_list">
+        <div class="line">
+            <div class="line-left"></div>
+            <div class="line-center">
+                <img src="{$TMPL}/images/icon-categorise.png" width=20  >
+                详细搜索
+            </div>
+            <div class="line-right"></div>
+        </div>
+        <div class="search_list_bar">
+            <div class="search_list_bar_left">
+                您感兴趣的分类
+            </div>
+            <div class="search_list_bar_right">
+                <ul>
+                    <li>
+                        <a href="javascript:void(0);"><label for="cate_all">全部</label></a>
+                        <input hidden="hidden" type="checkbox" name="cate" value="all" id="cate_all">
+                    </li>
+                    {foreach from=$cates item=cate key=keyd}
+                    <li>
+                        <a href="javascript:void(0);"><label for="cate_{$cate.id}">{$cate.name}</label></a>
+                        <input hidden="hidden" type="checkbox" name="cate" value="{$cate.id}" id="cate_{$cate.id}">
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <div class="search_list_bar">
+            <div class="search_list_bar_left">
+                完成情况
+            </div>
+            <div class="search_list_bar_right">
+                <ul>
+                    <li><a href="javascript:void(0);">
+                        <label for="status_all">全部</label></a>
+                        <input hidden="hidden" type="checkbox" name="status" value="all" id="status_all">
+                    </li>
+                    <li><a href="javascript:void(0);">
+                        <label for="s_success">筹资成功</label></a>
+                        <input hidden="hidden" type="checkbox" name="status" value="1" id="s_success"></a></li>
+                    <li><a href="javascript:void(0);">
+                        <label for="s_failed">筹资失败</label></a>
+                        <input hidden="hidden" type="checkbox" name="status" value="2" id="s_failed"></a></li>
+                    <li><a href="javascript:void(0);">
+                        <label for="s_ing">筹资中</label></a>
+                        <input hidden="hidden" type="checkbox" name="status" value="3" id="s_ing"></a></li>
+                    <li><a href="javascript:void(0);">
+                        <label for="s_longtime">长期项目</label></a>
+                        <input hidden="hidden" type="checkbox" name="status" value="4" id="s_longtime"></a></li>
+                    <!-- <li><a href="javascript:void(0);">
+                         <label for="s_notbegin">未开始项目</label></a>
+                         <input hidden="hidden" type="checkbox" name="status" value="0" id="s_notbegin"></a></li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="line">
+            <div class="line-left"></div>
+            <div class="line-center">
+                <img src="{$TMPL}/images/icon-fire.png" width=20  >
+                热门搜索
+            </div>
+            <div class="line-right"></div>
+        </div>
+        <div class="search_list_bar_right">
+            <ul id="keywordsList">
+                <li><a href="javascript:void(0);">吃遍驻京办</a></li>
+                <li><a href="javascript:void(0);">双十一</a></li>
+                <li><a href="javascript:void(0);">果园老农</a></li>
+                <li><a href="javascript:void(0);">咖啡</a></li>
+            </ul>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="linea"></div>
+        <div class="search_up" id="searchCloseBtn">
+            <a href="#"><img src="{$TMPL}/images/icon-arrow-up.png" width=25 ></a>
+        </div>
+
+    </div>
+
+</div>

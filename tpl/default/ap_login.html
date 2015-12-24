@@ -1,0 +1,105 @@
+{include file="inc/header.html"}
+<title>积分商城-登录</title>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/ap_login.css"/>
+</head>
+<script>
+    $(function(){
+        var url = window.location.href,mobile = url.query('m'),aqj_id = url.query('aqjid');
+        var $authorize = $(".login_loga"),$login = $(".login_logb");
+        $('input[name="log_mobile"]').val(mobile);
+        $('input[name="log_aqjid"]').val(aqj_id);
+        $("#showLoginForm").bind(EVENT_TYPE,function(){
+            $authorize.fadeOut(function(){
+                $login.fadeIn();
+            });
+        });
+        $("#showAuthorize").live(EVENT_TYPE,function(){
+            $login.fadeOut(function(){
+                $authorize.fadeIn();
+            });
+        });
+        $login.find('button').live(EVENT_TYPE,function(){
+            $("#loginForm").submit();
+        })
+        $("#loginForm").bind('submit',function(){
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function(json){
+                    var e = eval("("+json+")");
+                    $(".login_tips").html(e.msg);
+                    if(e.status == 1){
+                        // 登录成功
+                        window.location.href = e.jump;
+                    }
+                }
+            });
+            return false;
+        });
+        $("#doReg").bind(EVENT_TYPE,function(){
+            var p = {reg_aqjid:aqj_id,reg_m:mobile};
+            $.ajax({
+                url: './index.php?ctl=ajax&act=aqj_do_register',
+                type: "POST",
+                data: p,
+                success: function(json){
+                    var e = eval("("+json+")");
+                    //注册成功
+                    if(e.status !== 0){
+                        window.location.href = e.jump;
+                    }
+                    $("#showLoginForm").html(e.data);
+                }
+            });
+        });
+    })
+</script>
+<body>
+ <div class="loginbg">
+    <div class="login_bg">
+	   <img src="{$TMPL}/images/bg_login.jpg" >
+	</div>
+	<div class="login_log">
+	       <div class="login_loga" >
+			    <ul>
+				    <li><img src="{$TMPL}/images/u7.png" width=100%></li>
+					<li><img src="{$TMPL}/images/logo_bar.png" width=100%></li>
+					<li><img src="{$TMPL}/images/u9.png" width=100%></li>
+				</ul>
+				<div style="clear:both;"></div>
+				<p>允许用户以爱钱进帐号注册新乐筹账号并访问内容
+                </p>
+				<span><button type="button" id="doReg">授权登录</a></button></span>
+				<div style="clear:both;"></div>
+				<p><a href="#" class="login_pa" id="showLoginForm">已有账号？点击登录</a></p>
+			</div> 
+            <div class="login_logb" style="display:none;" >
+			    <form method="post" action="{url_wap r="ajax" p="act=aqj_do_login"}" id="loginForm">
+				    <table>
+					   <tr>
+					     <td>
+						   <input type="text" name="log_mobile" value="" placeholder="用户名或手机号">
+					     </td>
+					   </tr>
+					   <tr>
+					     <td>
+						    <input type="password" name="log_pwd" value="" placeholder="密码">
+						 </td>
+					   </tr>
+					   <tr>
+					      <td class="login_tdspan">
+						     <span class="login_span"><button type="button">登录</a></button>
+						  </td>
+					   </tr>
+                        <input type="text" name="log_aqjid" value="" hidden="hidden">
+					</table>
+				</form>
+				<div style="clear:both;"></div>
+				<p><a href="javascript:void(0)" class="login_pa left" id="showAuthorize">返回授权</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url_wap r="user#getpassword"}" class="login_pa right">忘记密码</a></p>
+                <p class="login_tips"></p>
+			</div>			
+	</div>
+ </div>
+ </body>
+</html>

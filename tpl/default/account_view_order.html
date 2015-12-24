@@ -1,0 +1,110 @@
+{include file="inc/header.html"}
+<title>订单详情</title>
+	<script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+	<script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+	<script type="text/javascript" src="{$TMPL}/js/account_cart_pay.js"></script>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/start.css"/>
+<style>
+    ul#paymentList li{
+        background-image: url({$TMPL}/images/sex_check.png);
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 20px;
+        padding-left: 35px;
+        height: auto;
+        line-height: 24px;
+    }
+   ul#paymentList li.onchecked{
+        background-image: url({$TMPL}/images/sex_checked.png);
+    }
+    ul#paymentList li{
+        height: 45px;
+        line-height: 45px;
+    }
+    .payment{
+        width: 100%;
+        margin-top: -40%;
+    }
+    .payment a{width: 90%;margin: 0 auto;}
+    .payment>div{background: #fff;height: 50px;border-bottom: 1px solid #dddddd;border-top: 1px solid #dddddd;}
+    .payment button{width: 85%;display: block;height: 50px;line-height: 50px;background-color:transparent;border: none;text-align: left;color: #66667b;
+    margin: 0 auto; }
+    button.next{
+        background:url({$TMPL}/images/next.png) no-repeat center right;
+        background-size: 21px;
+    }
+</style>
+
+ </head>
+ <body>
+     <div class="top">
+	     <span>{$page_title}</span>
+		  <span class="top_exit"><a href="{url_wap r="settings"}"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+	 </div>
+     <div class="pay_sucsss">
+         <form id="pay_form" action="{url_wap r="account#go_order_pay"}"  method="post">
+         <p>付款金额</p>
+         <p style="border-bottom:1px solid #dddddd;padding-bottom:5%;"><font style="font-weight:bold;font-size:36px;">{if $pay_type neq 'ap'}¥{/if}{if $order_info.delivery_fee gt 0}项目金额:{$order_info.deal_price}运费:{$order_info.delivery_fee}总额：{$order_info.total_price}{else}{$order_info.total_price}{/if}</font></p>
+         <table>
+             <tr >
+                 <td align=left class="pad_left font_colora" width="30%">项目名称</td>
+                 <td align=right class="pad_right font_colora">{if $deal_info}<a href="{url_wap r="deal#show" p="id=$deal_info.id"}">{$order_info.deal_name}</a>{else}{$order_info.deal_name}{/if}</span></td>
+             </tr>
+             <tr >
+                 <td align=left class="pad_left font_colora" width="30%">支付方式</td>
+                 <td align=right class="pad_right font_colora">{$payment_list.0.name}</td>
+             </tr>
+         </table>
+         <input type="hidden" name="order_id" value="{$order_info.id}" />
+         <input type="hidden" name="max_credit" value="{$user_info.money}" />
+         <input type="hidden" name="max_pay" value="{$order_info.total_price}" />
+         <input type="hidden" id="payment_id" name="payment_id" value="{$payment_list.0.id}" />
+         </form>
+         <!--支付方式弹框-->
+         <div id="paymentBox" style="display:none;">
+             <div class="con_direct_top">
+                 选择支付方式
+                 <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+             </div>
+             <div class="con_direct_bottom">
+                 <ul id="paymentList">
+                     {foreach from=$payment_list item=payment name=payment key=k}
+                     <li class="onchecked"><input class="radioclass" type="radio" value="{$payment.id}" name="payment" hidden="hidden"><span>{$payment.name}</span></li>
+                     {/foreach}
+                 </ul>
+             </div>
+         </div>
+
+     </div>
+     <div class="payment">
+         <!--<div><button type="button" id="paymentBtn" class="next">{$payment_list.0.name}</button></div>-->
+         <a href="#" class="butn3" style="margin-top:5%;" id="submit">去支付</a>
+     </div>
+
+	 <!--底部-->
+     {include file="inc/footer.html"}
+ </body>
+<script>
+    var PAYMENT_ID;
+    $(function(){
+        $("#paymentBtn").click(function(){
+                $.weeboxs.open("#paymentBox",{type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,okBtnName:"确定"});
+                $("#paymentList>li:first").addClass("onchecked");
+                $("#paymentList>li").live(EVENT_TYPE,function(){
+                    var $this = $(this),$oBtn = $("#paymentBtn"),p_info = {id:$this.find('input[name="payment"]').val(),name:$this.find('span').html()};
+                    $oBtn.html(p_info.name);
+                    $this.find('input[name="payment"]').attr('checked',true)
+                    PAYMENT_ID = p_info.id;// 支付方式ID
+                    $("#payment_id").val(PAYMENT_ID);
+                    //交替选中样式
+                    if(!$this.hasClass("onchecked")){
+                        $this.addClass("onchecked").siblings().removeClass("onchecked");
+                        //$.weeboxs.close();
+                    }
+                });
+        })
+    })
+</script>
+</html>

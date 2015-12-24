@@ -1,0 +1,144 @@
+/*订单信息填写表*/
+#payForm{
+    display: none;
+}
+/*收件人地址List&支付方式List*/
+ul#addressList,ul#paymentList{margin-bottom: 0;}
+ul#addressList li ,ul#paymentList li{
+    background-image: url(../images/sex_check.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 20px;
+    padding-left: 35px;
+    height: auto;
+    line-height: 24px;
+}
+ul#addressList li:not(:first-child),ul#paymentList li:not(:first-child){
+    margin-top: 5px;
+}
+ul#addressList li.onchecked ,ul#paymentList li.onchecked,.addNewAddress .isdefault_ckb label.onchecked{
+    background-image: url(../images/sex_checked.png);
+}
+ul#paymentList li{
+    height: 45px;
+    line-height: 45px;
+}
+/*添加新地址弹框*/
+.addNewAddress{
+    padding: 5px;
+    text-align: left;
+    width: 100%;
+}
+.addNewAddress p span{
+    display: inline-block;
+    width: 30%;
+    min-width: 80px;
+    position: relative;
+}
+.addNewAddress p span em{
+    background-image: url("../images/next.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 13px;
+    background-size: 10px;
+    font-style: normal;
+}
+.addNewAddress p input[type="text"]{
+    border: none;
+    width: 60%;
+    line-height: 35px;
+    background: transparent;
+    padding: 0 3px;
+}
+#provinceValue,#cityValue{
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+}
+.tips{
+    color: #885C4D;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    display: none;
+    margin: 0;
+}
+.addNewAddress .isdefault_ckb{
+    /*text-align: center;*/
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+
+}
+.addNewAddress .isdefault_ckb label{
+    background-image: url(../images/sex_check.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 18px;
+    padding-left: 25px;
+    margin: 0px;
+    padding-top: 5px;
+}
+.addNewAddress .isdefault_ckb
+/*回报*/
+.con_watchfont>div{margin-top: 10px;}
+
+.input_ad{
+    width: 70%;
+    background: none;
+    border: none;
+    float: right;
+    text-align: right;
+    padding-right: 26px;
+}
+.tips{
+    display: none;
+}
+.form_btn{
+    width: 100%;
+}
+.form_btn button{
+    color:#fff;
+    font-size:16px;
+    background: #000000;
+    border: none;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border:1px solid #977f70;
+    height: 50px;
+}
+.form_btn button.disabled{
+    color: #999999;
+    background: #dddddd;
+    border: 1px solid #dddddd;
+}
+/*支持按钮box*/
+.con_btn{
+    background: url("../images/ka.png") no-repeat left bottom;
+    background-size: 45px;
+    height: 45px;
+    line-height: 45px;
+}
+.con_btn.onchecked{
+    background-image: url("../images/shu.png");
+}
+.con_btn .pay_sun{
+    background: #977f70;
+    color: #fff;
+    width: 30%;
+    float: right;
+    text-align: center;
+    padding: 0;
+    margin-right: 5%;
+    vertical-align: middle;
+    margin-top: 5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+}
+.xm_list_soldout .con_btn button{
+    color: #8b8b8b;
+    background: transparent;
+}

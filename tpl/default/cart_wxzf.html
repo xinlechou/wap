@@ -1,0 +1,85 @@
+{include file="inc/header.html"} 
+
+<script type="text/javascript" src="{$TMPL}/js/cart_pay.js"></script>
+<script type="text/javascript">
+var timer = setInterval(checkpay,5000);
+var noticeId = {$notice_id};
+
+function checkpay(){
+	$.ajax({
+        type: "post",
+        dataType: "html",
+        url: '/wxpay_web/checkpay.php?notice_id='+noticeId,
+        data: "&notice_id="+noticeId,
+        success: function (data) {
+            if (data=="is_paid") {
+				window.clearInterval(timer);
+				$("#showname").html("支付成功，5秒后自动退出。");
+				$("#imgdiv").hide();
+				setTimeout(jump,5000);
+            }
+        }
+    });
+}
+function jump(){
+	location.href = APP_ROOT+'/index.php?ctl=account';
+}
+</script>
+<div class="top">
+    <span>支付订单</span>
+    <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+</div>
+	<div>
+		<form class="pay_form" action="{url r="cart#go_pay"}" target="_blank" method="post">
+	   <div style="width:100%;margin:0 auto;">
+           <br><br>
+	         <div style="margin:0 auto;text-align:center;" id="imgdiv">
+	       <img alt="请使用微信扫码支付" src="http://paysdk.weixin.qq.com/example/qrcode.php?data={$picurl}" style="width: 80%;"/>
+             </div>
+           <br>
+           <p style="width:100%;font-size:16px;font-weight:bold;text-align: center" id="showname">长按二维码保存图片后，<br>用微信扫一扫，识别二维码完成支付</p><br>
+	   </div>
+	  </form>
+	</div>	
+
+<div style="clear:both;"></div>
+<!--结尾-->
+
+<script type="text/javascript">
+	var left_money={$user_info.money};
+	var need_money={$deal_item.total_price};
+	$(function(){
+		$("input[name='ye_check']").attr("checked","checked");
+		if(left_money>=need_money){
+			$("input[name='credit']").val(need_money);
+			$("input[name='payment']").attr("disabled",true);
+		}else{
+			$("input[name='credit']").val(left_money);
+		}
+		$("input[name='ye_check']").bind("click",function(){
+			if($(this).attr("checked")=='checked'){
+				$("input[name='credit']").attr("disabled",false);
+				if(left_money>=need_money){
+					$("input[name='credit']").val(need_money);
+					$("input[name='payment']").attr("disabled",true);
+				}else{
+					$("input[name='credit']").val(left_money);
+				}
+			}else{
+				$("input[name='credit']").val(0);
+				$("input[name='payment']").attr("disabled",false);
+				$("input[name='credit']").attr("disabled",true);
+			}
+		});
+		$("input[name='credit']").bind("blur",function(){
+			var money=$(this).val();
+			if(money>=need_money){
+				$("input[name='payment']").attr("disabled",true);
+			}else{
+				$("input[name='payment']").attr("disabled",false);
+			}
+		});
+	});
+</script>
+
+{include file="inc/footer.html"}

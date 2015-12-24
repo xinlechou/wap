@@ -1,0 +1,148 @@
+{include file="inc/header.html"}
+<title>我的支持</title>
+
+<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+<!--<script type="text/javascript" src="{$TMPL}/js/js.js"></script>-->
+<script type="text/javascript" src="{$TMPL}/js/order_list.js"></script>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/start.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
+
+</head>
+ 
+ <body>
+     <div class="top">
+	       <span>我的支持</span>
+		   <span class="top_exit"><a href="{url_wap r="settings"}"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+		
+	 </div> 
+     <div class="xm_list">
+         {if $order_count}
+         {foreach from=$order_list item=order_item key=keyd}
+	     <div class="xm_list_start">
+		     <dl>
+			    <dt><a href="#" class="tags">{$order_item.cate}</a><a href="{url_wap r="deal" p="id=$order_item.deal_id"}" title="{$order_item.deal_name}">{function name="msubstr" v=$order_item.deal_name b=0 e=15}</a></dt>
+				
+				<dd>
+				   <div class="xm_list_start_left">
+                       <a href="{url_wap r="deal" p="id=$order_item.deal_id"}"><img src="{function name="get_spec_image" v=$order_item.deal_info.image w=100 h=100 g=1}" original="{function name="get_spec_image" v=$order_item.deal_info.image w=100 h=100 g=1}" width=100 height=100/></a>
+					    <span>筹资中</span>
+				   </div>
+				   <div class="xm_list_start_right">
+				           <div class="xm_list_start_right_a">
+						     <span class="xm_list_start_right_a_span">{if $order_item.is_ap eq 0}应付金额：{else}应付积分:{/if}<b style="color:#666666;">{if $order_item.is_ap eq 0}￥{/if}{$order_item.total_price}</b></span>
+							 <span class="xm_list_start_right_a_spana">交易状态：
+{if $order_item.order_status eq 0}
+
+                                已用余额支付{function name="format_price" v=$order_item.credit_pay}&nbsp;剩余支付未完成
+
+                                {else}
+
+                                    {if $order_item.deal_info}
+
+                                    {if $order_item.deal_info.is_success eq 1}
+
+                                        {if $order_item.deal_info.begin_time > $now}未开始{/if}
+
+                                        {if $order_item.deal_info.end_time < $now and $order_item.deal_info.end_time neq 0}已成功&nbsp;{if $order_item.repay_time gt 0}回报已发放{if $order_item.repay_make_time gt 0} &nbsp;  确认收到{else} &nbsp; 未确认收到{/if} {else}等待发放回报{/if}{/if}
+
+                                        {if $order_item.deal_info.begin_time < $now and ($order_item.deal_info.end_time > $now or $order_item.deal_info.end_time eq 0)}已成功&nbsp;{if $order_item.repay_time gt 0}回报已发放{if $order_item.repay_make_time gt 0} 确认收到{else} 未确认收到{/if}{else}等待发放回报{/if}{/if}
+
+                                        {else}
+
+                                        {if $order_item.deal_info.begin_time > $now}项目未开始{/if}
+
+                                        {if $order_item.deal_info.end_time < $now and $order_item.deal_info.end_time neq 0}未成功&nbsp;{if $order_item.is_refund eq 1}已退款{else}等待退款{/if}{/if}
+
+                                        {if $order_item.deal_info.begin_time < $now and ($order_item.deal_info.end_time > $now or $order_item.deal_info.end_time eq 0)}项目进行中{/if}
+
+                                    {/if}
+
+                                    {else}
+
+                                        {if $order_item.is_success eq 0}
+
+                                        未成功&nbsp;{if $order_item.repay_time gt 0}回报已发放{if $order_item.repay_make_time gt 0}<br /> 确认收到{else} <br /> 未确认收到{/if}{else}等待发放回报{/if}
+
+                                        {else}
+
+                                        已成功&nbsp;{if $order_item.is_refund eq 1}已退款{else}等待退款{/if}
+
+                                        {/if}
+
+                                    {/if}
+
+                                {/if}
+                             </span>
+                               {if $order_item.order_status eq 0}
+                                    <a href="{url_wap r="account#view_order" p="id=$order_item.id"}" class="xm_con_pay">继续支付</a>
+                                    <button data-url="{url_wap r="account#del_order" p="id=$order_item.id&ajax=1"}"     class="xm_con_delete del_order">删除</a>{/if}
+							 <!--<a href="#" class="xm_con_pay">去支付</a>
+							  <a href="#" class="xm_con_delete">删除</a>-->
+						   </div>
+				   </div>
+				
+				   
+				</dd>
+			 </dl>
+			 <div style="clear:both;"></div>
+			 <span class="att_ab showProjectDetail">
+			  <img src="{$TMPL}/images/icon-finger.png" width=18><a href="javascript:void(0);">详情展开</a>
+			 </span>
+			  
+			  <div class="xq_con projectDetail">
+			    <div style="clear:both;"></div>
+			    <div class="xq_add">
+			      <div class="xq_add_left">
+				   <img src="{$TMPL}/images/icon-location.png" width=35 />
+				   </div>
+				   <div class="xq_add_right">
+				      <p>联系人：{$order_item.user_name}&nbsp;&nbsp;{$order_item.mobile}</p>
+				      <p>收货地址：{$order_item.province}{$order_item.city}{$order_item.address}</p>
+				   </div>
+				
+			    </div>
+			    <div style="clear:both;"></div>
+			    <div class="xq_con_mon">
+                    {if $order_item.is_ap eq 0}支持金额：￥{else}支持积分:{/if}<b style="color:#666666;">{$order_item.total_price}</b>
+			    </div>
+			    <div class="xq_con_re">
+				  <b> 回报内容：</b>
+                    {$order_item.deal_item_info.description}
+				</div>
+				<ul class="re_time">
+				   <li><b>回报时间：</b>项目结束的{$order_item.deal_item_info.repaid_day}天内</li>
+				   <!--<li><b>回报时间：</b>吃遍驻京办</li>-->
+				</ul>
+			  </div>
+		 </div>
+         {/foreach}
+         <!--分页-->
+         <div class="page">
+             <div class="page_up"><button type="button">上一页</button></div>
+             <div class="select_page">
+                 <span>
+                     <em id="pageValue"></em>
+                     <select id="select_page">
+                         {$page}
+                     </select>
+                 </span>
+             </div>
+             <div class="page_down"><button type="button">下一页</button></div>
+         </div>
+         {else}
+         <div class="pay_sucsss">
+             <img src="{$TMPL}/images/pay_error.png">
+             <p>您还没有支持项目</p>
+             <ul>
+                 <li><a href="{url_wap r="index"}">去首页</a></li>
+                 <li><a href="{url_wap r="settings"}">返回个人中心</a></li>
+             </ul>
+         </div>
+         {/if}
+
+     </div>
+	 </div>
+	 <!--底部-->
+     {include file="inc/footer.html"}
+ </body>
+</html>

@@ -1,0 +1,162 @@
+    {include file="inc/header.html"}
+    <title>新乐筹</title>
+
+    <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
+    <script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+
+    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+    <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>--><!--临时注掉-->
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/index.css"/>
+    <!--搜索-->
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/search.css"/>
+    <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
+
+    <!--首页轮换推荐-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/slick.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dropload.css"/>
+
+    <!--下拉显示更多-->
+    <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/index.js"></script>
+    </head>
+ <body>
+ <!--<div id="loading"><img src="{$TMPL}/images/loading.gif"></div>-->
+     <div class="top">
+	       <span class="top_center"><a href="#"><img src="{$TMPL}/images/logo.png" width=75 height=33></a></span>
+		  <!-- <span class="top_exit"><a href="#"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>-->
+		   <span class="search" id="showLayerBtn"><a href="#"><img src="{$TMPL}/images/search.png" width=30 height=30></a></span>
+	 </div> 
+     <div class="line">
+	      <div class="line-left"></div>
+		  <div class="line-center">
+		      <img src="{$TMPL}/images/xin.png" width=20 height=18 >
+			    每日推荐
+		  </div>
+		  <div class="line-right"></div>
+	 </div>
+     <div class="index_slick_box">
+         <div class="indexSlick">
+             {foreach from=$deal_list item=deal_list key=keyd}
+             <div>
+                 <div class="index_slick_content" data-id="{$deal_list.id}">
+                     <a href="javascript:void(0)" class="con_a_b"><img src="{$deal_list.image}" original="{$deal_list.image}" width="100%"/></a>
+                     <p><a href="javascript:void(0)" class="con_a_c">{function name="msubstr" v=$deal_list.name b=0 e=30}</a></p>
+                     <!--<p>
+                         <a href="{url_wap r="deal" p="id=$deal_list.id"}" class="con_a_c">
+                         {function name="msubstr" v=$deal_list.brief b=0 e=30}
+                         </a>
+                     </p>-->
+                     <div class="index_slick_content_bottom">
+                         <table>
+                             <tr>
+                                 <td>已筹{$deal_list.support_amount}</td>
+                                 <!--<td class="line_bar"><img src="{$TMPL}/images/line_bar.png"></td>-->
+                                 <td>{$deal_list.show}</td>
+                             </tr>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+             {/foreach}
+
+         </div>
+	 </div>
+	
+     <div class="line" style="margin-bottom:3%;">
+	      <div class="line-left"></div>
+		  <div class="line-center">
+		      <img src="{$TMPL}/images/xin2.png" width=22 height=26 >
+			    活动专题
+		  </div>
+		  <div class="line-right"></div>
+	 </div>
+	 <div class="list_topic con_a_two">
+	    <ul id="topicList">
+            {foreach from=$topic_list item=topic key=keyt name="topic"}
+		   <li><a href="{if $topic.wap_url}{$topic.wap_url}{else}{$topic.url}{/if}"><img src="{$topic.pic}" original="{$topic.pic}" border=0 ></a></li>
+            {/foreach}
+        </ul>
+		<p class="drag_tips"><span id="dragTips">上拉加载更多专题</span></p>
+	 </div>
+     {include file="inc/footer.html"}
+     {include file="inc/searchLayer.html"}
+ </body>
+{if $signPackage}
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+                debug: false,
+                appId: '{$signPackage.appId}',
+                timestamp: {$signPackage.timestamp},
+            nonceStr: '{$signPackage.nonceStr}',
+            signature: '{$signPackage.signature}',
+            jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+    ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            // title: '{$page_title}', // 分享标题
+            link: '{$wx_url}', // 分享链接
+            imgUrl: '{$wx_image}', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            //title: '', // 分享标题
+            desc: '{$wx_desc}', // 分享描述
+            link:'{$wx_url}',  // 分享链接
+            imgUrl: '{$wx_image}', // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+{/if}
+</html>

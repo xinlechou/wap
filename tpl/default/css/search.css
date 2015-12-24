@@ -1,0 +1,110 @@
+/*搜索列表页*/
+#searchLayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    background: #fff;
+    display: none;
+    /*opacity: 0;*/
+}
+.search_list{
+    width:100%;
+    padding-left:3%;
+    padding-right:3%;
+    overflow:hidden;
+    margin:0 auto;
+    overflow:hidden;
+    -webkit-box-shadow:0 0 10px rgba(155, 127, 112, .8);
+    -moz-box-shadow:0 0 10px rgba(155, 127, 112, .8);
+    box-shadow:0 0 10px rgba(155, 127, 112, .8);
+    border-bottom:2px solid #977f70;
+}
+.search_list_bar{
+    width:100%;
+    margin:0 auto;
+    overflow:hidden;
+    margin-top:3%;
+
+
+}
+.search_list_bar_left{
+    font-size: 14px;
+    color: #977f70;
+    /* width: 30%; */
+    height: 25px;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 3%;
+}
+.search_list_bar_right{
+    /*float:left;*/
+    overflow:hidden;
+
+}
+.search_list_bar_right ul li{
+    float:left;
+    height: 24px;
+    border:1px solid #977f70;
+    /*padding: 0 10px;*/
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.search_list_bar_right ul li a{
+    color:#977f70;
+    margin-right:2%;
+    font-size:14px;
+    display:block;
+    height: 24px;
+    line-height: 24px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 10px;
+}
+.search_list_bar_right ul li a.act{
+    background:#000;
+    color:#fff;
+}
+
+.search_list_bar_right ul li.act a{color: #fff;}
+/*.search_list_ur{
+    width:100%;
+    margin:3% 0;
+
+
+}
+.search_list_ur ul{
+    width:100%;
+    margin:0 auto;
+
+}
+.search_list_ur ul li{
+    float:left;
+    margin-right:2%;
+    margin-bottom:2%;
+}
+.search_list_ur ul li a{
+    font-size:14px;
+    color:#977f70;
+    border:1px solid #977f70;
+    padding:2% 15%;
+    display:block;
+}
+.search_list_ur ul li a:hover,.search_list_ur ul li .atv{
+    background:#000;
+    color:#fff;
+}
+.search_list_ur ul li a:hover,.atv:hover{
+    color:#fff;
+}*/
+.linea{
+    border-bottom:1px solid #dddddd;
+    margin-top:3%;
+}
+.search_up{
+    width:100%;
+    margin:3% 0;
+    text-align:center;
+
+}

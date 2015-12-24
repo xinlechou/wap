@@ -1,0 +1,190 @@
+{include file="inc/header.html"}
+<title>{$page_title}-查看支持内容</title>
+
+<!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
+
+<script type="text/javascript" src="{$TMPL}/js/show.js"></script>
+<!--<script type="text/javascript" src="{$TMPL}/js/deal.js"></script>-->
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/start.css"/>
+<script>var userAp = "{$user_ap}";</script>
+<script type="text/javascript" src="{$TMPL}/js/deal_items_pay.js?1"></script>
+
+<script type="text/javascript" src="../system/region.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/deal_items.css"/>
+
+</head>
+ <body style="background:#fff;">
+ <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
+ <div class="box"></div>
+     <div class="top">
+	       <span>查看支持内容</span>
+		  <span class="top_exit"><a href="{url_wap r="deal" p="id=$deal_info.id"}"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+	 </div>
+
+     <div class="xm_list_watch">
+         {if $is_ap}
+         <div class="xm_list_con_watch"><dl style="border: none;"><dt style="color: #977f70;font-weight: 100;">我的积分：<span id="userAp">{$user_ap}</span></dt></dl></div>
+         {/if}
+         {foreach from=$deal_info.deal_item_list item=item key=k}
+
+        <div class="xm_list_con_watch {if $deal_info.status eq 0}xm_list_soldout{/if}{if $deal_info.status neq 0}{if ($item.support_count+$item.virtual_person) < $item.limit_user or $item.limit_user eq 0}{else}xm_list_soldout{/if}{else}xm_list_soldout{/if} pay_item">
+		     <dl>
+			    <dt>
+                    {if $item.ap_price_format}
+                    <span class="counzx"></span><span class="cou_zx counzx">{$item.ap_price_format}</span>
+                    {else}
+                    <span class="counzx">￥</span><span class="cou_zx counzx">{$item.price_format}</span>
+                    {/if}
+
+                </dt>
+				<dd>
+                    <span class="order_span"><img src="{$TMPL}/images/icon-time.png" width=16 height=16>预计发放时间：项目成功结束后{$item.repaid_day}天内</span>
+                </dd>
+			 </dl>
+			 <div class="con_watch con_watchfont">
+                 <div>{if $deal_info.status neq 0}
+                     {if $item.limit_user neq 0}
+                     {if ($item.support_count+$item.virtual_person) < $item.limit_user}
+                     {$item.person}人已支持 共{assign var=foo value=$item.limit_user}{$foo}个名额
+                     {else}
+                     已满额
+                     {/if}
+                     {else}
+                     {$item.person}人已支持 不限额
+                     {/if}
+                     {else}
+                     {$item.person}人已支持
+                     {/if}
+                 </div>
+			    <span>项目回报：</span>
+                 {$item.description}
+			 </div>
+            <div class="con_btn">
+                {if $deal_info.status neq 0}
+                {if ($item.support_count+$item.virtual_person) < $item.limit_user or $item.limit_user eq 0}
+                <button type="button" class="pay_sun" data-id="{$item.id}">支持本项</button>
+                {else}
+                <button disabled class="pay_sun">暂无法支持</button>
+                {/if}
+                {else}
+                <button disabled class="pay_sun">暂无法支持</button>
+                {/if}
+            </div>
+
+		</div>
+         {/foreach}
+         <div id="payForm">
+             <form id="pay_form" method="post" action="{url_wap r="cart#go_pay"}">
+                 <div class="xm_list_con_watch">
+                     <dl>
+                         <dt><span class="counzx"></span><span class="cou_zx counzx" id="amount"></span></dt>
+                         <dd></dd>
+                     </dl>
+                     <div class="con_watch con_watch_bottom">
+                         <ul class="con_watch_ul" id="payFormItems">
+                             <!--<li>应付金额：<color class="color">162￥</color></li>
+                             <li>支持金额：162￥</li>
+                             <li>配送费用：免运费</li>
+                             <li>收件地址：<input type="" value="" class="input_ad" placeholder="请填写详细地址"></li>
+                             <li>联系人：<input type="" value="" class="input_ad" placeholder="请填写联系人姓名"></li>
+                             <li>联系电话：<input type="" value="" class="input_ad" placeholder="请填写联系电话"></li>
+                             <li>支付方式<div class="input_pay">微信支付(WAP版本)
+                                 &lt;!&ndash;&nbsp;&nbsp;&nbsp;
+                                 <a href="#"><img src="{$TMPL}/images/next.png"></a>&ndash;&gt;</div></li>-->
+                         </ul>
+                         <div style="clear:both;"></div>
+                         <div class="re_textarea">
+                             <p>项目备注：</p>
+                             <textarea rows=4 class="htextareab" cols=100% name="remark"></textarea>
+                         </div>
+                     </div>
+                     <!--<span class="order_span"><img src="../images/icon-time.png" width=16 height=16>预计发放时间：项目成功结束后3天内</span>-->
+                 </div>
+                 <div class="xm_list">
+                     <div class="tips">您的积分不足，请到<a href="http://www.iqianjin.com" target="_blank">爱钱进</a>进行获取。</div>
+                     <div class="form_btn"><button type="submit">确定付款</button></div>
+                     <!--<div class="xm_list_con xm_list_cona" >
+                         <ul class="xm_pay_ad">
+                             <li class="xm_pay_ada xm_pay_adab">
+                                 <button type="submit">确定付款</button>
+                             </li>
+                         </ul>
+                     </div>-->
+                 </div>
+             <input type="hidden" value="1" name="id"/>
+             <input type="hidden" value="1" name="is_address"/>
+             <input type="hidden" value="0" id="consignee_id" name="consignee_id"/>
+             <input type="hidden" value="1" id="payment_id" name="payment_id"/>
+             <input type="hidden" value="0" id="is_ap" name="isap"/>
+             <input type="hidden" value="0" id="is_qr" name="isqr"/>
+             <input type="hidden" value="0" id="time" name="t"/>
+             </form>
+         </div>
+	 </div>
+<!--收件人弹框-->
+      <div id="addressBox" style="display:none;">
+          <div class="con_direct_top">
+              选择收件地址
+              <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+          </div>
+          <div class="con_direct_bottom">
+              <ul id="addressList"></ul>
+          </div>
+      </div>
+      <!--添加新地址弹框-->
+      <div id="addNewAddress" style="display:none;">
+          <div class="con_direct_top">
+              添加新地址
+              <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+          </div>
+          <div class="con_direct_bottom">
+              <div class="addNewAddress">
+                  <form id="addNewAddressForm">
+                      <p><span>*收件人：</span><input type="text" name="consignee" placeholder="请填写收件人姓名"></p>
+                      <p><span>*地区：</span>
+                          <span><em id="provinceValue">请选择省份</em>
+                          <select name="province" id="province" class="selectStyle">
+                              <option value="" rel="0">请选择省份</option>
+                              {foreach from=$region_lv2 item=region}
+                              <option value="{$region.name}" rel="{$region.id}">{$region.name}</option>
+                              {/foreach}
+                          </select></span>
+                          <span><em id="cityValue">请选择城市</em>
+                          <select name="city" id="city" class="selectStyle">
+                              <option value="" rel="0">请选择城市</option>
+                              {foreach from=$region_lv3 item=region}
+                              <option value="{$region.name}" rel="{$region.id}">{$region.name}</option>
+                              {/foreach}
+                          </select></span>
+                      <p><span>*详细地址：</span><input type="text" name="address" placeholder="请填写详细地址"></p>
+                      <p><span>*邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
+                      <p><span>*手机：</span><input type="text" name="mobile" placeholder="请填写手机号"></p>
+                      <p><span class="isdefault_ckb"><label for="isdefault">是否设为默认地址</label></span><input type="checkbox" name="isdefault" id="isdefault" hidden="hidden"></p>
+                      <!--隐藏input，用于保存参数-->
+                      <input id="area" hidden="hidden">
+                      <!--<input name="id" hidden="hidden" value="{$user_info.id}">-->
+                      <p class="tips"></p>
+                  </form>
+              </div>
+          </div>
+      </div>
+ <!--支付方式弹框-->
+      <div id="paymentBox" style="display:none;">
+          <div class="con_direct_top">
+              选择支付方式
+              <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+          </div>
+          <div class="con_direct_bottom">
+              <ul id="paymentList"></ul>
+          </div>
+      </div>
+ <div id="showQR">
+     <div><img src=""></div>
+ </div>
+      <!--底部-->
+      {include file="inc/footer.html"}
+ </body>
+</html>

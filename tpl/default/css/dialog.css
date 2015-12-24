@@ -1,0 +1,135 @@
+
+/*提示框样式*/
+.dialog-mask {
+    border: 0px none;
+    background: #000 none repeat scroll 0% 0%;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.weedialog {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+}
+.weedialog table {
+    border-radius: 3px;
+    overflow: hidden;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.weedialog table td {
+    border-radius: 3px;
+    overflow: hidden;
+}
+.weedialog .dialog-header {
+    cursor: move;
+    height: 37px;
+    line-height: 37px;
+    font-size: 14px;
+    width: 100%;
+    clear: both;
+    text-align: left;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+}
+.weedialog .dialog-title {
+    color: #333;
+    float: left;
+    padding-left: 20px;
+}
+.weedialog .dialog-close {
+    cursor: pointer;
+    line-height: 0px;
+    height: 15px;
+    width: 15px;
+    float: right;
+    margin: 8px 10px 0px 0px;
+}
+.weedialog .dialog-close .fa-times {
+    color: #8E8E8E;
+    font-size: 2rem;
+}
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-feature-settings: normal;
+    font-language-override: normal;
+    font-kerning: auto;
+    font-synthesis: weight style;
+    font-variant: normal;
+    text-rendering: auto;
+    font-size: inherit;
+}
+em, i {
+    font-style: normal;
+}
+.weedialog .dialog-content {
+    clear: both;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #FFF;
+    text-align: center;
+}
+.weedialog .dialog-button {
+    text-align: right;
+    font-size: 12px;
+    padding: 6px;
+    clear: both;
+    background: #FFF none repeat scroll 0% 0%;
+    overflow: hidden;
+}
+.weedialog .dialog-cancel {
+    margin-right: 4%;
+}
+.ui-button, .ui-button_active, .ui-button_hover, .ui_button {
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    color: #FFF !important;
+    cursor: pointer;
+    display: block;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 3px;
+}
+.ui-button div {
+    float: left;
+    background: #977f70 none repeat scroll 0% 0%;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFF;
+    width: 100%;
+}
+.ui-button span {
+    background: transparent none repeat scroll 0% 0%;
+    white-space: nowrap;
+    border: medium none;
+    height: 40px;
+    font-size: 16px;
+    float: left;
+    line-height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+.blank10 {
+    height: 10px;
+    clear: both;
+    visibility: hidden;
+}
