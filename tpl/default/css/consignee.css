@@ -98,6 +98,27 @@
     opacity: 0.9;
     z-index: 99999999;
 }
+
+.a_empty{
+    width:100%;
+    padding:10% 5% 40% 5%;
+
+}
+.a_empty img{
+    display:block;
+    margin:0 auto;
+    text-align:center;
+    margin-bottom:5%;
+    margin-top: 5%;
+    width: 40px;
+}
+.a_empty p{
+    color:#977f70;
+    font-size:16px;
+    text-align:center;
+    margin:0 auto;
+    font-weight:bold;
+}
 /*编辑地址页面*/
 .edit_con{
     width: 95%;
@@ -123,9 +144,15 @@
     border: none;
     float: right;
     text-align: right;
+    width: 68%;
 }
 .edit_con p>span{
     position: relative;
+}
+.edit_con select{
+    min-width: 30%;
+    line-height: 40px;
+    height: 40px;
 }
 .edit_con select.selectStyle {
     opacity: 0;
@@ -138,6 +165,7 @@
     height: 40px;
     line-height: 40px;
     /*width: 30%;*/
+    min-width: 30%;
     margin-left: 10px;
     padding: 0 15px;
 }
@@ -145,11 +173,15 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 80%;
+    width: 100%;
+    display: block;
+    line-height: 40px;
     text-align: right;
 }
 .edit_con .area>span{
     position: relative;
+    min-width: 120px;
+    display: inline-block;
 }
 .area em{
     background-image: url("../images/next.png");

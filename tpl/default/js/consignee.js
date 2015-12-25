@@ -35,9 +35,9 @@ $(function() {
                         success: function (json) {
                             $("#loading").hide();
                             if(json.status == 1){
-                                showtips(json.info,function(){
-                                    _this.remove();
-                                });
+                                showtips(json.info);
+                                _this.remove();
+
                             }
                         }
                     })
@@ -77,7 +77,7 @@ function showtips(msg,fun){
 }
 /*显示添加新地址弹框*/
 function addNewAddress(){
-    $.weeboxs.open("#addNewAddress",{boxid:"addressBox",type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,okBtnName:"保存",onok:function(){
+    $.weeboxs.open("#addNewAddress",{boxid:"addressBox",type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,position:"element",trigger:"#body",okBtnName:"保存",onok:function(){
         saveConsignee('addNewAddressForm',function(json){
             if(json.status==1){
                 $.weeboxs.close();

@@ -13,9 +13,10 @@
  <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
  <div class="top">
      <span>地址管理</span>
-     <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+     <span class="top_exit"><a href="{url_wap r="settings#modify"}"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
  </div>
  <div class="a_list">
+     {if $consignee_list}
      {foreach from=$consignee_list item=item key=k}
     <div class="a_item" data-id="{$item.id}">
         <div class="a_item_top">
@@ -38,6 +39,13 @@
         </div>
     </div>
      {/foreach}
+     {else}
+
+     <div class="a_empty">
+         <img src="{$TMPL}/images/pay_error.png" border=0 width=40>
+         <p>您尚未添加收货地址，请添加新地址</p>
+     </div>
+     {/if}
  </div>
  <div class="a_btn"><button type="button" id="showAddNewAddress">新建地址</button></div>
  <div class="light-tips"></div>
@@ -67,7 +75,7 @@
                               {/foreach}
                           </select></span>
                  <p><span>*详细地址：</span><input type="text" name="address" placeholder="请填写详细地址"></p>
-                 <p><span>*邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
+                 <p><span>&nbsp;&nbsp;邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
                  <p><span>*手机：</span><input type="text" name="mobile" placeholder="请填写手机号"></p>
                  <p><span class="isdefault_ckb"><label for="isdefault">是否设为默认地址</label></span><input type="checkbox" name="isdefault" id="isdefault" hidden="hidden"></p>
                  <!--隐藏input，用于保存参数-->

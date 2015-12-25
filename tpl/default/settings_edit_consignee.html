@@ -23,7 +23,7 @@
              <span class="area">
                 <span><em id="provinceValue">{$item.province}</em>
                           <select name="province" id="province" class="selectStyle">
-                              <option value="" rel="0">请选择省份</option>
+                              <!--<option value="" rel="0">请选择省份</option>-->
                               {foreach from=$region_lv2 item=region}
 
                               <option value="{$region.name}" rel="{$region.id}" {if $region.selected eq 1}selected="selected"{/if}>{$region.name}</option>
@@ -31,7 +31,7 @@
                           </select></span>
                           <span><em id="cityValue">{$item.city}</em>
                           <select name="city" id="city" class="selectStyle">
-                              <option value="" rel="0">请选择城市</option>
+                              <!--<option value="" rel="0">请选择城市</option>-->
                               {foreach from=$region_lv3 item=region}
                               <option value="{$region.name}" rel="{$region.id}" {if $region.selected eq 1}selected="selected"{/if}>{$region.name}</option>
                               {/foreach}
