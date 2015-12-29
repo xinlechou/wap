@@ -69,16 +69,17 @@
          {/foreach}
          <!--分页-->
          <div class="page">
-             <div class="page_up"><button type="button">上一页</button></div>
+             <div class="page_up"><button type="button">&laquo;</button></div>
              <div class="select_page">
                  <span>
-                     <em id="pageValue"></em>
-                     <select id="select_page">
+                     <!--<em id="pageValue"></em>-->
+                     <select id="select_page" class="form-control">
                          {$page}
                      </select>
                  </span>
+                 <!--<em class="media-bottom">/15</em>-->
              </div>
-             <div class="page_down"><button type="button">下一页</button></div>
+             <div class="page_down"><button type="button">&raquo;</button></div>
          </div>
          {/if}
 

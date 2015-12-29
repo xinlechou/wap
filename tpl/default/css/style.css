@@ -3,6 +3,7 @@
 }
 body{
     background:#f0f1f1;
+    -webkit-font-smoothing: antialiased;
 	}
 img{border:0px;}	
 a{text-decoration:none;}
@@ -1366,7 +1367,7 @@ ul#sexlist li.onchecked{
 }
 
 /*分页*/
-#select_page{
+/*#select_page{
     position: absolute;
     top: 13px;
     right: 30px;
@@ -1426,7 +1427,12 @@ ul#sexlist li.onchecked{
 }
 .select_page{
     width: 100%;
-}
+}*/
+.page{position: relative;height: 44px;font-size:20px;line-height: 44px;text-align: center;}
+.page button{background: transparent; width: 50px;}
+.page>div{display: inline-block;}
+/*.page em{display: inline-block;width: auto;font-style: italic;font-size: 14px;}*/
+.page .form-control{display: inline-block; width: auto;}
 /*增加loading样式*/
 #loading{position: fixed;top: 0;left: 0; bottom:0;right:0;display: none;width: 50px;height: 50px;margin:auto;}
 /*增加分享样式*/
