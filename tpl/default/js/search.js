@@ -69,12 +69,15 @@ $(function() {
         }
         this.showLayer = function(){
             //var _this = this;
-            this.layer.slideDown();
+            //this.layer.slideDown();
+            this.layer.removeClass('fadeOutUp').addClass('fadeInDown');
             this.closeBtn.live("click",function(){_this.closeLayer();})
 
         }
         this.closeLayer = function(){
-            this.layer.slideUp();
+            //this.layer.slideUp();
+            this.layer.removeClass('fadeInDown').addClass('fadeOutUp');
+
         }
         this.init();
     }
