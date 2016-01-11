@@ -3,7 +3,7 @@ $(document).ready(function(){
     $(window).scroll(function(){
         var scrollTop = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();
         //数据条在滚动到最上方的时候&滚动到底部时显示，滚动过程中消失
-        if(scrollTop>windowHeight){$("#footer_count_bar").fadeOut("slow")}
+        if(scrollTop>windowHeight){$("#footer_count_bar").fadeOut()}
         if((scrollTop + windowHeight == scrollHeight) || scrollTop == 0){$("#footer_count_bar").fadeIn();}
     });
     /*绑定分享事件*/

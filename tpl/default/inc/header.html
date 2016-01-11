@@ -26,14 +26,7 @@
             }
         });
     </script>
-    <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
-    <!--<script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>-->
 
-    <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
-    <!--<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
-    <!--<script type="text/javascript" src="{$TMPL}/js/TouchSlide.1.1.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
     <!--<script type="text/javascript" src="{$TMPL}/js/js.js"></script>-->
     <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>-->
     <!--<link rel="stylesheet" type="text/css" href="{$TMPL}/css/Font-Awesome-4.2.0/css/font-awesome.min.css" />-->
@@ -45,9 +38,8 @@
         {if app_conf("APP_MSG_SENDER_OPEN") eq "1"};
         var send_span = {function name="app_conf" v="SEND_SPAN"}000;
         {/if}
-            var EVENT_TYPE = 'click';//先默认成click，否则电脑不识别
 //            var EVENT_TYPE = 'touchend';
-
+            var EVENT_TYPE = 'click';//先默认成click，否则电脑不识别
     </script>
     <!--<html xmlns:wb="http://open.weibo.com/wb">-->
     <!--<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>-->

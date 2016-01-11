@@ -306,8 +306,8 @@ class settingsModule{
 
 		if(!$GLOBALS['user_info']) {app_redirect(url_wap("user#login"));} else {
 			$id = intval($_REQUEST['id']);
+            $title = empty($id)?"新建地址":"编辑收货地址";
 			$consignee_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_consignee where id = ".$id." and user_id = ".intval($GLOBALS['user_info']['id']));
-			
 			$region_pid = 0;
 			$region_lv2 = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."region_conf where region_level = 2 order by py asc");  //二级地址
 			foreach($region_lv2 as $k=>$v) {
@@ -331,6 +331,7 @@ class settingsModule{
 			}
 			$GLOBALS['tmpl']->assign("item",$consignee_info);
 		}
+        $GLOBALS['tmpl']->assign("title",$title);
         $GLOBALS['tmpl']->display("settings_edit_consignee.html");
 	}
 	public function del_consignee()

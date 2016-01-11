@@ -9,26 +9,26 @@ var DEAL_ITEM_ID = 0,//选择的支持项ID
 var url = window.location.href,is_ap = url.query('isap');
 $(function(){
     /*绑定弹框事件*/
-    $("#showAddressBox").live('touchend click',editAddress);//一定要绑一个touchend事件才能显示出来，为啥？？执行顺序问题？
-    $("#showAddNewAddress").live('touchend click',addNewAddress);
-    $("#showPaymentBox").live('touchend click',choosePayment);
+    $("#showAddressBox").live(EVENT_TYPE,editAddress);//一定要绑一个touchend事件才能显示出来，为啥？？执行顺序问题？
+    $("#showAddNewAddress").live(EVENT_TYPE,addNewAddress);
+    $("#showPaymentBox").live(EVENT_TYPE,choosePayment);
     $(".isdefault_ckb label").live(EVENT_TYPE,function(){$(this).toggleClass('onchecked');})
 
     $(".closebox").live(EVENT_TYPE,function(){
         $.weeboxs.close();
     });
     /*$(".pay_item").live(EVENT_TYPE,function(){alert($(this).attr('class'))
-        var _this = $(this);var checkBg = _this.find('.con_btn');
-        if(_this.hasClass('xm_list_soldout')){return;}
-        checkBg.toggleClass('onchecked');
-        var id = _this.find('.pay_sun').attr('data-id');
-        DEAL_ITEM_ID = id;
-        getDealItems(id);
-        $(".pay_item").not(this).each(function(){
-            $(this).find('.con_btn').removeClass('onchecked');
-        })
+     var _this = $(this);var checkBg = _this.find('.con_btn');
+     if(_this.hasClass('xm_list_soldout')){return;}
+     checkBg.toggleClass('onchecked');
+     var id = _this.find('.pay_sun').attr('data-id');
+     DEAL_ITEM_ID = id;
+     getDealItems(id);
+     $(".pay_item").not(this).each(function(){
+     $(this).find('.con_btn').removeClass('onchecked');
+     })
 
-    });*/
+     });*/
     $(".pay_item").each(function(){
         $(this).live(EVENT_TYPE,function(){
             var _this = $(this);var checkBg = _this.find('.con_btn');
@@ -121,7 +121,7 @@ function editAddress(){
 }
 /*显示添加新地址弹框*/
 function addNewAddress(){
-    $.weeboxs.open("#addNewAddress",{boxid:"addressBox",type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,okBtnName:"保存",onok:function(){
+    $.weeboxs.open("#addNewAddress",{boxid:"addressBox",type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,okBtnName:"保存",position:"element",trigger:"#payForm",onok:function(){
         var $form = $("#addNewAddressForm"),$tips = $form.find('.tips'),
         /*p = {
          mobile:$.trim($form.find('input[name="mobile"]').val()),
@@ -278,41 +278,41 @@ function checkPayment(paymentId){
         case "35":
             //微信支付
             if(isWeiXin()){
-               return true;
+                return true;
             }else{
                 //$("#loading").show();
                 $("#pay_form").find('input[name="isqr"]').val(1)
                 //非微信浏览器时获取支付二维码
                 //后台校验
                 /*var url = APP_ROOT+"/index.php?ctl=cart&act=go_pay";
-                $.ajax({url:url,dataType:"json",type:"get",
-                    success:function(json){
-                        switch (json.status){
-                            case "0"://获取失败
-                                window.clipboardData.setData("Text",window.location.href);
-                                $.showSuccess('复制地址成功！请粘贴到微信浏览器完成支付。',function(){
-                                    //alert(location.href);
-                                    window.location.href='weixin://'+location.href;
-                                });
-                                break;
-                            case '1'://获取二维码正常
-                                $("#pay_form").find('input[name="isqr"]').val(1)
-                                *//*$.showSuccess('请使用微信浏览器打开此页才能正常使用。<img src="'+json.src+'">',function(){
-                                    //alert(location.href);
-                                    //window.location.href='weixin://'+location.href;
-                                });*//*
-                                break;
+                 $.ajax({url:url,dataType:"json",type:"get",
+                 success:function(json){
+                 switch (json.status){
+                 case "0"://获取失败
+                 window.clipboardData.setData("Text",window.location.href);
+                 $.showSuccess('复制地址成功！请粘贴到微信浏览器完成支付。',function(){
+                 //alert(location.href);
+                 window.location.href='weixin://'+location.href;
+                 });
+                 break;
+                 case '1'://获取二维码正常
+                 $("#pay_form").find('input[name="isqr"]').val(1)
+                 *//*$.showSuccess('请使用微信浏览器打开此页才能正常使用。<img src="'+json.src+'">',function(){
+                 //alert(location.href);
+                 //window.location.href='weixin://'+location.href;
+                 });*//*
+                 break;
 
-                        }
-                        $("#loading").hide();
+                 }
+                 $("#loading").hide();
 
-                    },error:function(json){}
-                });*/
+                 },error:function(json){}
+                 });*/
 
                 //return false;
             }
             return true;
-        break;
+            break;
         case "41":
             //积分支付
             //$.showSuccess('进入积分支付。');
@@ -322,21 +322,20 @@ function checkPayment(paymentId){
             //其它支付方式
             $.showSuccess('由于微信浏览器不能支持其他支付方式，请使用其他浏览器打开此页才能正常使用。');
             return false;
-        break;
+            break;
     }
     /*if(isWeiXin()){
-        if(paymentId==35){
-            return true;
-        }else{
-            $.showSuccess('由于微信浏览器不能支持其他支付方式，请使用其他浏览器打开此页才能正常使用。');
-            return false;
-        }
-    }else{
-        if(paymentId==35){
-            $.showSuccess('请使用微信浏览器打开此页才能正常使用。');
-            return false;
-        }
+     if(paymentId==35){
+     return true;
+     }else{
+     $.showSuccess('由于微信浏览器不能支持其他支付方式，请使用其他浏览器打开此页才能正常使用。');
+     return false;
+     }
+     }else{
+     if(paymentId==35){
+     $.showSuccess('请使用微信浏览器打开此页才能正常使用。');
+     return false;
+     }
 
-    }*/
+     }*/
 }
-

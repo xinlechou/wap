@@ -2,11 +2,9 @@
     <title>{$page_title}</title>
 
     <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/order_list.js"></script>
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/deals.css"/>
     <!--搜索-->
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/search.css"/>
-    <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
     </head>
 
 <body>
@@ -15,7 +13,9 @@
 		  <!-- <span class="top_exit"><a href="#"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>-->
 		   <span class="search" id="showLayerBtn"><a href="javascript:void(0);"><img src="{$TMPL}/images/search.png" width=30 height=30></a></span>
 	 </div>
-     {if $page_title eq '搜索结果'}{if $result_count neq 0}<div class="search_bottom">为您搜索到{$result_count}条数据</div>{/if}{/if}
+     {if $page_title eq '搜索结果'}{if $result_count neq 0}
+     <div class="search_bottom">为您搜索到{$result_count}条数据<a class="close" href="{url_wap r="deals"}"><!--&times;-->&#215;</a></div>
+     {/if}{/if}
      {if $result_count eq 0}
      <div class="pay_sucsss">
          <img src="{$TMPL}/images/pay_error.png">
@@ -29,7 +29,7 @@
          {foreach from=$deal_list item=deal_info key=keyd}
 	     <div class="xm_list_li">
 		    <div class="xm_list_li_title">
-			   <span>{$deal_info.cate_name}</span><!--项目标签-->
+                <a class="tags" href="{url_wap r="deals" p="&cate=$deal_info.cate_id"}"><span>{$deal_info.cate_name}</span></a><!--项目标签-->
                 <a href="{url_wap r="deal" p="id=$deal_info.id"}">{$deal_info.name}</a>
 			</div>
 			<div class="xm_list_li_img">
@@ -85,6 +85,10 @@
 	 </div>
 	 <!--底部-->
      {include file="inc/footer.html"}
+     <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
 
      {include file="inc/searchLayer.html"}
+     <script type="text/javascript" src="{$TMPL}/js/order_list.js"></script>
+
+
 </body></html>

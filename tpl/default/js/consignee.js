@@ -2,7 +2,7 @@
  * Created by admin on 15/12/22.
  */
 $(function() {
-    $("#showAddNewAddress").live('touchend click',addNewAddress);
+    //$("#showAddNewAddress").live('touchend click',addNewAddress);
     $(".isdefault_ckb label").live(EVENT_TYPE,function(){$(this).toggleClass('onchecked');});
     $(".closebox").live(EVENT_TYPE,function(){
         $.weeboxs.close();
@@ -14,7 +14,7 @@ $(function() {
                     window.location.href = APP_ROOT+"/index.php?ctl=settings&act=consignee";
                 });
             }else{
-                showtips(json.info)
+                showtips(json.info,null,1)
             }
         });
     });
@@ -69,14 +69,9 @@ $(function() {
         })
     });
 });
-function showtips(msg,fun){
-    $('.light-tips').html(msg).fadeIn(function(){
-        setTimeout(function(){$('.light-tips').fadeOut(); fun && fun();},1000)
-    });
 
-}
 /*显示添加新地址弹框*/
-function addNewAddress(){
+/*function addNewAddress(){
     $.weeboxs.open("#addNewAddress",{boxid:"addressBox",type:'box',width:300,showTitle: false,showCancel:false,clickClose:true,position:"element",trigger:"#body",okBtnName:"保存",onok:function(){
         saveConsignee('addNewAddressForm',function(json){
             if(json.status==1){
@@ -88,7 +83,7 @@ function addNewAddress(){
                 showtips(json.info)
             }
         });
-        /*var $form = $("#addNewAddressForm"),$tips = $form.find('.tips'),
+        *//*var $form = $("#addNewAddressForm"),$tips = $form.find('.tips'),
             str = "",p=$form.serialize();
         if(!$.checkMobilePhone($.trim($form.find('input[name="mobile"]').val()))){
             str="请填写正确的手机号";$tips.html(str).show();return;
@@ -107,10 +102,10 @@ function addNewAddress(){
                     showtips(json.info)
                 }
             }
-        });*/
+        });*//*
 
     }});
-}
+}*/
 /* 编辑地址*/
 function saveConsignee(formid,fun){
     var $form = $("#"+formid),

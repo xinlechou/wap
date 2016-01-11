@@ -1,30 +1,5 @@
 {include file="inc/header.html"} 
 
-<script type="text/javascript" src="{$TMPL}/js/cart_pay.js"></script>
-<script type="text/javascript">
-var timer = setInterval(checkpay,5000);
-var noticeId = {$notice_id};
-
-function checkpay(){
-	$.ajax({
-        type: "post",
-        dataType: "html",
-        url: '/wxpay_web/checkpay.php?notice_id='+noticeId,
-        data: "&notice_id="+noticeId,
-        success: function (data) {
-            if (data=="is_paid") {
-				window.clearInterval(timer);
-				$("#showname").html("支付成功，5秒后自动退出。");
-				$("#imgdiv").hide();
-				setTimeout(jump,5000);
-            }
-        }
-    });
-}
-function jump(){
-	location.href = APP_ROOT+'/index.php?ctl=account';
-}
-</script>
 <div class="top">
     <span>支付订单</span>
     <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
@@ -44,6 +19,33 @@ function jump(){
 
 <div style="clear:both;"></div>
 <!--结尾-->
+
+{include file="inc/footer.html"}
+<script type="text/javascript" src="{$TMPL}/js/cart_pay.js"></script>
+<script type="text/javascript">
+    var timer = setInterval(checkpay,5000);
+    var noticeId = {$notice_id};
+
+    function checkpay(){
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: '/wxpay_web/checkpay.php?notice_id='+noticeId,
+            data: "&notice_id="+noticeId,
+            success: function (data) {
+                if (data=="is_paid") {
+                    window.clearInterval(timer);
+                    $("#showname").html("支付成功，5秒后自动退出。");
+                    $("#imgdiv").hide();
+                    setTimeout(jump,5000);
+                }
+            }
+        });
+    }
+    function jump(){
+        location.href = APP_ROOT+'/index.php?ctl=account';
+    }
+</script>
 
 <script type="text/javascript">
 	var left_money={$user_info.money};
@@ -82,4 +84,3 @@ function jump(){
 	});
 </script>
 
-{include file="inc/footer.html"}

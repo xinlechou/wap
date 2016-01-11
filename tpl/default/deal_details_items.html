@@ -1,16 +1,7 @@
 {include file="inc/header.html"}
 <title>{$page_title}-查看支持内容</title>
 
-<!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
-
-<script type="text/javascript" src="{$TMPL}/js/show.js"></script>
-<!--<script type="text/javascript" src="{$TMPL}/js/deal.js"></script>-->
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/start.css"/>
-<script>var userAp = "{$user_ap}";</script>
-<script type="text/javascript" src="{$TMPL}/js/deal_items_pay.js?1"></script>
-
-<script type="text/javascript" src="../system/region.js"></script>
-<script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
 
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/deal_items.css"/>
@@ -160,7 +151,7 @@
                               {/foreach}
                           </select></span>
                       <p><span>*详细地址：</span><input type="text" name="address" placeholder="请填写详细地址"></p>
-                      <p><span>*邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
+                      <p><span>&nbsp;&nbsp;邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
                       <p><span>*手机：</span><input type="text" name="mobile" placeholder="请填写手机号"></p>
                       <p><span class="isdefault_ckb"><label for="isdefault">是否设为默认地址</label></span><input type="checkbox" name="isdefault" id="isdefault" hidden="hidden"></p>
                       <!--隐藏input，用于保存参数-->
@@ -186,5 +177,10 @@
  </div>
       <!--底部-->
       {include file="inc/footer.html"}
+ <script type="text/javascript" src="{$TMPL}/js/show.js"></script>
+ <script>var userAp = "{$user_ap}";</script>
+ <script type="text/javascript" src="{$TMPL}/js/deal_items_pay.js?1"></script>
+ <script type="text/javascript" src="../system/region.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
  </body>
 </html>

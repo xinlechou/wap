@@ -92,7 +92,7 @@ class ajaxModule
         $data['mobile'] = $mobile;
         $data['user_id'] = intval($GLOBALS['user_info']['id']);
         if(isset($_REQUEST['isdefault'])){
-            $data['is_default']= $_REQUEST['isdefault']=='on'?1:0;
+            $data['is_default']= $_REQUEST['isdefault']?1:0;
             //新地址设为默认地址时将其它地址更新为非默认地址
             $GLOBALS['db']->query("UPDATE ".DB_PREFIX."user_consignee SET is_default = 0 where (user_id = ".intval($GLOBALS['user_info']['id'])." and is_default = 1)");
         }

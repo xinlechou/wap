@@ -1349,4 +1349,18 @@ String.prototype.query=function(name){
     var r = window.location.search.substr(1).match(reg);
     if (r!=null) return unescape(r[2]); return null;
 }
+/*light tips*/
+function showtips(msg,fun,iswarn){
+    var $div = $('.light-tips');
+    if(iswarn){$div.addClass('warning');}else{$div.removeClass('warning');}
+    $div.html(msg).addClass('show');
+    setTimeout(function(){
+        $div.removeClass('show');
+        fun && fun();},2000)
+    /*$('.light-tips').html(msg).fadeIn(function(){
+     setTimeout(function(){
+     $('.light-tips').fadeOut();
+     fun && fun();},1000)
+     });*/
 
+}

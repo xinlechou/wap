@@ -20,23 +20,28 @@
 .a_item_top address{margin-top: 3px;}
 .a_btn{
     position: fixed;
-    background: #f0f1f1;
+    /*background: #f0f1f1;*/
     bottom: 0;
     width: 100%;
     height: 50px;
     text-align: center;
     padding: 5px 0;
 }
-.a_btn button{
+.a_btn a,.a_btn button{
     width: 85%;
     height: 40px;
-    /*line-height: 95%;*/
+
     text-align: center;
     background: #000000;
     color: #fff;
     -moz-border-radius:2px;
     -webkit-border-radius:2px;
     border-radius:2px;
+
+}
+.a_btn a{
+    line-height: 40px;
+    display: inline-block;
 }
 .a_item_bottom{
     margin-bottom: -2%;
@@ -79,25 +84,6 @@
     background: transparent;
     float: right;
 }
-.light-tips{
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: none;
-    width: 85%;
-    height: 50px;
-    margin: auto;
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
-    border-radius: 1px;
-    background: #fff;
-    text-align: center;
-    line-height: 50px;
-    opacity: 0.9;
-    z-index: 99999999;
-}
 
 .a_empty{
     width:100%;
@@ -134,9 +120,13 @@
     line-height: 45px;
     margin: 5px auto;
     border-bottom: 1px solid #977f70;
+
     position: relative;
 }
-.edit_con p.last{
+/*.edit_con p.last{
+    border: none;
+}*/
+.edit_con p:last-of-type{
     border: none;
 }
 .edit_con p input{

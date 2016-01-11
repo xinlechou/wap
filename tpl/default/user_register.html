@@ -4,20 +4,7 @@
      <!--<script type="text/javascript" src="{$TMPL}/js/js.js"></script>-->
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
      <link href="{$TMPL}/css/bootstrap.min.css" rel="stylesheet">
-     <script type="text/javascript" src="{$TMPL}/js/user.js"></script>
 
-     <script>
-         {if app_conf("USER_VERIFY") eq 2}
-         var is_mobile=1;
-         {else}
-         var is_mobile=0;
-         {/if}
-         /*user.js中所用的url*/
-             var urls = {}
-             urls.submitUrl = '{url_wap r="user#do_register"}';
-             urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
-             urls.checkVerifyCodeUrl = '{url_wap r="user#check_verify_code"}';
-     </script>
  </head>
  <body>
      <div class="top">
@@ -70,5 +57,18 @@
     <!--注册结束-->
     	 <!--底部-->
      {include file="inc/footer.html"}
+     <script type="text/javascript" src="{$TMPL}/js/user.js"></script>
+     <script>
+         {if app_conf("USER_VERIFY") eq 2}
+         var is_mobile=1;
+         {else}
+         var is_mobile=0;
+         {/if}
+             /*user.js中所用的url*/
+             var urls = {}
+             urls.submitUrl = '{url_wap r="user#do_register"}';
+             urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
+             urls.checkVerifyCodeUrl = '{url_wap r="user#check_verify_code"}';
+     </script>
  </body>
 </html>

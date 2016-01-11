@@ -1,11 +1,6 @@
 {include file="inc/header.html"}
     <title>个人中心-地址管理</title>
-    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/consignee.css"/>
-    <script type="text/javascript" src="{$TMPL}/js/consignee.js"></script>
-<!--<script type="text/javascript" src="{$TMPL}/js/deal_items_pay.js?1"></script>-->
-<script type="text/javascript" src="../system/region.js"></script>
-<script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
-
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/consignee.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/deal_items.css"/>
 </head>
@@ -47,10 +42,12 @@
      </div>
      {/if}
  </div>
- <div class="a_btn"><button type="button" id="showAddNewAddress">新建地址</button></div>
+ <div class="a_btn"><!--<button type="button" id="showAddNewAddress">新建地址</button>-->
+     <a href="{url_wap r="settings#edit_consignee"}" id="showAddNewAddress">新建地址</a>
+ </div>
  <div class="light-tips"></div>
  <!--添加新地址弹框-->
- <div id="addNewAddress" style="display:none;">
+ <!--<div id="addNewAddress" style="display:none;">
      <div class="con_direct_top">
          添加新地址
          <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
@@ -78,13 +75,22 @@
                  <p><span>&nbsp;&nbsp;邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
                  <p><span>*手机：</span><input type="text" name="mobile" placeholder="请填写手机号"></p>
                  <p><span class="isdefault_ckb"><label for="isdefault">是否设为默认地址</label></span><input type="checkbox" name="isdefault" id="isdefault" hidden="hidden"></p>
-                 <!--隐藏input，用于保存参数-->
+                 &lt;!&ndash;隐藏input，用于保存参数&ndash;&gt;
                  <input id="area" hidden="hidden">
-                 <!--<input name="id" hidden="hidden" value="{$user_info.id}">-->
+                 &lt;!&ndash;<input name="id" hidden="hidden" value="{$user_info.id}">&ndash;&gt;
                  <p class="tips"></p>
              </form>
          </div>
      </div>
- </div>
+ </div>-->
+ <!--footer-->
+ <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+
+ <script type="text/javascript" src="{$TMPL}/js/consignee.js"></script>
+ <script type="text/javascript" src="../system/region.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
  </body>
 </html>

@@ -4,43 +4,15 @@
     <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>-->
 
     <!--<script type="text/javascript" src="{$TMPL}/js/show.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/deal.js"></script>
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
-    <!--轮换 img-->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="{$TMPL}/js/slick.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/slick.css"/>
 
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/deals.css"/>
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
 
 
-    <script>
-        $(function(){
-            $(".detail_slick").slick({
-            lazyLoad: 'ondemand',
-                dots:true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-                arrows:false,  //是否显示翻页按钮
-                //touchMove:true,
-                draggable:true,
-                mobileFirst:true
-            });
-            $(".detail_slick").find('img').click(function(){
-              var url = this.src,layer=$("#imgLayer"),$img = $(this).clone();
-                $img.appendTo(layer)
-//                layer.find("img").attr("src",url);
-                layer.find("button").live('touchstart',function(){
-                    layer.hide();
-                    layer.find('img').remove();
-                });
-                layer.show();
-            });
-        })
-    </script>
+
 
 </head>
  <body style="background:#fff;">
@@ -185,5 +157,41 @@
           <!--<img src="http://www.xinlechou.com/public/attachment/201512/10/14/82d4a4ca88586a95dfdb08ff310b304015_800x600.jpg"/>-->
           <button type="button">关闭</button>
       </div>
+      <!--底部footer-->
+      <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+      <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+      <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+      <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+      <script type="text/javascript" src="{$TMPL}/js/deal.js"></script>
+
+      <!--轮换 img-->
+      <script type="text/javascript" src="{$TMPL}/js/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="{$TMPL}/js/slick.js"></script>
+      <script>
+          $(function(){
+              $(".detail_slick").slick({
+                  lazyLoad: 'ondemand',
+                  dots:true,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 2000,
+                  arrows:false,  //是否显示翻页按钮
+                  //touchMove:true,
+                  draggable:true,
+                  mobileFirst:true
+              });
+              $(".detail_slick").find('img').click(function(){
+                  var url = this.src,layer=$("#imgLayer"),$img = $(this).clone();
+                  $img.appendTo(layer)
+//                layer.find("img").attr("src",url);
+                  layer.find("button").live(EVENT_TYPE,function(){
+                      layer.hide();
+                      layer.find('img').remove();
+                  });
+                  layer.show();
+              });
+          })
+      </script>
  </body>
 </html>

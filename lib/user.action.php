@@ -6,7 +6,11 @@ class userModule{
  		if($GLOBALS['user_info']){
 			app_redirect(url_wap("settings#index"));
 		}
-		
+		$gopreview = es_session::get("gopreview");
+		if(!$gopreview){
+			$url = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:url("index");
+			es_session::set("gopreview",$url);
+		}
 //		$GLOBALS['tmpl']->caching = true;
 //		$cache_id  = md5(MODULE_NAME.ACTION_NAME);
 //		if (!$GLOBALS['tmpl']->is_cached('user_login.html', $cache_id))

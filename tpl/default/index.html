@@ -1,25 +1,15 @@
     {include file="inc/header.html"}
     <title>新乐筹</title>
 
-    <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
-
-    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
-    <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>--><!--临时注掉-->
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/index.css"/>
     <!--搜索-->
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/search.css"/>
-    <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
 
-    <!--首页轮换推荐-->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="{$TMPL}/js/slick.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/slick.css"/>
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dropload.css"/>
 
-    <!--下拉显示更多-->
-    <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
-    <script type="text/javascript" src="{$TMPL}/js/index.js"></script>
+
     </head>
  <body>
  <!--<div id="loading"><img src="{$TMPL}/images/loading.gif"></div>-->
@@ -81,7 +71,19 @@
 		<p class="drag_tips"><span id="dragTips">上拉加载更多专题</span></p>
 	 </div>
      {include file="inc/footer.html"}
-     {include file="inc/searchLayer.html"}
+ <!--首页轮换推荐-->
+ <script type="text/javascript" src="{$TMPL}/js/jquery-migrate-1.2.1.min.js"></script>
+ <!--<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+ <script type="text/javascript" src="{$TMPL}/js/slick.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+ <!--下拉显示更多-->
+ <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/index.js"></script>
+
+ {include file="inc/searchLayer.html"}
+ <script type="text/javascript" src="{$TMPL}/js/search.js"></script>
+
  </body>
 {if $signPackage}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>

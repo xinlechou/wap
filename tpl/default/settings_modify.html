@@ -1,16 +1,6 @@
-
-    {include file="inc/header.html"}
-
-    <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
-    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
-
+{include file="inc/header.html"}
     <title>个人中心-修改信息</title>
-    <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
-    <script type="text/javascript" src="../system/region.js"></script>
-    <script type="text/javascript" src="{$TMPL}/js/avatar.js"></script>
-    <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
-
 </head>
  <body id="body">
  <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
@@ -186,6 +176,11 @@
    </div>
    <!--底部-->
    {include file="inc/footer.html"}
+ <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
+ <script type="text/javascript" src="../system/region.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/avatar.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
  <script>
      $(function(){
          $("#email").click(editEmail);

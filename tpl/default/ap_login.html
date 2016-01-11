@@ -2,59 +2,6 @@
 <title>积分商城-登录</title>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/ap_login.css"/>
 </head>
-<script>
-    $(function(){
-        var url = window.location.href,mobile = url.query('m'),aqj_id = url.query('aqjid');
-        var $authorize = $(".login_loga"),$login = $(".login_logb");
-        $('input[name="log_mobile"]').val(mobile);
-        $('input[name="log_aqjid"]').val(aqj_id);
-        $("#showLoginForm").bind(EVENT_TYPE,function(){
-            $authorize.fadeOut(function(){
-                $login.fadeIn();
-            });
-        });
-        $("#showAuthorize").live(EVENT_TYPE,function(){
-            $login.fadeOut(function(){
-                $authorize.fadeIn();
-            });
-        });
-        $login.find('button').live(EVENT_TYPE,function(){
-            $("#loginForm").submit();
-        })
-        $("#loginForm").bind('submit',function(){
-            $.ajax({
-                url: this.action,
-                type: this.method,
-                data: $(this).serialize(),
-                success: function(json){
-                    var e = eval("("+json+")");
-                    $(".login_tips").html(e.msg);
-                    if(e.status == 1){
-                        // 登录成功
-                        window.location.href = e.jump;
-                    }
-                }
-            });
-            return false;
-        });
-        $("#doReg").bind(EVENT_TYPE,function(){
-            var p = {reg_aqjid:aqj_id,reg_m:mobile};
-            $.ajax({
-                url: './index.php?ctl=ajax&act=aqj_do_register',
-                type: "POST",
-                data: p,
-                success: function(json){
-                    var e = eval("("+json+")");
-                    //注册成功
-                    if(e.status !== 0){
-                        window.location.href = e.jump;
-                    }
-                    $("#showLoginForm").html(e.data);
-                }
-            });
-        });
-    })
-</script>
 <body>
  <div class="loginbg">
     <div class="login_bg">
@@ -101,5 +48,61 @@
 			</div>			
 	</div>
  </div>
+ <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+
+ <script>
+     $(function(){
+         var url = window.location.href,mobile = url.query('m'),aqj_id = url.query('aqjid');
+         var $authorize = $(".login_loga"),$login = $(".login_logb");
+         $('input[name="log_mobile"]').val(mobile);
+         $('input[name="log_aqjid"]').val(aqj_id);
+         $("#showLoginForm").bind(EVENT_TYPE,function(){
+             $authorize.fadeOut(function(){
+                 $login.fadeIn();
+             });
+         });
+         $("#showAuthorize").live(EVENT_TYPE,function(){
+             $login.fadeOut(function(){
+                 $authorize.fadeIn();
+             });
+         });
+         $login.find('button').live(EVENT_TYPE,function(){
+             $("#loginForm").submit();
+         })
+         $("#loginForm").bind('submit',function(){
+             $.ajax({
+                 url: this.action,
+                 type: this.method,
+                 data: $(this).serialize(),
+                 success: function(json){
+                     var e = eval("("+json+")");
+                     $(".login_tips").html(e.msg);
+                     if(e.status == 1){
+                         // 登录成功
+                         window.location.href = e.jump;
+                     }
+                 }
+             });
+             return false;
+         });
+         $("#doReg").bind(EVENT_TYPE,function(){
+             var p = {reg_aqjid:aqj_id,reg_m:mobile};
+             $.ajax({
+                 url: './index.php?ctl=ajax&act=aqj_do_register',
+                 type: "POST",
+                 data: p,
+                 success: function(json){
+                     var e = eval("("+json+")");
+                     //注册成功
+                     if(e.status !== 0){
+                         window.location.href = e.jump;
+                     }
+                     $("#showLoginForm").html(e.data);
+                 }
+             });
+         });
+     })
+ </script>
  </body>
 </html>
