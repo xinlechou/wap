@@ -132,7 +132,7 @@ $is_weixin=isWeixin();
 $GLOBALS['tmpl']->assign("is_weixin",$is_weixin);
 
 $GLOBALS['tmpl']->assign("cate_list",$cate_list);
-if($_REQUEST['code']&&$_REQUEST['state']==1&&$m_config['wx_appid']&&$m_config['wx_secrit']&&!$user_info){
+/*if($_REQUEST['code']&&$_REQUEST['state']==1&&$m_config['wx_appid']&&$m_config['wx_secrit']&&!$user_info){
 	//file_put_contents('./t.txt',var_export($_REQUEST,TRUE)."\n",FILE_APPEND);
 	//require '../system/utils/weixin.php';
 	$weixin=new weixin($m_config['wx_appid'],$m_config['wx_secrit'],get_domain().APP_ROOT."/wap");
@@ -153,7 +153,7 @@ if($_REQUEST['code']&&$_REQUEST['state']==1&&$m_config['wx_appid']&&$m_config['w
 		$wx_url=$weixin_2->scope_get_code();
 		app_redirect($wx_url);
 	}
-}
+}*/
 if($m_config['wx_appid']&&$m_config['wx_secrit']){
 	require_once APP_ROOT_PATH."system/utils/jssdk.php";
 	$jssdk = new JSSDK($m_config['wx_appid'],$m_config['wx_secrit']);

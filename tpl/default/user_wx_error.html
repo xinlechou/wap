@@ -1,0 +1,19 @@
+{include file="inc/header.html"}
+</head>
+<body>
+<div class="top">
+    <span>{$page_title}</span>
+    <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+
+</div>
+
+<div class="pay_sucsss">
+    <img src="{$TMPL}/images/pay_error.png" border=0 width=40>
+    <p>{$error}</p>
+    <ul>
+        <li><a href="{url_wap r="settings"}">返回个人中心</a></li>
+        <li><a href="{$pre}">返回</a></li>
+    </ul>
+</div>
+</body>
+</html>

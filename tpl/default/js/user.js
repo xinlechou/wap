@@ -3,26 +3,6 @@
  */
 $(function(){
     user.init(urls);
-
-    /*var dropObj = $('.drop_content');
-    //选择登录方式
-    $('.pay_sucsss>ul>li>a').each(function(){
-        //alert(_this.id)
-        var _this = $(this)
-        _this.live(EVENT_TYPE,function(e){
-            e.preventDefault();
-            if(_this.attr('id') == 'wechatLoginBtn'&&isWeiXin()){
-            //if(_this.attr('id') == 'wechatLoginBtn'){
-                //微信浏览器直接授权登录
-                weChatUtils.getWechatUserInfo();
-                return;
-            }
-            var thisDropObj =  $(this).next();
-
-            dropObj.slideUp();
-            if(thisDropObj.css('display')=="none"){thisDropObj.slideDown();}
-        })
-    });*/
 });
 
 var user = {
@@ -149,9 +129,11 @@ var user = {
 
             user.sendAjax(url, p, function (json) {
                 if (json.status == 1) {
-                    var url = json.jump;
-                    $.showConfirm('注册成功！绑定微信就可以使微信登录啦，绑不绑？',function(){
-                        url = APP_ROOT+"/index.php?ctl=user&act=wx_login";
+                    $('.register').hide();
+                    $('.register_complete').show();
+                    $('#s').html(json.data);
+                    $('#later').live(EVENT_TYPE,function(){
+                        var url = json.jump?json.jump:APP_ROOT;
                         location.href = url;
                     });
 

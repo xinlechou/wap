@@ -1,5 +1,5 @@
-     <title>个人中心-注册</title>
      {include file="inc/header.html"}
+     <title>个人中心-注册</title>
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
      <link href="{$TMPL}/css/bootstrap.min.css" rel="stylesheet">
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
@@ -68,10 +68,26 @@
                      </form>
                  </div>
                  <!--注册结束-->
+     <!--注册完成时显示-->
+     <div class="register_complete" style="display: none;">
+         <div class="wechat">
+             <p>欢迎您,<span id="s"></span></p>
+             <p>是否立即绑定微信号，方便您更快地接收消息通知？</p>
+         </div>
+         <div class="pay_bind_bottom">
+             <ul>
+                 <li><button id="wechatLoginBtn" class="pay_bind_act">绑定并登录</a></button>
+                 <li><button id="later">以后再说</a></button>
+             </ul>
+         </div>
+     </div>
      <!--</li></ul></div>-->
     	 <!--底部-->
      {include file="inc/footer.html"}
-     <script type="text/javascript" src="{$TMPL}/js/user.js?111"></script>
+     <script type="text/javascript" src="{$TMPL}/js/user.js?1113"></script>
+     <!--内嵌二维码微信登录JS-->
+     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+     <script type="text/javascript" src="{$TMPL}/js/wechat.js"></script>
      <script>
          {if app_conf("USER_VERIFY") eq 2}
          var is_mobile=1;
