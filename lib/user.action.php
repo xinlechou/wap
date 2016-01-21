@@ -883,8 +883,78 @@ class userModule{
 	
 		return false;
 	}
+//wechat 绑定手机号码
+    public function user_bind_mobile(){
+        $userinfo = $GLOBALS['user_info'];
+        $wx_Login_info = es_session::get('wx_login_user_info');
+        $wx_info = $wx_Login_info?$wx_Login_info:es_session::get('wx_user_info');
+        $wx_type = $wx_Login_info?'login':'auth';
+        if(!$wx_info['unionid']){
+            $GLOBALS['tmpl']->assign("error",'用户ID为空或微信号已绑定其他账号');
+        }else{
+            $select_openid_sql = "select userid from ".DB_PREFIX."user_idx where wechat_unionid = '".$wx_info['unionid']."'";
+            $unionid_idx = $GLOBALS['db']->getOne($select_openid_sql);
+            if($unionid_idx&&$unionid_idx!==$userinfo['id']){
+                $GLOBALS['tmpl']->assign("error",'此微信已绑定其他帐号。');
+                $html = "user_bind_mobile.html";
+                $GLOBALS['tmpl']->display($html);
+                exit;
+            }
+            if($userinfo){
+                //用户信息存在，检查用户绑定情况：
+                //  没有绑定信息：使用手机密码登录，并绑定微信；
+                //  有绑定信息：进入绑定页面进行异常提示；
+                $userid = $userinfo['id'];
+                //查询该用户是否有绑定信息
+                $select_sql = "select wechat_unionid from ".DB_PREFIX."user_idx where userid = ".$userid;
+                $user_unionid = $GLOBALS['db']->getOne($select_sql);
 
-    //微信用户绑定手机号码
+                if($user_unionid){
+                    //有绑定信息：判断是否为该unionid
+                    if($user_unionid == $wx_info['unionid']){
+//                        echo $user_unionid;exit;
+                        if($userinfo['is_effect']==1){
+                            //在此自动登录
+                            require_once APP_ROOT_PATH."system/libs/user.php";
+                            do_login_user($userinfo['user_name'],$userinfo['user_pwd']);
+                        }
+                    }else{
+                        $GLOBALS['tmpl']->assign("error",'已绑定其他微信，请先去个人中心解绑。');
+                        $GLOBALS['tmpl']->assign("mobile",$userinfo['mobile']);
+                    }
+                }else{
+                    $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$userinfo['id'].",mobile='".$userinfo['mobile']."',nickname='".$wx_info['nickname']."',wechat_".$wx_type."_openid='".$wx_info['openid']."',wechat_unionid='".$wx_info['unionid']."'";
+                    $GLOBALS['db']->query($sql_user_idx_insert);
+                }
+
+                //是否替换用户昵称等信息
+                if($userinfo['has_set_name']==0){
+                    $sql_user_name_info ="select * from xlc_user where user_name='".$wx_info['nickname']."' limit 1";
+                    $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
+                    if($tmp_user_name_info){
+                        //微信用户昵称存在
+                        $wx_info['nickname'] .= rand(10000,99999);
+                    }
+                    //更新用户表
+                    $sql_user_update = "UPDATE `xlc_user` SET user_name='".$wx_info['nickname']."',headimgurl='".$wx_info['headimgurl']."',sex=".$wx_info['sex'].",province='".$wx_info['province']."',city='".$wx_info['city']."' where id=".$userinfo['id'];
+//                        print_r($sql_user_update);
+                    $GLOBALS['db']->query($sql_user_update);
+                }
+                //完成绑定跳转回个人中心
+                app_redirect(url("settings#thirdparties"));
+            }
+
+            $page_title = '绑定手机';
+
+        }
+
+        $GLOBALS['tmpl']->assign("wx_info",$wx_info);
+        $GLOBALS['tmpl']->assign("page_title",$page_title);
+        $html = "inc/user_bind_mobile.html";
+
+        $GLOBALS['tmpl']->display($html);
+    }
+    /*//微信用户绑定手机号码
     public function user_bind_mobile(){
         $userinfo = $GLOBALS['user_info'];
         $wx_Login_info = es_session::get('wx_login_user_info');
@@ -941,7 +1011,7 @@ class userModule{
         $html = "user_bind_mobile.html";
 
         $GLOBALS['tmpl']->display($html);
-    }
+    }*/
 
     //更新用户手机号码
     public function save_mobile(){
@@ -978,6 +1048,12 @@ class userModule{
         $wx_login_info = es_session::get('wx_login_user_info');
         $wx_info = es_session::get('wx_user_info');
         $user_info = $wx_login_info?$wx_login_info:$wx_info;
+        //没有微信帐号信息
+        if(!$user_info){showErr("请使用微信扫描后绑定手机！",1,"");}
+        //判断微信号是否已存在
+        $select_openid_sql = "select id from ".DB_PREFIX."user_idx where wechat_unionid = '".$user_info['unionid']."'";
+        $unionid_idx = $GLOBALS['db']->getOne($select_openid_sql);
+        if($unionid_idx){showErr("此微信号已绑定其他帐号！",1,"");}
         $user_info['sex'] = $user_info['sex']==2?0:1;
         $wx_type = $wx_login_info?'login':'auth';
         if($type=='reg'){
@@ -1049,7 +1125,7 @@ class userModule{
 //                if($result['user']['has_set_name']==1){
             //不替换用户昵称等信息
             if($user_info['unionid']){
-                $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$result['user']['id'].",mobile='".$result['user']['mobile']."',wechat_".$wx_type."_openid='".$user_info['openid']."',wechat_unionid='".$user_info['unionid']."'";
+                $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$result['user']['id'].",mobile='".$result['user']['mobile']."',nickname='".$user_info['nickname']."',wechat_".$wx_type."_openid='".$user_info['openid']."',wechat_unionid='".$user_info['unionid']."'";
                 $GLOBALS['db']->query($sql_user_idx_insert);
                 if($result['user']['has_set_name']==0){
                     $sql_user_name_info ="select * from xlc_user where user_name='".$user_info['nickname']."' limit 1";
@@ -1060,7 +1136,7 @@ class userModule{
                     }
                     //更新用户表
                     $sql_user_update = "UPDATE `xlc_user` SET user_name='".$user_info['nickname']."',headimgurl='".$user_info['headimgurl']."',sex=".$user_info['sex'].",province='".$user_info['province']."',city='".$user_info['city']."' where id=".$result['user']['id'];
-//                        print_r($sql_user_update);
+                        print_r($sql_user_update);
                     $GLOBALS['db']->query($sql_user_update);
                 }
             }else{
@@ -1072,7 +1148,7 @@ class userModule{
             $return['status'] = 1;
             $return['info'] = "登录成功";
             $return['data'] = $result['msg'];
-            $return['jump'] = get_gopreview();
+            $return['jump'] = get_gopreview_wap();//与pc端不同
             ajax_return($return);
         }else{
             switch($result['data']){

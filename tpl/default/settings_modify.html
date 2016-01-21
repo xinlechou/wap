@@ -21,7 +21,7 @@
 	    <div class="con_self_right">
             <span class="con_self_right_font">我的账号</span>
 
-            <a href="#" class="con_self_right_img">{$user_info.user_name}</a>
+            <input class="con_self_right_img" value="{$user_info.user_name}" style="text-align: right;border: none;" name="user_name">
 		</div>
 	 </div>
      <div class="con_self">
@@ -251,8 +251,10 @@
              intro:$("#introText").val(),
              mobile:$("#mobile").html(),
              sex:$("#sex").attr("data-sex"),
-             email:$("#email").attr("data-email")
+             email:$("#email").attr("data-email"),
+             user_name:$('input[name="user_name"]').val()
          };
+         alert(param.user_name)
          var post_url='{url_wap r="settings#save_modify"}';
 
 //         alert(param.province+"---"+param.city+"---"+param.mobile+"---"+param.sex+"---"+param.intro+"---"+param.email)
