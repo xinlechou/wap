@@ -12,7 +12,7 @@
      <div class="login_register">
          <div class="bind">
              <p><img src="{if $idx}{$user.headimgurl}{else}{$TMPL}/images/u36.png{/if}" width="20%" class="img-circle"></p>
-             <p class="login_register_font">{if $idx}当前账号：{$user.user_name}{else}绑定状态：未绑定<br>绑定账号后，您将享受更好的服务<br>猛戳下面&nbsp;&#8659;{/if}</p>
+             <p class="login_register_font">{if $idx}当前账号：{$idx.nickname}{else}绑定状态：未绑定<br>绑定账号后，您将享受更好的服务<br>猛戳下面&nbsp;&#8659;{/if}</p>
              <div class="pay_bind_bottom">
                  {if $idx}
                  <button class="pay_bind_acta" type="button" data-act="unbindWechat" id="unbind">点击解绑</button>

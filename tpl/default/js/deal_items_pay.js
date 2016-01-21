@@ -17,27 +17,17 @@ $(function(){
     $(".closebox").live(EVENT_TYPE,function(){
         $.weeboxs.close();
     });
-    /*$(".pay_item").live(EVENT_TYPE,function(){alert($(this).attr('class'))
-     var _this = $(this);var checkBg = _this.find('.con_btn');
-     if(_this.hasClass('xm_list_soldout')){return;}
-     checkBg.toggleClass('onchecked');
-     var id = _this.find('.pay_sun').attr('data-id');
-     DEAL_ITEM_ID = id;
-     getDealItems(id);
-     $(".pay_item").not(this).each(function(){
-     $(this).find('.con_btn').removeClass('onchecked');
-     })
 
-     });*/
+    //去掉整框全可选
     $(".pay_item").each(function(){
-        $(this).live(EVENT_TYPE,function(){
-            var _this = $(this);var checkBg = _this.find('.con_btn');
-            if(_this.hasClass('xm_list_soldout')){return;}
+        var _this = $(this);var checkBg = _this.find('.con_btn'),__this = this;
+        if(_this.hasClass('xm_list_soldout')){return;}
+        _this.find('.pay_sun').bind(EVENT_TYPE,function(){
             checkBg.toggleClass('onchecked');
             var id = _this.find('.pay_sun').attr('data-id');
             DEAL_ITEM_ID = id;
             getDealItems(id);
-            $(".pay_item").not(this).each(function(){
+            $(".pay_item").not(__this).each(function(){
                 $(this).find('.con_btn').removeClass('onchecked');
             });
             $("#loading").show();

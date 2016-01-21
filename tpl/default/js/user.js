@@ -149,7 +149,12 @@ var user = {
 
             user.sendAjax(url, p, function (json) {
                 if (json.status == 1) {
-                    location.href = json.jump;
+                    var url = json.jump;
+                    $.showConfirm('注册成功！绑定微信就可以使微信登录啦，绑不绑？',function(){
+                        url = APP_ROOT+"/index.php?ctl=user&act=wx_login";
+                        location.href = url;
+                    });
+
                 } else {
                     $.showErr(json.info);
                 }

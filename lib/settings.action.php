@@ -566,8 +566,8 @@ class settingsModule{
         }else{
             $userid = $GLOBALS['user_info']['id'];
 //            echo $userid;
-            $select_sql = "select id from ".DB_PREFIX."user_idx where userid = ".$userid;
-            $idx = $GLOBALS['db']->getOne($select_sql);
+            $select_sql = "select * from ".DB_PREFIX."user_idx where userid = ".$userid;
+            $idx = $GLOBALS['db']->getRow($select_sql);
             if($idx){
                 $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
             }

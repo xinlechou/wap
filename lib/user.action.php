@@ -137,102 +137,77 @@ class userModule{
 	}
 	public function do_register()
 		{
-			$referer=$_REQUEST['referer'];
-			$email = strim($_REQUEST['email']);
-			require_once APP_ROOT_PATH."system/libs/user.php";
-			$_REQUEST['confirm_user_pwd']= strim($_REQUEST['user_pwd']);
-			$return = $this->register_check_all();
-
- 			if($return['status']==0)
-			{
-				ajax_return($return);
-			}
-			$user_data = $_POST;
-			foreach($_POST as $k=>$v)
-			{
-				$user_data[$k] = strim($v);
-			}
-            //开启邮箱验证
-            if(app_conf("USER_VERIFY")==0||app_conf("USER_VERIFY")==2){
-                 $user_data['is_effect'] = 1;
-            }else{
-            	$user_data['is_effect'] = 0;
+            $mobile=strim($_POST['mobile']);
+            $username =$_REQUEST['user_name'] = preg_replace('/(\d{3})\d{4}(\d{4})/', '$1****$2', $mobile);
+            $verify_coder=strim($_POST['verify_coder']);
+            require_once APP_ROOT_PATH."system/libs/user.php";
+            $user_name_result = check_user("user_name",$username);
+            if($user_name_result['data']['error']==EXIST_ERROR) {
+                $username =  $_REQUEST['user_name'] = $username.rand(10000,99999);
+            }
+            $return = $this->register_check_all();
+            if($return['status']==0){ajax_return($return);}
+            $has_code=$GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."mobile_verify_code where mobile='".$mobile."' and verify_code='".strim($verify_coder)."' ");
+            if(!$has_code){
+                showErr("验证码错误",1,"");
             }
 
-			$res = save_user($user_data);
-			statistics('register');
+            $user_data = $_POST;
+            foreach($_POST as $k=>$v){
+                $user_data[$k] = strim($v);
+            }
+            $user_data['user_name']=$username;
+            $user_data['is_effect']=1;
+//            print_r($user_data);
+        $res = save_user($user_data);
+        statistics('register');
+        if($res['status'] == 1) {
+            if(!check_ipop_limit(get_client_ip(),"user_do_register",5))
+                showErr("提交太快",1);
 
-			if($res['status'] == 1)
-			{
-				if(!check_ipop_limit(get_client_ip(),"user_do_register",5))
-				showErr("提交太快",1);
+            $user_id = intval($res['data']);
+            $userinfo = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
+//                print_r($userinfo);exit;
+            if($userinfo['is_effect']==1){
+                //在此自动登录
+                $result = do_login_user($user_data['user_name'],$user_data['user_pwd']);
+                ajax_return(array("status"=>1,"data"=>$result['msg'],"jump"=>get_gopreview()));
+            }else{
+                if(app_conf("USER_VERIFY")==1){
+                    ajax_return(array("status"=>1,"jump"=>url("user#mail_check",array('uid'=>$user_id))));
+                }else if(app_conf("USER_VERIFY")==3){
+                    ajax_return(array("status"=>0,"info"=>"请等待管理员审核"));
+                }
 
-				$user_id = intval($res['data']);
-				$user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
-				if($user_info['is_effect']==1)
-				{
-					//在此自动登录
-					//send_register_success(0,$user_data);
-					$result = do_login_user($user_data['user_name'],$user_data['user_pwd']);
-				//	ajax_return(array("status"=>1,"jump"=>get_gopreview()));
-					ajax_return(array("status"=>1,"data"=>$result['msg'],"jump"=>$referer));
-				}
-				else
-				{
-                    if(app_conf("USER_VERIFY")==1){
-                        ajax_return(array("status"=>1,"jump"=>$referer));
-                    }else if(app_conf("USER_VERIFY")==3){
-                    	ajax_return(array("status"=>0,"info"=>"请等待管理员审核"));
-                    }
+            }
+        }else{
+            $error = $res['data'];
+            switch($error['field_name']){
+                case 'mobile':
+                    $field_name = "手机号码";
+                    break;
+                case 'verify_code':
+                    $field_name = "验证码";
+                    break;
+                case 'user_name':
+                    $field_name = "帐号";
+                    break;
+            }
 
-				}
-			}
-			else
-			{
-				$error = $res['data'];
-				if($error['field_name']=="user_name")
-				{
-					$data[] = array("type"=>"form_success","field"=>"email","info"=>"");
-					$field_name = "会员帐号";
-				}
-				/*
-				if($error['field_name']=="email")
-				{
-					$data[] = array("type"=>"form_success","field"=>"user_name","info"=>"");
-					$field_name = "电子邮箱";
-				}
-				*/
-				if($error['field_name']=="mobile")
-				{
-					$data[] = array("type"=>"form_success","field"=>"mobile","info"=>"");
-					$field_name = "手机号码";
-				}
-				/*
-				if($error['field_name']=="verify_code")
-				{
-					$data[] = array("type"=>"form_success","field"=>"verify_code","info"=>"");
-					$field_name = "验证码";
-				}*/
-				if($error['error']==EMPTY_ERROR)
-				{
-					$error_info = "不能为空";
-					$type = "form_tip";
-				}
-				if($error['error']==FORMAT_ERROR)
-				{
-					$error_info = "错误";
-					$type="form_error";
-				}
-				if($error['error']==EXIST_ERROR)
-				{
-					$error_info = "已存在";
-					$type="form_error";
-				}
+            switch ($error['error']){
+                case EMPTY_ERROR:
+                    $error_info = "不能为空";
+                    break;
+                case FORMAT_ERROR:
+                    $error_info = "错误";
+                    break;
+                case EXIST_ERROR:
+                    $error_info = "已存在";
+                    break;
+            }
+            ajax_return(array("status"=>0,"data"=>$field_name.$error_info));
 
-				//$data[] = array("type"=>$type,"field"=>$error['field_name'],"info"=>$field_name.$error_info);
-				ajax_return(array("status"=>0,"data"=>$field_name.$error_info,"info"=>""));
-
-			}
+        }
 
 	}
 
