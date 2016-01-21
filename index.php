@@ -5,6 +5,13 @@
 // | Copyright (c) 2010 http://www.fanwe.com All rights reserved.
 // +----------------------------------------------------------------------
 
+
+$old_host = $_SERVER['HTTP_HOST'];
+/*if(!strstr($old_host, "www") && !strstr($old_host, "localhost")){
+	$new_host = str_replace("xinlechou", "www.xinlechou", $old_host);
+	header("location:http://".$new_host.$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);exit;
+}*/
+
 //define('APP_ROOT','zhongc');
 require '../system/common.php';
 require '../system/utils/transport.php';
@@ -52,6 +59,7 @@ $GLOBALS['tmpl']->assign("TMPL",$tmpl_path."default");
 $GLOBALS['tmpl']->assign("APP_ROOT_URL",get_domain().APP_ROOT);
 
 $GLOBALS['tmpl']->assign("TMPL_REAL",APP_ROOT_PATH."wap/tpl/default");
+
 
 //用户信息
 $user_info = es_session::get('user_info');

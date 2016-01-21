@@ -1,60 +1,74 @@
      <title>个人中心-注册</title>
      {include file="inc/header.html"}
-     <!--<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>-->
-     <!--<script type="text/javascript" src="{$TMPL}/js/js.js"></script>-->
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
      <link href="{$TMPL}/css/bootstrap.min.css" rel="stylesheet">
-
+     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
  </head>
  <body>
      <div class="top">
-	       <span>新乐筹注册</span>
+	       <span>{$page_title}</span>
 		   <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
 		 
-	 </div> 
-     <!--注册开始-->
-      <div class="register">
-          <form id="user_register_form" name="user_register_form" action="{url_wap r="user#do_register"}">
-            <input type="hidden" name="referer" id="referer" value="{$referer}" />
-          <table>
-			     <tr>
-				     <td>
-					       <input class="input_td" name="user_name" type="text" placeholder="请填写用户名" required="required">
-					 </td>
-				 </tr>
-				  <tr> 
-				   <td>
-				     <input class="input_td" name="user_pwd" id="user_pwd" type="password" placeholder="请输入6-20位登录密码">
-				   </td>
-				</tr>
-				  <tr> 
-				   <td>
-				     <input class="input_td" name="confirm_user_pwd" id="confirm_user_pwd" type="password" placeholder="确认密码">
-				   </td>
-				</tr>
-				 <tr> 
-				   <td>
-				     <input class="input_tel" name="mobile" id="settings_mobile" type="text" placeholder="请输入手机号">
-                       <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>&lt;!&ndash;方法尚有疑问&ndash;&gt;-->
-                       <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code">获取短信验证码</button>
-				   </td>
-				</tr>
-				<tr> 
-				   <td>
-				     <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="请输入短信验证码">
+	 </div>
+     <!--选择注册方式-->
+     <!--<div class="pay_sucsss">
+         <ul>
+             <li><img src="{$TMPL}/images/u36.png" border=0 width=18%>
+                 <a href="#" id="wechatLoginBtn">使用微信号注册</a>
+                 <div class="wxLogin drop_content" style="display: none;">
+                     <div id="qr_container"></div>
+                     <div class="wxtips"></div>
+                 </div>
+             </li>
+             <li><img src="{$TMPL}/images/u41.png" border=0 width=18%>
+                 <a href="#">使用手机号注册</a>-->
+                 <!--注册开始-->
+                 <div class="register">
+                     <form id="user_register_form" name="user_register_form" action="{url_wap r="user#do_register"}">
+                     <input type="hidden" name="referer" id="referer" value="{$referer}" />
+                     <table>
+                         <tr>
+                             <td>
+                                 <input class="input_td" name="mobile" id="settings_mobile" type="text" placeholder="手机号">
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input class="input_td" name="user_name" type="text" placeholder="请填写用户名" required="required" hidden="hidden">
+                             </td>
+                         </tr>
+                         <tr>
+                             <td class="r_position">
+                                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入短信验证码">
+                                 <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>&lt;!&ndash;方法尚有疑问&ndash;&gt;-->
+                                 <!--<div class="code_numbera">-->
+                                     <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code code_numbera">发送验证码</button>
+                                 <!--</div>-->
 
-				   </td>
-				</tr>
-				<tr> 
-				   <td>
-                     <!--<a href="javascript:void(0);" class="butn butn1" onclick="do_register_user();">注册</a>-->
-                       <button class="butn butn1" type="button" data-submit-type="doRegister" id="submit_btn">注册</button>
-                   </td>
-				</tr>
-			   </table>
-		   </form>
-	  </div>
-    <!--注册结束-->
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input class="input_td" name="user_pwd" id="user_pwd" type="password" placeholder="设置密码">
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input class="input_td" name="confirm_user_pwd" id="confirm_user_pwd" type="password" placeholder="确认密码">
+                             </td>
+                         </tr>
+
+                         <tr>
+                             <td>
+                                 <!--<a href="javascript:void(0);" class="butn butn1" onclick="do_register_user();">注册</a>-->
+                                 <button class="butn butn1" type="button" data-submit-type="doRegister" id="submit_btn">注册</button>
+                             </td>
+                         </tr>
+                     </table>
+                     </form>
+                 </div>
+                 <!--注册结束-->
+     <!--</li></ul></div>-->
     	 <!--底部-->
      {include file="inc/footer.html"}
      <script type="text/javascript" src="{$TMPL}/js/user.js"></script>

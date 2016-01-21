@@ -1,0 +1,229 @@
+/*新注册登陆*/
+.pay_sucsss ul{
+    width: 100%;
+    margin: 5% auto;
+    text-align: center;
+}
+
+.pay_sucsss ul li img{
+	/*float:left;*/
+	margin:5px 0;
+    display: inline-block;
+}
+.pay_sucsss ul li{
+    /*padding: 0 25%;*/
+	border-radius:5px;
+}
+.pay_sucsss ul li a{
+    width: auto;
+    display: inline-block;
+}
+.pay_login{
+	width:90%;
+	margin:0 auto;
+	margin-top:20%;
+}
+.pay_login p{
+	
+	font-size:14px;
+	float:left;
+	font-weight:normal;
+}
+.both{
+	clear:both;
+}
+.cer_login{
+	text-decoration:none;
+	color:#fff;
+	background:#977f70;
+	display:block;
+	text-align:center;
+	margin:3% 0;
+	height:50px;
+	line-height:50px;
+	border-radius:0.3em;
+}
+.cer_login:hover{
+	color:#fff;
+}
+/*帐号绑定*/
+.pay_bind{
+	width:100%;
+	padding:10% 5% 30% 5%;
+}
+.pay_bind_top{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+}
+.pay_bind_top_left{
+	float:left;
+	width:40%;
+	position:relative;
+	
+}
+.pay_bind_top_left .avatar{
+ margin-left:15%;
+ width:50%;	
+ -webkit-border-radius:50%;
+ -moz-border-radius:50%;
+ border-radius:50%;
+	
+}
+.pay_bind_top_left .avatar_img{
+	position:absolute;
+	width:15%;
+	bottom:0;
+	right:20%;
+}
+.pay_bind_top_right{
+	float:right;
+	width:60%;
+	
+}
+.pay_bind_top_right p{
+	margin:0 auto;
+	font-size:12px;
+	line-height:2em;
+}
+.font_age{
+	font-size:16px;
+}
+.font_aa{
+	color:#5c5c5c;
+}
+.font_bb{
+	text-indent:2em;
+}
+.pay_bind_bottom{
+	width:90%;
+	margin:0 auto;
+	margin-top:20%;
+	padding:0 auto;
+}
+.pay_bind_bottom ul {
+	width:100%;
+	text-align:center;
+	margin:0 auto;
+	padding:0 auto;
+}
+.pay_bind_bottom ul li{
+	width:100%;
+	list-style:none;
+	/*height:3em;*/
+	/*line-height:3em;*/
+	/*border:1px solid #977f70;*/
+	margin-top:2em;
+	/*border-radius:0.3em;*/
+}
+.pay_bind_bottom ul li button.pay_bind_act.disabled{
+    background:#dddddd;
+    color:#999999;
+    border: none;
+}
+/*.pay_bind_bottom ul li a{
+	display:block;
+	color:#977f70;
+	text-decoration:none;
+}*/
+.pay_bind_bottom ul li button.pay_bind_act{
+	display:block;
+	color:#fff;
+	background:#977f70;
+    width:100%;
+    list-style:none;
+    height:3em;
+    line-height:3em;
+    border:1px solid #977f70;
+    border-radius:0.3em;
+}
+.code_numbera{
+	position:absolute;
+	right:0;
+	top:0;
+	min-width:30%;
+	padding:0px 2%;
+	background:#977f70;
+	color:#fff;
+	border-radius:0.3em;
+}
+.wechat{
+	width:90%;
+	margin:0 auto;
+	padding:0 auto;
+	font-size:12px;
+	
+}
+.pay_bind .wechat p{
+	margin-bottom:0;
+	
+}
+.pay_either{
+	width:90%;
+	margin:0 auto;
+	padding:0 auto;
+	margin-top:10%;
+    height: 20%;
+}
+.pay_either img{
+	/*width:40%;*/
+
+	margin:0 auto;
+	display:block;
+	margin-bottom:5%;
+}
+.pay_either p{
+	text-align:center;
+	color:#977f70;
+}
+.wxtips{margin: 3%}
+.drop_content{display: none;}
+.r_position{position: relative;}
+#verify_coder{
+    background-image: url("../images/icon_check.png");
+    background-position: 114px -25px;
+    background-repeat: no-repeat;
+    background-size: 25px;
+}
+#verify_coder.correct{
+    background-position:114px 12px;
+}
+#verify_coder.incorrect{}
+.pay_sucsss p.login_thirdp{
+    font-size: 1em;
+    font-weight: normal;
+    margin-top: 15%;
+}
+.pay_sucsss ul li.login_tips{
+    border: none;
+}
+
+/*.pay_sucsss{padding-bottom: 0}*/
+.login_register{
+    width: 100%;
+    margin: 0 auto;
+    padding: 10% 0 50px 0;
+    text-align: center;
+}
+.login_link{color: #977f70;}
+/*html{height: 100%;}*/
+
+.pay_bind_acta{
+    width:100%;
+    background:#977f70;
+    border-radius:0.3em;
+    line-height:3em;
+    color:#fff;
+}
+
+.login_register_font {
+    width: 60%;
+    margin: 0 auto;
+    padding: 0 auto;
+    text-align: center;
+    color: #977f70;
+    font-size: 0.8em;
+}
+
+
+

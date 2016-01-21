@@ -1,0 +1,28 @@
+     {include file="inc/header.html"}
+     <title>{$page_title}</title>
+     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
+
+ </head>
+ <body>
+     <div class="top">
+	       <span>{$page_title}</span>
+		   <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
+	 </div>
+
+
+     <!--扫码登录-->
+     <div class="login_register">
+             <div id="qr_container"></div>
+             <div class="wxtips"></div>
+         <p>或<a href="{url_wap r="user#register"}"" class="login_link">手机号注册</a></p>
+         <p><a href="{url_wap r="user#start_login"}"" class="login_link">已有账号，直接登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></p>
+     </div>
+
+    <!--注册结束-->
+     {include file="inc/footer.html"}
+     <!--内嵌二维码微信登录JS-->
+     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+     <script type="text/javascript" src="{$TMPL}/js/wechat.js"></script>
+
+ </body>
+</html>

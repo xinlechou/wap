@@ -1,7 +1,7 @@
      {include file="inc/header.html"}
      <title>个人中心-登录</title>
-
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
+     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
      <script>
          /*user.js中所用的url*/
          var urls = {}
@@ -10,65 +10,55 @@
  </head>
  <body>
      <div class="top">
-	       <span>新乐筹登录</span>
+	       <span>{$page_title}</span>
 		   <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
-		 
-	 </div> 
-     <!--注册开始-->
-      <div class="register">
-	       <form action="{url_wap r="user#do_login"}" id="user_login_form" name="user_login_form">
-		       <table>
-			     <tr>
-				     <td>
-                         <input class="input_td" name="mobile" required="required" type="text" placeholder="请输入用户名/已验证手机">
-                         <!--登陆时不需要验证码-->
-                         <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>-->
-					 </td>
-				 </tr>
-				  <tr> 
-				   <td>
-                       <input class="input_td" required="required" name="user_pwd"  id="user_pwd" type="password" placeholder="请输入登录密码">
-				   </td>
-                      <input type="hidden" name="ajax" value="1">
-				</tr>
-				  <!--<tr>
-				   <td class="input_code">
+	 </div>
+     <!--选择登录方式-->
 
-				     <input class="input_td" name="sms_verify" type="text" placeholder="请输入验证码">
-					   &lt;!&ndash;<div class="code_img">
-					     <img src="{$TMPL}/images/codeimg.png" width=105 height=40>
-					   </div>&ndash;&gt;
-				   </td>
-				</tr>-->
-               <!-- <tr>
-				  <td class="time">
-				     <img src="{$TMPL}/images/time.png">7天内免登录
-				  </td>
-				</tr>-->
+                 <!--手机号登录开始-->
+                 <div class="register">
+                     <form action="{url_wap r="user#do_login"}" id="user_login_form" name="user_login_form">
+                     <table>
+                         <tr>
+                             <td>
+                                 <input class="input_td" name="mobile" required="required" type="text" placeholder="请输入手机号">
+                                 <!--登陆时不需要验证码-->
+                                 <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>-->
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input class="input_td" required="required" name="user_pwd"  id="user_pwd" type="password" placeholder="请输入登录密码">
+                             </td>
+                             <input type="hidden" name="ajax" value="1">
+                         </tr>
+                         <tr>
+                             <td>
+                                 <button class="butn butn1" type="button" data-submit-type="doLogin" id="submit_btn">登录</button>
+                             </td>
+                         </tr>
+                     </table>
+                     </form>
+                     <table>
+                         <tr>
+                             <td>
+                                 <a href="{url_wap r="user#register"}" class="reg">快速注册</a>
+                                 <a href="{url_wap r="user#getpassword"}" class="pwd">找回密码</a>
+                                 <!--<a href="weixin://contacts/profile/gh_c28e28a2510d" class="reg">open wechat
+                                    <img src="{$TMPL}/images/qrcode_for_gh_402a958dc563_344.jpg">
+                                 </a>-->
+                                 <!--weixin://profile/gh_c28e28a2510d-->
+                             </td>
+                         </tr>
+                     </table>
+                 </div>
+                 <!--手机号登录结束-->
+            <!-- </li>
 
-				<tr> 
-				   <td>
-                       <!--<a href="javascript:void(0);" name="submit_form" class="butn butn1" onClick="do_login_user();">登录</a>-->
-                       <button class="butn butn1" type="button" data-submit-type="doLogin" id="submit_btn">登录</button>
+         </ul>
+     </div>
+-->
 
-                   </td>
-				</tr>
-			   </table>
-		   </form>
-		   <table>
-		      <tr>
-			     <td>
-				   <a href="{url_wap r="user#register"}" class="reg">快速注册</a>
-				   <a href="{url_wap r="user#getpassword"}" class="pwd">找回密码</a>
-                     <!--<a href="weixin://contacts/profile/gh_c28e28a2510d" class="reg">open wechat
-                        <img src="{$TMPL}/images/qrcode_for_gh_402a958dc563_344.jpg">
-                     </a>-->
-                     <!--weixin://profile/gh_c28e28a2510d-->
-				 </td>
-			  </tr>
-		   </table>
-	  </div>
-    <!--注册结束-->
      {include file="inc/footer.html"}
      <script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
      <script type="text/javascript" src="{$TMPL}/js/user.js"></script>

@@ -828,11 +828,6 @@ button#send_msg_box{background-color: #000000;color: #fff}
 	margin-bottom:3%;
 	float:left;
 }
-.correct{
-    background-image: url("../images/sex_checked.png");
-    background-position:center right 10px;
-    background-repeat: no-repeat;
-}
 /*
 .code:hover{
 	color:#999999;

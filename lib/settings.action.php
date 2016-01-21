@@ -275,11 +275,7 @@ class settingsModule{
 		}
 		
 	}
-	public function bind()
-	{
-       
-		$GLOBALS['tmpl']->display("settings_bind.html");
-	}
+
     /*增加地址管理*/
     public function consignee()
 	{
@@ -499,20 +495,17 @@ class settingsModule{
 	
 	public function save_mobile_password()
 	{
-		//$ajax = intval($_REQUEST['ajax']);
+//		$ajax = intval($_REQUEST['ajax']);
+        $ajax =1;
 		if(!$GLOBALS['user_info'])
 		{
 			app_redirect(url_wap("user#login"));
 		}
 		$data=array();
 		if(!check_ipop_limit(get_client_ip(),"setting_save_mobile_password",5)){
-			$data['info']="提交太频繁";
-			ajax_return($data);
-			return false;
+            showErr("提交太频繁",$ajax,"");
 		}
-			//showErr("提交太频繁",$ajax,"");
-	
-	
+
 		$user_pwd = strim($_REQUEST['user_pwd']);
 		$confirm_user_pwd = strim($_REQUEST['confirm_user_pwd']);
 		$user_info=$GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".intval($GLOBALS['user_info']['id']));
@@ -522,31 +515,19 @@ class settingsModule{
 				
 			$has_code=$GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."mobile_verify_code where mobile='".$mobile."' and verify_code='".strim($_REQUEST['verify_coder'])."' ");
 			if(!$has_code){
-				//showErr("验证码错误",$ajax,"");
-				$data['info']="验证码错误";
-				ajax_return($data);
-				return false;
+				showErr("验证码错误",$ajax,"");
 			}
 		}else{
-			//showErr("请绑定手机号",$ajax,"");
-			$data['info']="请绑定手机号";
-			ajax_return($data);
-			return false;
+			showErr("请绑定手机号",$ajax,"");
 		}
 	
 		if(strlen($user_pwd)<4)
 		{
-			//showErr("密码不能低于四位",$ajax,"");
-			$data['info']="密码不能低于四位";
-			ajax_return($data);
-			return false;
+			showErr("密码不能低于四位",$ajax,"");
 		}
 		if($user_pwd!=$confirm_user_pwd)
 		{
-			//showErr("密码确认失败",$ajax,"");
-			$data['info']="密码确认失败";
-			ajax_return($data);
-			return false;
+			showErr("密码确认失败",$ajax,"");
 		}
 	
 		require_once APP_ROOT_PATH."system/libs/user.php";
@@ -559,13 +540,32 @@ class settingsModule{
 		}else{
 			$data['status']=0;
 		}
-		ajax_return($data);
-		//showSuccess("保存成功",$ajax,url_wap("settings#index"));
+//		ajax_return($data);
+		showSuccess("保存成功",$ajax,url_wap("settings#index"));
 	}
 	public function invest_info()
 	{	
 		
 		 settings_invest_info('wap',$GLOBALS['user_info']);
  	}
+    /*用于绑定解绑第三方帐号 20160120*/
+    public function bind(){
+//        print_r($GLOBALS['user_info']);
+        if(!$GLOBALS['user_info']) {
+            app_redirect(url_wap("user#login"));
+        }else{
+            $userid = $GLOBALS['user_info']['id'];
+//            echo $userid;
+            $select_sql = "select id from ".DB_PREFIX."user_idx where userid = ".$userid;
+            $idx = $GLOBALS['db']->getOne($select_sql);
+            if($idx){
+                $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
+            }
+            $GLOBALS['tmpl']->assign("idx",$idx);
+            $GLOBALS['tmpl']->assign("page_title",'绑定第三方帐号');
+            $GLOBALS['tmpl']->display("settings_bind.html");
+        }
+
+    }
 }
 ?>

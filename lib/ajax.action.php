@@ -1155,5 +1155,30 @@ public function send_mobile_verify_code()
 		}
 		ajax_return($data);
 	}
+    /*用于绑定解绑第三方帐号 20160120*/
+    public function unbindWechat(){
+        $userid = $_REQUEST['userid'];
+        $del_sql = "delete from ".DB_PREFIX."user_idx where userid = ".$userid;
+        $select_sql = "select id from ".DB_PREFIX."user_idx where userid = ".$userid;
+        $id = $GLOBALS['db']->getOne($select_sql);
+        if($id){
+            if($GLOBALS['db']->query($del_sql)>0){
+                $result['status']=1;
+                $result['info']="删除成功！";
+                ajax_return($result);
+                return false;
+            }else{
+                $result['status']=0;
+                $result['info']="删除失败！";
+                ajax_return($result);
+                return false;
+            }
+        }else{
+            $result['status']=0;
+            $result['info']="删除失败：没有绑定信息！";
+            ajax_return($result);
+            return false;
+        }
+    }
 }
 ?>
