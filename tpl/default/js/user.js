@@ -131,7 +131,7 @@ var user = {
                 if (json.status == 1) {
                     $('.register').hide();
                     $('.register_complete').show();
-                    $('#s').html(json.data);
+                    //$('#s').html(json.data);
                     $('#later').live(EVENT_TYPE,function(){
                         var url = json.jump?json.jump:APP_ROOT;
                         location.href = url;

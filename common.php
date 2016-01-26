@@ -306,7 +306,7 @@ function load_page_png($img)
 
 
 //显示错误
-function showErr($msg,$ajax=0,$jump='',$stay=0)
+function showErr($msg,$ajax=0,$jump='',$stay=0,$title="错误")
 {
 	
 	if($ajax==1)
@@ -319,7 +319,7 @@ function showErr($msg,$ajax=0,$jump='',$stay=0)
 	}
 	else
 	{		
-		$GLOBALS['tmpl']->assign('page_title',"错误");
+		$GLOBALS['tmpl']->assign('page_title',$title);
 		$GLOBALS['tmpl']->assign('msg',$msg);
 		if($jump=='')
 		{
@@ -553,10 +553,18 @@ function get_user_avatar($id,$type)
 	$id = substr($id,-2);
 	$avatar_file = APP_ROOT."/public/avatar/".$path."/".$id."virtual_avatar_".$type.".jpg";
 	$avatar_check_file = APP_ROOT_PATH."public/avatar/".$path."/".$id."virtual_avatar_".$type.".jpg";
-	if(file_exists($avatar_check_file))	
-	return $avatar_file;
-	else
-	return APP_ROOT."/public/avatar/noavatar_".$type.".gif";
+//    echo $avatar_check_file;
+	if(file_exists($avatar_check_file)){
+        return $avatar_file;
+    }else{
+        //检查用户是否有微信头像
+        $pic=$GLOBALS['db']->getOne("select `headimgurl` from  ".DB_PREFIX."user where id=".$uid);
+        if($pic!==null&&@fopen($pic,'r')){//如果有绑定微信&头像地址有效
+            return $pic;
+        }else{
+            return APP_ROOT."/public/avatar/noavatar_".$type.".gif";
+        }
+    }
 	//@file_put_contents($avatar_check_file,@file_get_contents(APP_ROOT_PATH."public/avatar/noavatar_".$type.".gif"));
 }
 

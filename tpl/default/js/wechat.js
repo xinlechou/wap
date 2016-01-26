@@ -21,6 +21,7 @@ $(function(){
     }
 })
 var weChatUtils = {
+    urlPrefix:'http://'+window.location.host+'/wxpay_web/wxUtil.php?act=',
     //获取微信登录二维码
     getWechatLoginQr:function(){
         var redirect_uri = encodeURIComponent("http://www.xinlechou.com/wxpay_web/wxUtil.php?act=getWechatAuthLogin");
@@ -38,7 +39,8 @@ var weChatUtils = {
     },
     getWechatUserInfo:function(){
         //临时地址
-        var url = 'http://'+window.location.host+'/wxpay_web/wxUtil.php?act=getWechatAuthBase';
+        var url = weChatUtils.urlPrefix+'getWechatAuthBase';
+        console.log("开始注水："+url);
         window.location.href = url;
     }
 }

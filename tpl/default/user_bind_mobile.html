@@ -88,7 +88,7 @@
                     switch (json.error){
                         case '0':
                             //新用户
-                            showBindtips('新用户，请输入密码&验证码完成绑定');
+                            showBindtips('请输入密码和验证码完成绑定');
                             bind.type = 'reg';
                             $('#registerInput').slideDown();
                             if(oBtn.hasClass('disabled')){oBtn.attr('disabled',false).removeClass('disabled')}
@@ -96,13 +96,13 @@
                             break;
                         case '-1':
                             //老用户，可输入密码绑定
-                            showBindtips('老用户，输入密码完成绑定');
+                            showBindtips('请输入密码完成绑定');
                             bind.type = 'login';
                             $('#registerInput').slideUp();
                             if(oBtn.hasClass('disabled')){oBtn.attr('disabled',false).removeClass('disabled')}
                             break;
                         case '-2':
-                            showBindtips('此账号已绑定微信，请去个人中心解绑');
+                            showBindtips('此账号已与其它微信绑定，请更换手机号，或用手机号登录');
                             oBtn.attr('disabled',true).addClass('disabled');
                             break;
 
