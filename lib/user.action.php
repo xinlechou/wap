@@ -20,7 +20,7 @@ class userModule{
 //		}
 
 //		$GLOBALS['tmpl']->display("user_login.html",$cache_id);
-        $a = Array(
+        /*$a = Array(
             'openid' => 'o02xeszVAvZG9UkJ9HmrNCt-l8JA',
             'nickname' => '贝xMan',
             'sex' => 2,
@@ -31,7 +31,7 @@ class userModule{
             'headimgurl' => "http://wx.qlogo.cn/mmopen/ajNVdqHZLLCicmCoWterhicQ2ia2B9ia6GMOiarGKia8y6diag9gEiaCljsiaAXmVa1sJUwJTQcLeibic5fTxK9EzetxqEwGw/0",
             'privilege' => Array(),
             'unionid' => "oCj9huKCm-JDZMIdiliXPyJgXsnU");
-        es_session::set("wx_login_user_info",$a);
+        es_session::set("wx_login_user_info",$a);*/
 	}
     public function start_login()
     {
@@ -917,7 +917,7 @@ class userModule{
                 }
 
                 //完成绑定跳转回个人中心
-                $url = $pre?$pre:url("settings#thirdparties");
+                $url = $pre?$pre:url_wap("settings#thirdparties");
                 showErr('绑定成功！',"",$url,0,"成功");
             }else{
                 $sql_user_info ="select a.*,b.userid from ".DB_PREFIX."user as a , ".DB_PREFIX."user_idx as b where a.id=b.userid and b.wechat_unionid='".$wx_info['unionid']."' limit 1";
@@ -927,7 +927,9 @@ class userModule{
                             require_once APP_ROOT_PATH . "system/libs/user.php";
                             //如果会员存在，直接登录
                             do_login_user($wx_user_info['mobile'], $wx_user_info['user_pwd']);
-                            app_redirect(url_wap("settings#index"));
+                            //完成绑定跳转回个人中心
+                            $url = $pre?$pre:url_wap("settings#thirdparties");
+                            app_redirect($url);
                             exit;
                         }
                     }
@@ -1066,12 +1068,12 @@ class userModule{
                 $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$result['user']['id'].",mobile='".$result['user']['mobile']."',nickname='".$user_info['nickname']."',wechat_".$wx_type."_openid='".$user_info['openid']."',wechat_unionid='".$user_info['unionid']."'";
                 $GLOBALS['db']->query($sql_user_idx_insert);
                 if($result['user']['has_set_name']==0){
-                    $sql_user_name_info ="select * from xlc_user where user_name='".$user_info['nickname']."' limit 1";
+                    /*$sql_user_name_info ="select * from xlc_user where user_name='".$user_info['nickname']."' limit 1";
                     $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
                     if($tmp_user_name_info){
                         //微信用户昵称存在
                         $user_info['nickname'] .= rand(10000,99999);
-                    }
+                    }*/
                     //更新用户表
                     $sql_user_update = "UPDATE `xlc_user` SET user_name='".$user_info['nickname']."',headimgurl='".$user_info['headimgurl']."',sex=".$user_info['sex'].",province='".$user_info['province']."',city='".$user_info['city']."' where id=".$result['user']['id'];
                     $GLOBALS['db']->query($sql_user_update);

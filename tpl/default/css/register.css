@@ -15,8 +15,12 @@
 	border-radius:5px;
 }
 .pay_sucsss ul li a{
-    width: auto;
     display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-position: 36% center;
+    width: 100%;
+    padding-left: 12%;
 }
 .pay_login{
 	width:90%;
@@ -235,6 +239,12 @@
     color: #977f70;
     font-size: 0.8em;
 }
-
+/*登录页面按钮焦点区域问题*/
+.pay_sucsss ul li a.login-btn-phone{
+    background-image: url("../images/u41.png");
+}
+.pay_sucsss ul li a.login-btn-wx{
+    background-image: url("../images/u36.png");
+}
 
 
