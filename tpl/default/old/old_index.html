@@ -1,0 +1,212 @@
+{include file="old/old_header.html"}
+ <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/index.css"/>
+ <div id="nav">
+     <div class="top">
+         <div class="top_left">
+             <a href="{$pre}"><img src="{$TMPL}/old/images/exit.png"></a>
+         </div>
+         <div class="top_center">{$page_title}</div>
+         <div class="top_right"></div>
+     </div>
+ </div>
+ <div class="box">
+     <div class="content">
+         <div class="grid-sizer"></div><!--控制初始宽度-->
+         {if $error}<div class="empty">{$error}</div>{/if}
+         {foreach from=$goods item=good_list key=keyd}
+         {if $good_list.online_state eq 1}
+         <div class="content_list">
+             <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="content_list_link"><img src="{$good_list.head_image}" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$good_list.avatar}" class="img-circle circle">
+                 <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="font_title">{$good_list.name}</a>
+             </div>
+             <div class="content_list_bottoma">
+                 {if $good_list.is_focus}
+                 <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+                {else}
+                 <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+                 {/if}
+                 <span>{$good_list.focus_num}</span>
+             </div>
+         </div>
+         {/if}
+         {/foreach}
+         <!--<div class="content_list" id="s">
+             &lt;!&ndash;<img src="{$TMPL}/old/images/list1.png" />&ndash;&gt;
+             <a href="{url_wap r="old#detail"}" class="content_list_link"><img src="{$TMPL}/old/images/list1.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                <a href="#" class="font_title">我爷爷的爷爷的自行我爷爷的爷爷的自行车车</a>
+                </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span></span>
+             </div>
+
+         </div>
+         <div class="content_list" id="u">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list2.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">heheh</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span></span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list1.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">我爷爷的爷爷的自行车</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list2.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">首套</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list3.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">你家的大房子</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list4.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">就这个好货</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list5.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">饮水机</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>
+         </div>
+         <div class="content_list">
+             <a href="#" class="content_list_link"><img src="{$TMPL}/old/images/list4.png" class="img-responsive"></a>
+             <div class="content_list_bottom">
+                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
+                 <a href="#" class="font_title">bonitaLee</a>
+             </div>
+             <div class="content_list_bottoma">
+                 <img src="{$TMPL}/old/images/zan.png" border="0">
+                 <span>1124</span>
+             </div>-->
+         </div>
+
+     </div>
+ </div>
+ {include file="old/old_footer.html"}
+ <script type="text/javascript" src="{$TMPL}/old/js/masonry.pkgd.min.js"></script>
+ <script type="text/javascript" src="{$TMPL}/old/js/imagesloaded.pkgd.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
+
+ <script type="text/javascript">
+
+     $(document).ready(function(){
+         var $grid = $('.content');
+// layout Isotope after each image loads
+         $grid.imagesLoaded( function() {
+             // init Masonry after all images have loaded
+             $grid.masonry({
+                 itemSelector: '.content_list',
+                 percentPosition: true,
+                 columnWidth: '.grid-sizer',
+//                     gutterWidth : 20,
+                 isAnimated: true
+//                     isFitWidth:true,
+             });
+         });
+
+         $grid.imagesLoaded().progress( function() {
+             $grid.masonry('layout');
+         });
+
+
+         $('.content').dropload({
+          scrollArea : window,
+          loadUpFn:function(me){
+          var $items = $("#u").clone();
+          $grid.append( $items )
+          // add and lay out newly appended items
+          .masonry( 'prepended', $items );
+          me.resetload();
+
+
+          },
+          loadDownFn : function(me){
+          //                     if(!window.moving)return;
+          var $items = $("#s").clone();
+          $grid.append( $items )
+          // add and lay out newly appended items
+          .masonry( 'appended', $items );
+          me.resetload();
+          //                     window.moving = true;
+          }
+          });
+//             var scrollHeight = $(document).height();
+         /*$(window).scroll(function() {
+          //当内容滚动到底部时加载新的内容
+          window.moving = true;
+          if(!window.moving)return;
+          var r =  setTimeout(function(){
+          var scrollTop = $(this).scrollTop(),windowHeight = $(this).height();
+          console.log('scrollTop:'+scrollTop);
+          console.log('windowHeight:'+windowHeight);
+          console.log('scrollHeight:'+scrollHeight);
+          if((scrollTop + windowHeight > scrollHeight+100)){
+          console.log('loading');
+          var $items =$('#s').clone();
+          // append items to grid
+          $grid.append( $items )
+          // add and lay out newly appended items
+          .masonry( 'appended', $items );
+          //                     }
+          }
+          //                     if ($(this).scrollTop() + $(window).height()== $(document).height() && $(this).scrollTop() > 120) {
+
+
+          window.moving = false;
+          },100);*/
+
+//                                  })
+
+//             $grid.masonry('layout');
+         /*$grid.imagesLoaded().progress( function() {
+          //                 $grid.masonry('layout');
+          console.log('ddd')
+          });*/
+
+     });
+ </script>
+ </body>
+ </html>

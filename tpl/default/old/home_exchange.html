@@ -1,0 +1,566 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/change_invation.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/cans.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+   <div class="change_invation">
+        <div class="change_invation_top">
+           <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+              <a href="#home" data-toggle="tab">
+               交换申请
+              </a>
+            </li>
+            <li>
+		       <a href="#ios" data-toggle="tab">我的申请</a>
+		    </li>
+           </ul>
+          <div id="myTabContent" class="tab-content">
+              <div class="tab-pane fade in active " id="home">
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images1.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images2.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟想和您交换物品，是否同意？</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">同意</a>
+						  <a href="#" class="change_disagree">忽略</a>
+						 </div>
+				   </div>
+				 </div>
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟想用线上交换保证金300RMB的方式和您交换物品，是否同意？</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">同意</a>
+						  <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal">更改交换方式</a>
+						 </div>
+					   <form action="" method="">
+						 <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog change_modal_dialog">
+                         <div class="modal-content change-content">
+                         <div class="modal-header change_modal_header">
+                           
+                        <h4 class="modal-title change_modal_title" id="myModalLabel">
+                         更改交换方式
+                       </h4>
+                      </div>
+                     <div class="modal-body change_modal_body">
+                       <div class="change_modal_body_top">
+					      <a href="#">线下交换</a>
+					   </div>
+					    <div class="change_modal_body_bottom">
+						   <a href="#">线上交换</a>
+						   <span class="change_modal_body_bottom_span">对方选择了更改交换方式为线上交易+保证金</span>
+						   <label><input type="text" value="" placeholder="300" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RMB</label>
+						   <span class="change_modal_body_bottom_span no_top">您输入的保证金金额不能少于此金额</span>
+						</div>
+                     </div>
+					 
+                     <div class="modal-footer change_modal_footer">
+                     <button type="button" class="btn change_btn btn-default change_certain" 
+                      data-dismiss="modal">确认
+                    </button>
+                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
+                      取消
+                    </button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal -->
+             </div>
+			</form>
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>您已选择交易方式为线上交易保证金500RMB，请等待对方选择。</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">与对方交谈</a>
+						  <a href="#" class="change_disagree">拨打电话</a>
+						 </div>
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟同意您的交换申请，请填写物流信息</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree no_margin">填写物流信息</a>
+						 
+						 </div>
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>交换方式：担保交易(500RMB)顺丰900120345543</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">交换完成</a>
+						    <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal2">投诉</a>
+						 </div>
+				 <form action="" method="">
+						 <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" 
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog change_modal_dialog">
+                         <div class="modal-content change-content">
+                         <div class="modal-header change_modal_header">
+                           
+                        <h4 class="modal-title change_modal_title" id="myModalLabel">
+                         请将您的不满告诉我们，我们会尽快处理
+                       </h4>
+                      </div>
+                     <div class="modal-body change_modal_body">
+                       <div class="change_modal_body_top no_bottom">
+					      <textarea rows=8 class="change_modal_body_top_textarea"></textarea>
+					   </div>
+					 
+                     </div>
+					 
+                     <div class="modal-footer change_modal_footer">
+                     <button type="button" class="btn change_btn btn-default change_certain" 
+                      data-dismiss="modal">确认
+                    </button>
+                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
+                      取消
+                    </button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal -->
+             </div>
+			</form> 
+				   </div>
+				 </div>					 
+              </div>
+              <div class="tab-pane fade" id="ios">
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟想和您交换物品，是否同意？</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">同意</a>
+						  <a href="#" class="change_disagree">忽略</a>
+						 </div>
+				   </div>
+				 </div>
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟想用线上交换保证金300RMB的方式和您交换物品，是否同意？</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">同意</a>
+						  <a href="#" class="change_disagree"  data-toggle="modal" data-target="#myModal3">更改交换方式</a>
+						 </div>
+					   <form action="" method="">
+						 <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" 
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog change_modal_dialog">
+                         <div class="modal-content change-content">
+                         <div class="modal-header change_modal_header">
+                           
+                        <h4 class="modal-title change_modal_title" id="myModalLabel">
+                         更改交换方式
+                       </h4>
+                      </div>
+                     <div class="modal-body change_modal_body">
+                       <div class="change_modal_body_top">
+					      <a href="#">线下交换</a>
+					   </div>
+					    <div class="change_modal_body_bottom">
+						   <a href="#">线上交换</a>
+						   <span class="change_modal_body_bottom_span">对方选择了更改交换方式为线上交易+保证金</span>
+						   <label><input type="text" value="" placeholder="300" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RMB</label>
+						   <span class="change_modal_body_bottom_span no_top">您输入的保证金金额不能少于此金额</span>
+						</div>
+                     </div>
+					 
+                     <div class="modal-footer change_modal_footer">
+                     <button type="button" class="btn change_btn btn-default change_certain" 
+                      data-dismiss="modal">确认
+                    </button>
+                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
+                      取消
+                    </button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal -->
+             </div>
+			</form>						 
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images1.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images2.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>您已选择交易方式为线上交易保证金500RMB，请等待对方选择。</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">与对方交谈</a>
+						  <a href="#" class="change_disagree">拨打电话</a>
+						 </div>
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>小弟同意您的交换申请，请填写物流信息</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree no_margin">填写物流信息</a>
+						 
+						 </div>
+				   </div>
+				 </div>	
+			     <div class="change_Panels">
+                   <div class="change_title clearfix">
+				        <span class="change_title_left">
+						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
+							小弟
+						</span>
+						<span class="change_title_right">
+						   2016.01.08
+						</span>
+				   </div>
+				   <div class="change_body clearfix">
+				       <div class="change_body1">
+					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
+					   
+					   </div>
+				       <div class="change_body2">
+					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+					   </div>
+					   <div class="change_body3">
+					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
+					   </div>
+				   </div>
+				   <div class="change_progess clearfix">
+				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
+				         <div class="progress progress-striped process_height">
+                             <div class="progress-bar progress-bar-info" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                                style="width: 30%;">
+                                </div>
+                        </div>
+				   </div>
+				   <div class="change_foot clearfix">
+				      <span>交换方式：担保交易(500RMB)顺丰900120345543</span>
+					     <div  class="change_foot_body"> 
+						  <a href="#" class="change_agree">交换完成</a>
+						    <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal4">投诉</a>
+						 </div>
+				  <form action="" method="">
+						 <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" 
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog change_modal_dialog">
+                         <div class="modal-content change-content">
+                         <div class="modal-header change_modal_header">
+                           
+                        <h4 class="modal-title change_modal_title" id="myModalLabel">
+                         请将您的不满告诉我们，我们会尽快处理
+                       </h4>
+                      </div>
+                     <div class="modal-body change_modal_body">
+                       <div class="change_modal_body_top no_bottom">
+					      <textarea rows=8 class="change_modal_body_top_textarea"></textarea>
+					   </div>
+					 
+                     </div>
+					 
+                     <div class="modal-footer change_modal_footer">
+                     <button type="button" class="btn change_btn btn-default change_certain" 
+                      data-dismiss="modal">确认
+                    </button>
+                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
+                      取消
+                    </button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal -->
+             </div>
+			</form> 						 
+				   </div>
+				 </div>	                  
+              </div>
+         </div>
+
+      </div>
+   
+   </div>
+
+
+
+ 
+
+
+  </body>
+ <html>

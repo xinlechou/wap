@@ -1,0 +1,41 @@
+<div class="foot">
+    <img class="index-bottom footer_btn" data-toggle="modal" data-target="#myModal" src="{$TMPL}/old/images/click.png">
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog border-bottom">
+        <div class="modal-content cont_bg">
+            <div class="modal-header cont_bg">
+                <ul class="model_ul">
+                    <li><a href="{url_wap r="old"}">浏览<img src="{$TMPL}/old/images/home.png"></a></li>
+                    <li><a href="#">消息<img src="{$TMPL}/old/images/mes.png"></a></li>
+                    <li><a href="{url_wap r="old#home"}">管理<img src="{$TMPL}/old/images/lead.png"></a></li>
+                    <li><a href="{url_wap r="old#release"}">发布<img src="{$TMPL}/old/images/pub.png"></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <img src="{$TMPL}/old/images/click.png" data-dismiss="modal" aria-hidden="true" width="18%" class="modal_img footer_btn">
+
+</div>
+<script src="{$TMPL}/old/js/jquery.min.js"></script>
+<script src="{$TMPL}/old/js/bootstrap.min.js"></script>
+{include file="old/dialog.html"}
+<script type="text/javascript" src="{$TMPL}/old/js/old.js"></script>
+<script type="text/javascript">
+    function initFooter(){
+        var footerModal = $('#myModal'),footerBtn = $('.index-bottom');
+        footerModal.on('hide.bs.modal', function () {
+            footerBtn.fadeIn();
+//             console.log('ww');
+        });
+        footerModal.on('show.bs.modal', function () {
+            footerBtn.fadeOut();
+//             console.log('dd');
+        })
+    }
+    $(document).ready(function(){
+        initFooter();
+    });
+</script>

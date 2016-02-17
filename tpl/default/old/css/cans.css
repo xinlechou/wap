@@ -1,0 +1,193 @@
+﻿.tab-content .cans{
+	width:100%;
+	margin:0 auto;
+	padding:2em 3em;
+	background:#fff;
+}
+.tab-content .cans li{
+	width:100%;
+	border:0;
+	text-align:center;
+	line-height:5em;
+	border-bottom:0.1em solid #dbdbdb;
+	padding-bottom:5em;
+	margin-top:3em;
+	position:relative;
+}
+.cans_left{
+	float:left;
+}
+.cans_left img{
+	float:left;
+}
+.cans_left_left{
+	float:left;
+}
+.cans_left .cans_left_left .cans_left_top{
+	color:#565a5c;
+	font-size:20em;
+	display:inline-block;
+
+	margin-left:1em;
+	margin-top:1em;
+}
+.cans_left .cans_left_left  .cans_left_bottom{
+	color:#b3b3b3;
+	font-size:15em;
+	display:inline-block;
+
+	margin-left:1em;
+	margin-top:1em;
+}
+.cans_right{
+	float:right;
+	line-height:5em;
+}
+.tab-content .cans li .cans_right a{
+	text-decoration:none;
+	color:#fff;
+	background:#ff5a5f;
+	width:5em;
+	line-height:2em;
+	text-align:center;
+	display:block;
+	font-size:10em;
+	border-radius:0.3em;
+	margin-top:1em;
+}
+
+.cans_bottom{
+	margin-bottom:2em;
+}
+.cans_delete,.cans_delete:hover,.cans_delete:focus{
+	width:100%;
+	line-height:2em;
+	position:fixed;
+	bottom:0;
+	color:#fff;
+	background:#ff5a5f;
+	text-decoration:none;
+	text-align:center;
+	outline:none;
+	font-size:0.5em;
+}
+.cans_left1{float:left;
+           width:20em;
+		   padding-top:10em;}
+/*单选框样式*/
+.roundedTwo {
+  width: 20em;
+  height: 20em;
+  position: relative;
+  margin: 2em auto;
+  background: #ff5a5f;
+  background: -moz-linear-gradient(top, #ff5a5f 0%, #ff5a5f 40%, #ff5a5f 100%);
+  background: -webkit-linear-gradient(top, #ff5a5f 0%, #ff5a5f 40%, #ff5a5f 100%);
+  background: linear-gradient(to bottom, #ff5a5f 0%, #ff5a5f 40%, #ff5a5f 100%);
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -moz-box-shadow: inset 0px 1px 1px #ff5a5f, 0px 1px 3px rgba(255, 90, 95, 0.5);
+  -webkit-box-shadow: inset 0px 1px 1px #ff5a5f, 0px 1px 3px rgba(255, 90, 95, 0.5);
+  box-shadow: inset 0px 1px 1px #ff5a5f, 0px 1px 3px rgba(255, 90, 95, 0.5);
+}
+.roundedTwo label {
+  width: 15em;
+  height: 15em;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  cursor: pointer;
+  background: -moz-linear-gradient(top, #ff5a5f 0%, #ff5a5f 100%);
+  background: -webkit-linear-gradient(top, #ff5a5f 0%, #ff5a5f 100%);
+  background: linear-gradient(to bottom, #ff5a5f 0%, #ff5a5f 100%);
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -moz-box-shadow: inset 0px 1px 1px rgba(255, 90, 95, 0.5), 0px 1px 0px #ff5a5f;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(255, 90, 95, 0.5), 0px 1px 0px #ff5a5f;
+  box-shadow: inset 0px 1px 1px rgba(255, 90, 95, 0.5), 0px 1px 0px #ff5a5f;
+}
+.roundedTwo label:after {
+  content: '';
+  width: 10em;
+  height: 20em;
+  position: absolute;
+  top: -0.5px;
+  left: -0.5px;
+  border: 5em solid white;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -moz-transform: rotate(-70deg);
+  -ms-transform: rotate(-70deg);
+  -webkit-transform: rotate(-70deg);
+  transform: rotate(-70deg);
+}
+.roundedTwo label:hover::after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3;
+}
+.roundedTwo input[type=checkbox] {
+  visibility: hidden;
+}
+.roundedTwo input[type=checkbox]:checked + label:after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+}
+.cans_right1{
+	position:absolute;
+	right:-30em;
+}
+.top .top_right .color{
+	color:#bdc1bb;
+	outline:0;
+}
+
+.cans_left_warehouse{
+	position:absolute;
+	left:-25em;
+}
+.cans_right_warehouse{
+	line-height:5em;
+    float:left;
+	margin-left:50em;
+}
+.tab-content .cans li .cans_right_warehouse a{
+	text-decoration:none;
+	color:#fff;
+	background:#ff5a5f;
+	width:5em;
+	line-height:2em;
+	text-align:center;
+	display:block;
+	font-size:10em;
+	border-radius:0.3em;
+	margin-top:1em;
+}
+.cans_warehouse_right{
+	background:#efeff4;
+	width:60em;
+	line-height:5em;
+	float:right;
+	display:block;
+}
+.tab-content .cans .cans_edit_css{
+	margin-top:0;
+	padding-bottom:0;
+	position:relative;
+
+}
+.cans_background{
+	background:#efeff4;
+	padding-bottom:15em;
+}
+.tab-content .cans li .cans_right .cans_edit{
+
+	display:inline-block;
+	background:none;
+	width:2em;
+	margin-right:1em;
+}

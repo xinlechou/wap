@@ -27,8 +27,8 @@
             scrollArea : me.$element,                                            // 滑动区域
             domUp : {                                                            // 上方DOM
                 domClass   : 'dropload-up',
-                domRefresh : '<div class="dropload-refresh">下拉刷新</div>',
-                domUpdate  : '<div class="dropload-update">释放更新</div>',
+                domRefresh : '<div class="dropload-refresh">加载中...</div>',
+                domUpdate  : '<div class="dropload-update">加载中...</div>',
                 domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
             },
             domDown : {                                                          // 下方DOM

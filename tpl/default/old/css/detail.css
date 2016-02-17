@@ -1,0 +1,183 @@
+.detail{
+	margin:0 auto;
+	padding:2%;
+	width:100%;
+	background:#fff;
+	overflow:hidden;
+	margin-top:2em;
+}
+.detail_head{
+	margin:0 auto;
+	padding:3% auto;
+	width:100%;
+	overflow:hidden;
+	line-height:2em;
+	border-bottom:0.1em solid #d2d2d2;
+}
+.detail_head .detail_head_left{
+	width:70%;
+	margin:0 auto;
+	padding:0 auto;
+	float:left;
+	font-size:1.4em;
+	color:#565a5c;
+	
+}
+.detail_head .detail_head_left .img_width{
+	width:3em;
+}
+.detail_head .detail_head_left span{
+    background: url("../images/nocer.png") no-repeat right center;
+    display: inline-block;
+    padding-right: 1em;
+    background-size: 0.9em;
+}
+.detail_head .detail_head_left span.cer{
+    background-image: url("../images/cer.png");
+}
+.detail_head .detail_head_right{
+    margin: 2.2% auto;
+    /*padding: 0 auto;*/
+    float: right;
+    font-size: 1em;
+    text-align: right;
+    color: #565a5c;
+    padding-left: 1.3em;
+    background: url("../images/exchange.png") no-repeat left center;
+    background-size: 1em;
+}
+.detail_head .detail_head_right img{
+	margin-right:2%;
+}
+.detail_body{
+	width:100%;
+	margin:3% auto;
+	padding:0 auto;
+	
+	overflow:hidden;
+	font-size:1.2em;
+	line-height:1.5em;
+	color:#565a5c;
+}
+.detail_body img{
+	width:100%;
+	border:0;
+	margin:2% 0;
+}
+.detail_content{
+	width:100%;
+	margin:0 auto;
+	padding:2%;
+	
+}
+.detail_content_title{
+	width:100%;
+	padding:3% auto;
+	margin:0 auto;
+	font-size:1.3em;
+	color:#565a5c;
+	line-height:2em;
+}
+.detail_content_body{
+	width:100%;
+	margin:2% auto;
+	padding:0 auto;
+	margin-bottom:20%;
+}
+.detail_content_body_ul{
+	width:100%;
+	margin:3% auto;
+	padding:0 auto;
+	text-align:center;
+	display:-moz-flex;
+	display:-webkit-flex;
+	display:flex;
+		
+}
+.detail_content_body_ul .detail_content_body_ul_list{
+	
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+}
+.detail_content_body_ul_list{
+    width: 33%;
+    -webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;box-flex:1;/*老版本的flex方法，兼容低版本安卓系统*/
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-grow: 1;
+}
+.detail_content_body_ul .detail_content_body_ul_list img{
+    border:none;
+    width:90%;
+}
+.detail_foot{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+	
+	background:#fff;
+	position:fixed;
+	bottom:0;
+	
+}
+.detail_foot_one,.detail_foot_two{
+	 width:25%;
+	 margin:0 auto;
+	 padding:0 auto;
+	 line-height:4.5em;
+	 float:left;
+	 text-align:center;
+	 border-right:0.1em solid #e5e5e5;
+}
+.detail_foot_one img{
+    width: 1.2em;
+}
+.detail_foot_two_right{
+	border:none;
+}
+.detail_foot_two_right a,.detail_foot_one a{
+    display: inline-block;
+    background-size: 1.2em;
+    padding-left: 1.4em;
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+.detail_foot_two_right a{
+    background-image: url("../images/mesa.png");
+}
+.detail_foot_one a{
+    background-image: url("../images/zan.png");
+}
+.detail_foot_one a.zan{
+    background-image: url("../images/zan_hover.png");
+}
+.detail_foot_one a,.detail_foot_one a:hover,.detail_foot_two a,.detail_foot_two a:hover{
+	color:#565a5c;
+	text-decoration:none;
+	font-size:1.2em;
+}
+.detail_foot_three{
+	width:50%;
+	margin:0 auto;
+	padding:0 auto;
+	background:#ff5a5f;
+	line-height:4.5em;
+	float:left;
+	text-align:center;
+	color:#fff;
+	
+}
+.detail_foot_three a,.detail_foot_three a:hover{
+	color:#fff;
+	font-size:1.2em;
+	text-decoration:none;
+}
+#toTop{
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    text-align: right;
+    width: 100%;
+}

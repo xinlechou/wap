@@ -1,0 +1,250 @@
+.issuecontain{
+	width:96%;
+	margin:2%;
+	padding:2%;
+	background:#fff;
+	text-align:center;
+	margin-top:60px;
+}
+.issue{
+	width:96%;
+	margin:2% auto;
+	padding:4%;
+	text-align:center;
+	background:#fff;
+	border:0.2em dashed #dbdbdb;
+}
+.issue_add{
+	width:100%;
+	margin:0 auto;
+	text-align:center;
+	position:relative;
+	/*padding:5% 0;*/
+	padding:0 auto;
+}
+.issue_add_div,.issue_add_div:hover{
+	position:relative;
+	text-decoration:none;
+}
+.issue_add_div p,.issue_add_div p:hover{
+	
+	text-decoration:none;
+	color:#cccccc;
+	/*position:absolute;*/
+	top:30%;
+	width:100%;
+	font-size:5em;
+	
+}
+
+.issue_add .issue_add_add{
+	font-size:20em;
+	color:#cccccc;
+	width:100%;
+}
+.issue_add_img{
+	cursor:pointer;
+    display: none;
+}
+.issue_input{
+    width: 100%;
+    /*margin: 0 auto;*/
+    /*padding: 0 auto;*/
+    /*text-align: center;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    filter: alpha(opacity:0);
+    -moz-opacity: 0;
+    opacity: 0;
+    cursor: pointer;
+	
+}
+.filter label{
+    background: url("../images/filter_bg.png") no-repeat left center;
+    background-size: 23px;
+    background-position: 0px 1px;
+    padding-left: 26px;
+    -webkit-transition: background-position 0.3s;
+    transition: background-position 0.3s;
+    line-height: 23px;
+}
+.filter label.checked{
+    background-position: 0px -29px;
+}
+.filter,.filter:hover{
+	text-decoration:none;
+	color:#565a5c;
+	font-size:2em;
+	display:block;
+	line-height:2em;
+	vertical-align:middle;
+}
+.filter img{
+	margin-right:1%; 
+}
+.issue_contain{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	/*overflow:hidden;*/
+}
+.issue_upload{
+	width:100%;
+}
+
+.issue_upload_list {
+    display: inline-block;
+    width: 15.5%;
+    background: #fff;
+    /*font-size: 12px;*/
+    position: relative;
+    vertical-align: middle;
+    visibility: hidden;
+}
+/*div.issue_upload_list:nth-child(2n) {
+    background: orange;
+}*/
+.issue_upload_list:before {
+    content: "";
+    display: inline-block;
+    padding-bottom: 100%;
+    width: .1px;
+    vertical-align: middle;
+}
+.issue_upload_list span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 4em;
+    color: #cccccc;
+}
+.issue_upload_list>img{
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.issue_upload_list_span::before{
+	content:'+';
+    padding-bottom: .2em;
+    display: block;
+}
+.issue_upload_list_span+i{
+    display: block;
+    width: 1.8em;
+    height: 1.8em;
+    background: url("../images/click_colse.png") no-repeat;
+    background-size: 1.8em;
+    position: absolute;
+    top: -.7em;
+    right: -.5em;
+    z-index: 30;
+}
+.issue_upload .issue_upload_list a,.issue_upload .issue_upload_list a:hover{
+	color:#cccccc;
+	text-decoration:none;
+}
+.issue_upload_input{
+	position:absolute;
+	top:0;
+	filter:alpha(opacity:0);
+	-moz-opacity:0;
+	opacity:0;
+	cursor:pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.issue_title,.issue_des{
+    font-size: 2em;
+
+}
+.issue_des,.issue_title{
+	width:96%;
+	margin:2%;
+	padding:2%;
+	background:#fff;
+}
+.issue_title >.issue_title_input{
+	width:100%;
+	line-height:2.5em;
+	border:none;
+	color:#cccccc;
+}
+.issue_des >.issue_des_textarea{
+	width:100%;
+	border:none;
+	color:#565a5c;
+}
+.issue_close{
+	position:absolute;
+	top:-20%;
+	right:10%;
+	width:8%;
+	cursor:pointer;
+}
+.issue_upload_logo{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 2em;
+    background-color: rgba(12, 19, 27, 0.6);
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+}
+.issue_dialog{
+	width:100%;
+	margin:0 auto;
+}
+.issue_content{
+	background-color: rgba(12, 19, 27, 1);
+	border:none;
+	border-radius:0;
+	box-shadow:none;
+	height:100%;
+}
+.issue_trash{
+	color:#fff;
+}
+.issue_header{
+	border:none;
+	/*padding:5% 2%;*/
+    padding: 0;
+}
+.issue_header .top{
+    background: transparent;
+}
+.issue_header .top>div{
+    color: #fff;
+}
+.issue_modal{
+	border:none;
+}
+.issue_ul_modal{
+	width:100%;
+	
+}
+.issue_ul_modal li{
+	float:left;
+	list-style:none;
+	width:100%;
+	color:#fff;
+	font-size:24em;
+}
+.issue_ul_modal_left{
+	text-align:left;
+}
+.issue_ul_modal_right{
+	text-align:right;
+}
+.issue_modal_body{
+	padding:0;
+}
+.top_center>.filter{
+    font-size: 1em;
+}

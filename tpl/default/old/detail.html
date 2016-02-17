@@ -1,0 +1,92 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css"/>
+
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{url_wap r="old"}"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right">
+            <a href="{$pre}"><img src="{$TMPL}/old/images/share.png"></a>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <div class="detail">
+        <div class="detail_head">
+            <div class="detail_head_left">
+                <img src="{$detail.avatar}" class="img-circle circle img_width" >
+                <span class="cer">{$detail.username}</span><i class="cer"></i><!--<img src="{$TMPL}/old/images/cer.png" onmouseover="this.src='{$TMPL}/old/images/cer.png'" onmouseout="this.src='{$TMPL}/old/images/nocer.png'"></a>-->
+            </div>
+            <div class="detail_head_right">{$detail.exchange_num}次
+                <!--<img src="{$TMPL}/old/images/exchange.png">-->
+            </div>
+        </div>
+        <div class="detail_body clearfix">
+            <p>{$detail.info}</p>
+            <!--物品图片-->
+            <div>
+                {foreach from=$detail.images_data.list item=img_list key=keyd}
+                <img src="{$img_list.url}" {if $detail.is_filter eq '1'}class="backdrop"{/if}>
+                <!--<img src="{$TMPL}/old/images/images1.png" class="backdrop">-->
+                <!--<img src="{$TMPL}/old/images/images2.png">-->
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="detail_content">
+        <div class="detail_content_title">
+            其他人想拿Ta交换Ta
+        </div>
+        <div class="detail_content_body">
+            <div class="detail_content_body_ul">
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images1.png"></a></div>
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images4.png"></a></div>
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images5.png"></a></div>
+            </div>
+            <div class="detail_content_body_ul">
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images3.png"></a></div>
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images4.png"></a></div>
+                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images5.png"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="detail_foot">
+        <div class="detail_foot_one"  onclick="old.add_focus(this.childNodes[1],'{$user.id}','{$detail.id}')">
+            {if $detail.is_focus}
+            <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png">
+            {else}
+            <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png">
+            {/if}
+            <span class="focus_num">{$detail.focus_num}</span>
+        </div>
+        <div class="detail_foot_two detail_foot_two_right">
+            <a href="#"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
+        </div>
+        <div class="detail_foot_three">
+            <a href="#">我想要</a>
+        </div>
+    </div>
+    <div id="toTop">
+        <a href="javascript:scroll(0,0)" onfocus="this.blur();"><img src="{$TMPL}/old/images/return.png" border=0 width='6%' /></a>
+    </div>
+
+</div>
+<script src="{$TMPL}/old/js/jquery.min.js"></script>
+{include file="old/dialog.html"}
+
+<script type="text/javascript" src="{$TMPL}/old/js/old.js"></script>
+
+ <script type="text/javascript">
+ var topObj = document.getElementById("toTop");
+ window.onscroll = function() {
+ var sTop = document.body.scrollTop + document.documentElement.scrollTop;
+ sTop > 0 ? topObj.style.display = "" : topObj.style.display = "none";
+ }
+</script>
+<script>
+
+</script>
+  </body>
+ <html>

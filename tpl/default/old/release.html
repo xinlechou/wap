@@ -1,0 +1,458 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/issue.css"/>
+
+  <div id="nav">
+     <div class="top" >
+      <div class="top_left">
+	      <a href="{url_wap r="old"}"><img src="{$TMPL}/old/images/exit.png"></a>
+	  </div>
+	  <div class="top_center">{$page_title}</div>
+	  <div class="top_right">
+	       <a href="#">确认</a>
+	  </div>
+    </div>
+   </div>
+      <form action="" method="">
+	   <div class="issuecontain">
+          <div class="issue">
+            <label class="issue_add" for="img_0">
+                <div class="issue_add_div">
+			     <!--添加图片样式的开始-->
+                   <p class="glyphicon glyphicon-plus issue_add_add"></p>
+                    <p>添加封面</p>
+				   <!--添加图片样式的结束-->
+                </div>
+                <!--添加图片后的样式的开始--->
+
+                <input type="file" hidden="hidden" name="img_0" class="issue_input" id="img_0">
+                <img src="{$TMPL}/old/images/list3.png" width=100% class="issue_add_img" id="cover" data-index="0">
+		    </label>
+          </div>
+		  <div class="filter">
+              <label for="issue_filter" id="filterBtn">滤镜效果<input type="checkbox" id="issue_filter" hidden="hidden"></label>
+          </div><!--<a href="#" class="filter">&lt;!&ndash;<img src="{$TMPL}/old/images/filter_hover.png" border=0 width=10>&ndash;&gt;滤镜效果</a>-->
+	   </div> 
+	   <div class="issue_contain clearfix">
+
+        <div class="issue_upload" style="display: none;">
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_1" class="issue_upload_input" id="img_1"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_1">
+            </label>
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_2" class="issue_upload_input" id="img_2"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_2">
+            </label>
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_3" class="issue_upload_input" id="img_3"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_3">
+            </label>
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_4" class="issue_upload_input" id="img_4"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_4">
+            </label>
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_5" class="issue_upload_input" id="img_5"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_5">
+            </label>
+            <label class="issue_upload_list">
+                <span class="issue_upload_list_span"></span>
+                <input type="file" hidden="hidden" name="img_6" class="issue_upload_input" id="img_6"><i class="delItem"></i>
+                <img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-index="img_6">
+            </label>
+	    </div>
+	   </div>	
+       <div class="issue_title">
+	     <input type="text" value="" name="" class="issue_title_input" placeholder="标题不超过14个字">
+	   </div>
+        <div class="issue_des">
+	       <textarea class="issue_des_textarea" rows=5 placeholder="物品描述不超过140个字"></textarea>
+	   </div>  
+      </form>
+<!--设为封面弹出层-->
+<div class="modal fade" id="setCoverModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog issue_dialog">
+        <div class="modal-content issue_content">
+            <div class="modal-header issue_header">
+                <div class="top" >
+                    <div class="top_left">
+                        <a href="javascript:void(0)"><img src="{$TMPL}/old/images/exit.png" data-dismiss="modal" aria-hidden="true" ></a>
+                    </div>
+                    <div class="top_center">
+                        <div class="filter">
+                            <label for="setCover" id="setCoverBtn">设为封面<input type="checkbox" id="setCover" hidden="hidden"></label>
+                        </div>
+                    </div>
+                    <div class="top_right">
+                        <a href="#"><img src="{$TMPL}/old/images/del.png" border=0 data-dismiss="modal" aria-hidden="true" width="20px"></a>
+                    </div>
+            </div>
+            <div class="modal-body issue_modal_body">
+                <img src="{$TMPL}/old/images/images7.png" border=0 width=100% id="whichImg">
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+{include file="old/old_footer.html"}
+<script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
+<script>
+    var elem = {
+        coverStr:'<i class="issue_upload_logo">封面</i>',
+        preCover:$('.issue_upload>label:first'),//前一次的封面，默认为第一张
+        newCover:"",
+        coverContainer:$('#cover'),
+        lenght:$('.issue_upload').children('label').length,
+        thumbIndex:1,
+        thumbImgList:[],
+        thumbStr:function(src){
+            var str = '';
+            if(elem.thumbIndex==1){
+            str += '<label class="issue_upload_list">';
+            str += elem.coverStr;
+            str += '<span class="issue_upload_list_span"></span><i id="delItem"></i>';
+//            str += '<input type="file" hidden="hidden" name="img_'+elem.thumbIndex+'" class="issue_upload_input" id="img_'+elem.thumbIndex+'">';
+            str += '<img src="'+src+'" class="" data-toggle="modal" data-target="#setCoverModal" data-src="'+src+'" data-index="'+elem.thumbIndex+'">';
+            str += '</label>';}
+            if($('.issue_upload').children('label').length<7){
+                str += '<label class="issue_upload_list">';
+                str += '<span class="issue_upload_list_span"></span>';
+                str += '<input type="file" hidden="hidden" name="img_'+(elem.thumbIndex+1)+'" class="issue_upload_input" id="img_'+(elem.thumbIndex+1)+'">';
+                str += '<img src="{$TMPL}/old/images/list4.png" class="issue_add_img" data-toggle="modal" data-target="#setCoverModal" data-src="{$TMPL}/old/images/list4.png" data-index="'+(elem.thumbIndex+1)+'">';
+                str += '</label>';
+            }
+            elem.thumbIndex ++;
+
+//            console.log(elem.thumbIndex)
+            return str;
+        },
+        fileIut:function(id){
+            return '<input type="file" hidden="hidden" name="'+id+'" class="issue_upload_input" id="'+id+'">';
+        }
+    }
+    var img = function(el){
+        this.imgFile = el.find('input');
+        this.imgFileName = this.imgFile.attr('name');
+//        console.log(this.imgFileName);
+        this.preview = el.find('img');
+        this.delBtn = el.find('.delItem');
+        this.refresh = function(){
+            elem.lenght = $('.issue_upload').children('label').length;
+        }
+        var _this = this;
+        /*this.del = function(e){
+
+            e.preventDefault();
+            var inputStr = elem.fileIut(_this.imgFileName);
+            console.log($('input[name="'+_this.imgFileName+'"]').length)
+            $("input[name='"+_this.imgFileName+"']").remove();
+//            console.log($('input[name="'+_this.imgFileName+'"]').length)
+            _this.preview.hide();
+            _this.delBtn.before(inputStr);
+            _this.delBtn.off(EVENT_TYPE);
+//            console.log(el.html());
+//            el.css('visibility','hidden');
+        }*/
+
+        this.uploadFile = function(file_id,successFun,errorFun){
+            $(document).on('change',"input[name='"+file_id+"']",function(){
+                var files = $('input[name="'+file_id+'"]').prop('files');
+
+                var index = parseInt(file_id.substr(4,5));
+                $('#loading').show();
+                $.ajaxFileUpload({
+                            url:APP_ROOT_ORA+'/upload.php',//test
+//                            url:APP_ROOT_ORA+"/olddata.php?act=add_goods_img&user_id={$user.id}&img_num="+index,
+                            secureuri:false,
+                            fileElementId:file_id,
+                            dataType: 'json',
+                            success: function (data){
+
+                                $('#loading').hide();
+                                if(data.status==1){//test
+//                                if(data.error==0){
+
+                                    data = {error:data.status,data :data.thumb_url};//test
+                                    successFun && successFun(data);
+                                }else{
+//                                $.showErr(data.msg);
+                                    data = {error:data.status,data :data.thumb_url};//test
+                                    errorFun && errorFun(data);
+                                }
+                            },
+                            error: function (data, status, e){
+                                console.log(e.message);
+//                                $.showErr(data.responseText);;
+                            }
+                        }
+                );
+            });
+
+//            console.log(file_id);
+        }
+    };
+    $(function() {
+        var $D = $(document);
+        //封面选择
+        $D.on(EVENT_TYPE,'.issue', function () {
+            var i = new img($(this));
+            i.uploadFile(i.imgFileName, function (data) {
+                $('.issue_add_div').hide();
+//                console.log(data.data);
+                var thumbUrl = getReplace(data.data)
+                //封面预览
+                i.preview[0].src = thumbUrl;
+                i.preview.show();
+                //小图第一张预览显示
+                $('.issue_upload').show();
+//                if(elem.lenght==0){
+                    var p = elem.preCover = $('.issue_upload>label:first');
+
+                    p.find('img').attr('src',thumbUrl).show();
+                    p.css('visibility','visible');
+                    p.next().css('visibility','visible');
+                    p.append(elem.coverStr);
+//                }
+
+            }, function (data) {
+                if(confirm(data.msg)){
+                    window.location.href = APP_ROOT+"?ctl=user&act=login";
+                }
+            })
+        });
+        $D.on(EVENT_TYPE,'.issue_upload_list',function(){
+            var _this = $(this);
+            if(elem.lenght>6){
+                alert("只能传6张＝。＝");
+                return;
+            }else{
+                var i = new img($(this));
+                i.uploadFile(i.imgFileName, function (data) {
+                    var thumbUrl = getReplace(data.data)
+                    i.preview[0].src = thumbUrl;
+                    i.preview.show();
+                    i.refresh();
+                    var file = $("input[name='"+i.imgFileName+"']");
+//                        file.after(file.clone().val("").css('z-index',-11));
+                    file.remove();
+                    $D.on(EVENT_TYPE,'.delItem',function(e){
+                        if ( e && e.stopPropagation ){e.stopPropagation();}
+                        else{window.event.cancelBubble = true;return false;}
+//否则，我们需要使用IE的方式来取消事件冒泡 
+
+                        var parent = $(this).parents('.issue_upload_list');
+                        var inputStr = elem.fileIut(i.imgFileName);
+//                        console.log($('input[name="'+_this.imgFileName+'"]').length)
+//                        $("input[name='"+i.imgFileName+"']").remove();
+//            console.log($('input[name="'+_this.imgFileName+'"]').length)
+//                        _this.preview.hide();
+                        $(this).before(inputStr);
+                        parent.find('img').hide()
+                        i.refresh();
+                    })
+//                    $("input[name='"+i.imgFileName+"']").remove();
+                    if(elem.lenght<7){
+                        _this.next().css('visibility','visible');
+                    }
+//                    i=null;
+                }, function (data) {
+                    console.log(data);
+                })
+            }
+        });
+        $('#setCoverModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var which = button.attr('src');
+            // ajax
+            var modal = $(this),laber = $('#setCoverBtn');
+
+            modal.find('#whichImg').attr('src',which);
+//            laber.data('src',which);
+            laber.on(EVENT_TYPE,function(){
+                var evObj =$(this).attr('for'),inputObj = $('#'+evObj),cover = $("#cover");
+//                var coverStr = '<i class="issue_upload_logo">封面</i>';
+                //这里请求ajax设置封面图片，将返回的图片地址写到cover.src
+//                var which = $(this).data('src');
+                if(!inputObj.is(':checked')){
+                    setTimeout(function(){
+                        cover.attr('src',which);
+//                        console.log(which);
+                    },100);
+                    elem.newCover = button.parent();
+                }else{
+                    elem.newCover = elem.preCover;
+                }
+                $(this).toggleClass('checked');
+            });
+//            modal.find('.modal-body input').val(recipient)
+        })
+        $('#setCoverModal').on('hidden.bs.modal', function (event) {
+            setCover();
+        })
+        /*$D.on(EVENT_TYPE,'.issue', function () {
+            var i = new img($(this));
+            console.log(i.imgFile.css('display'))
+            i.uploadFile(i.imgFileName, function (data) {
+                $('.issue_add_div').hide();
+                //封面预览
+                i.preview[0].src = data.thumb_url;
+                i.preview.show();
+                //小图第一张预览显示
+                if(elem.thumbIndex==1){
+                    var thumb = elem.thumbStr(data.thumb_url)
+                    $('.issue_upload').prepend(thumb).show();
+                    elem.preCover = $('.issue_upload>label:first');
+                }else{
+                    elem.preCover.find('img').attr('src',data.thumb_url);
+                }
+            }, function (data) {
+                console.log(data);
+            })
+        })
+        $D.on(EVENT_TYPE,'.issue_upload_list',function(){
+            if($('.issue_upload').children('label').length>6){
+                alert("只能传6张＝。＝");
+                return;
+            }else{
+                var i = new img($(this));
+                i.uploadFile(i.imgFileName, function (data) {
+                    i.preview[0].src = data.thumb_url;
+                    i.preview.before('<i id="delItem"></i>').show();
+                    i.refresh();
+                    console.log(elem.lenght)
+                    if(parseInt(i.preview.data('index'))!==elem.thumbIndex-1){
+                        var thumb = elem.thumbIndex==6?"":elem.thumbStr(data.thumb_url);
+                        $('.issue_upload').append(thumb);
+                    }
+                    $("input[name='"+i.imgFileName+"']").remove();
+                }, function (data) {
+                    console.log(data);
+                })
+            }
+
+        })
+        $D.on(EVENT_TYPE,'#delItem',function(){
+            var parent = $(this).parents('.issue_upload_list');
+            elem.thumbIndex--;
+            i.refresh();
+            parent.remove();
+        })*/
+    });
+    function setCover(){
+        if(!elem.newCover) return;
+        elem.preCover.remove('.issue_upload_logo');
+        elem.newCover.append(elem.coverStr);
+        elem.preCover =  elem.newCover;
+        elem.coverContainer.attr('src',elem.newCover.find('img')[0].src);
+    }
+    function getReplace(url){
+        var s = url.replace("/var/www/html", "http://www.xinlechou.com");//暂时replace，回头改成reg
+        return s;
+    }
+        /*$("input[type=file]").on('change',function(e){
+         var _this = $(this),name = _this.attr('name');;
+         try{
+         previewFile(_this);
+         if(name=='img_1'){
+         $('.issue_add_div').hide();
+         elem.preCover.append(elem.coverStr);
+         }
+         }catch (e){
+
+         }
+         })*/
+      /*  $('#filterBtn').on('touchstart',function(){
+            var evObj =$(this).attr('for'),inputObj = $('#'+evObj),cover = $("#cover");
+//                        console.log(evObj)
+            if(evObj=='issue_filter'){
+                if(!inputObj.is(':checked')){
+                    cover.addClass('backdrop');
+                }else{
+                    cover.removeClass('backdrop');
+                }
+                $(this).toggleClass('checked');
+
+            }*//*else if(evObj == 'setCover'){
+                var coverStr = '<i class="issue_upload_logo">封面</i>';
+                //这里请求ajax设置封面图片，将返回的图片地址写到cover.src
+                var which = $(this).data('src');
+                setTimeout(function(){
+                    cover.attr('src',which);
+                },100)
+            }*//*
+
+
+        })*/
+        /*$('#setCoverModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var which = button.data('src');
+            // ajax
+            var modal = $(this),laber = $('#setCoverBtn');
+
+            modal.find('#whichImg').attr('src',which);
+            laber.data('src',which);
+            laber.on('touchstart',function(){
+                var evObj =$(this).attr('for'),inputObj = $('#'+evObj),cover = $("#cover");
+//                var coverStr = '<i class="issue_upload_logo">封面</i>';
+                        //这里请求ajax设置封面图片，将返回的图片地址写到cover.src
+                var which = $(this).data('src');
+                if(!inputObj.is(':checked')){
+                    setTimeout(function(){
+                        cover.attr('src',which);
+                        console.log(which);
+                    },100);
+                    elem.newCover = button.parent();
+                }else{
+                    elem.newCover = elem.preCover;
+                }
+                $(this).toggleClass('checked');
+            });
+//            modal.find('.modal-body input').val(recipient)
+        })
+        $('#setCoverModal').on('hidden.bs.modal', function (event) {
+           setCover();
+        })
+    })
+    function setCover(){console.log(elem.newCover);
+        if(!elem.newCover) return;
+        elem.preCover.remove('.issue_upload_logo');
+        elem.newCover.append(elem.coverStr);
+        elem.coverContainer.attr('src',elem.newCover.find('img')[0].src);
+    }
+    function previewFile(inputObj) {
+        var file = inputObj[0].files[0];//document.querySelector('input[type=file]').files[0];
+        var name = inputObj.attr('name');
+        var previews = [];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            $('img').each(function(){
+                var _this = $(this);
+                if(_this.data('index')==name){
+                    _this[0].src = reader.result;
+                    _this.show();
+                    _this.data('src',reader.result)
+                }
+            })
+            inputObj.hide();
+        }
+
+//        var preview = imgObj[0]//document.querySelector('img');
+
+//        console.log(preview.src)
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }*/
+</script>
+  </body>
+ <html>
