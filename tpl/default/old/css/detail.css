@@ -126,7 +126,8 @@
 	 width:25%;
 	 margin:0 auto;
 	 padding:0 auto;
-	 line-height:4.5em;
+    height: 40px;
+	 line-height:40px;
 	 float:left;
 	 text-align:center;
 	 border-right:0.1em solid #e5e5e5;
@@ -163,7 +164,6 @@
 	margin:0 auto;
 	padding:0 auto;
 	background:#ff5a5f;
-	line-height:4.5em;
 	float:left;
 	text-align:center;
 	color:#fff;
@@ -173,6 +173,9 @@
 	color:#fff;
 	font-size:1.2em;
 	text-decoration:none;
+    line-height:40px;
+    display: inline-block;
+    width: 100%;
 }
 #toTop{
     position: fixed;

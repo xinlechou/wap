@@ -1,0 +1,105 @@
+{include file="inc/header.html"}
+    <title>个人中心-地址管理</title>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/consignee.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/deal_items.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_consignee.css"/>
+
+</head>
+ <body id="body">
+ <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
+ <div id="nav">
+     <div class="top">
+         <div class="top_left">
+             <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+         </div>
+         <div class="top_center">{$page_title}</div>
+         <div class="top_right"></div>
+     </div>
+ </div>
+ <div class="a_list">
+     {if $consignee_list}
+     {foreach from=$consignee_list item=item key=k}
+    <div class="a_item" data-id="{$item.id}">
+        <div class="a_item_top">
+            <span>{$item.consignee}</span><mobile>{$item.mobile}</mobile>
+            <address>{$item.province}{$item.city}{$item.address}</address>
+        </div>
+        <div class="a_item_bottom">
+            {if $item.is_default eq 1}
+            <span class="onchecked setDefault">
+                默认地址
+                {else}
+             <span class="setDefault">
+                设为默认
+                {/if}
+            </span>
+            <div class="a_item_bottom_right">
+                <a href="#" class="delConsignee">删除</a>
+                <a href="{url_wap r="old#edit_consignee" p="id=$item.id"}" class="editConsignee">编辑</a>
+            </div>
+        </div>
+    </div>
+     {/foreach}
+     {else}
+
+     <div class="a_empty">
+         <img src="{$TMPL}/images/pay_error.png" border=0 width=40>
+         <p>您尚未添加收货地址，请添加新地址</p>
+     </div>
+     {/if}
+ </div>
+ <div class="a_btn"><!--<button type="button" id="showAddNewAddress">新建地址</button>-->
+     <a href="{url_wap r="settings#edit_consignee"}" id="showAddNewAddress">新建地址</a>
+ </div>
+ <div class="light-tips"></div>
+ <!--添加新地址弹框-->
+ <!--<div id="addNewAddress" style="display:none;">
+     <div class="con_direct_top">
+         添加新地址
+         <a href="javascript:void(0)" class="closebox"><img src="{$TMPL}/images/hint33.png" width=38 height=37 border=0></a>
+     </div>
+     <div class="con_direct_bottom">
+         <div class="addNewAddress">
+             <form id="addNewAddressForm">
+                 <p><span>*收件人：</span><input type="text" name="consignee" placeholder="请填写收件人姓名"></p>
+                 <p><span>*地区：</span>
+                          <span><em id="provinceValue">请选择省份</em>
+                          <select name="province" id="province" class="selectStyle">
+                              <option value="" rel="0">请选择省份</option>
+                              {foreach from=$region_lv2 item=region}
+                              <option value="{$region.name}" rel="{$region.id}">{$region.name}</option>
+                              {/foreach}
+                          </select></span>
+                          <span><em id="cityValue">请选择城市</em>
+                          <select name="city" id="city" class="selectStyle">
+                              <option value="" rel="0">请选择城市</option>
+                              {foreach from=$region_lv3 item=region}
+                              <option value="{$region.name}" rel="{$region.id}">{$region.name}</option>
+                              {/foreach}
+                          </select></span>
+                 <p><span>*详细地址：</span><input type="text" name="address" placeholder="请填写详细地址"></p>
+                 <p><span>&nbsp;&nbsp;邮编：</span><input type="text" name="zip" placeholder="请填写邮编"></p>
+                 <p><span>*手机：</span><input type="text" name="mobile" placeholder="请填写手机号"></p>
+                 <p><span class="isdefault_ckb"><label for="isdefault">是否设为默认地址</label></span><input type="checkbox" name="isdefault" id="isdefault" hidden="hidden"></p>
+                 &lt;!&ndash;隐藏input，用于保存参数&ndash;&gt;
+                 <input id="area" hidden="hidden">
+                 &lt;!&ndash;<input name="id" hidden="hidden" value="{$user_info.id}">&ndash;&gt;
+                 <p class="tips"></p>
+             </form>
+         </div>
+     </div>
+ </div>-->
+ <!--footer-->
+ <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+ <script type="text/javascript" src="{$TMPL}/old/js/old_consignee.js"></script>
+
+ <!--<script type="text/javascript" src="{$TMPL}/js/consignee.js"></script>-->
+ <script type="text/javascript" src="../system/region.js"></script>
+ <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
+ </body>
+</html>

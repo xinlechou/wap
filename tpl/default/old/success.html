@@ -1,0 +1,23 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/success.css"/>
+<div id="nav">
+    <div class="top" >
+        <div class="top_left"></div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+  <div class="publish_sucess">
+      {if $msg}<p>{$msg}</p>{else}
+     <p>恭喜您成功发布了交换的物品！</p>
+	 <p>赶快分享到朋友圈，让更多更靠谱的小伙伴</p>
+	 <p>看到它来跟您交换吧!</p>
+      {/if}
+	 <img src="{$TMPL}/old/images/sucess.jpg">
+	 <a href="#" class="publish_circle">分享至朋友圈</a>
+      <a href="{$pre}" class="publish_skip">跳过</a>
+  </div>
+
+{include file="old/old_inc_footer.html"}
+ </body>
+ </html>

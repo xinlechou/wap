@@ -65,7 +65,7 @@
    * @type {Object}
    */
   var DEFAULTS = $.extend({
-    hashTracking: true,
+    hashTracking: false,
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,

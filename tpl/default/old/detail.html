@@ -1,5 +1,5 @@
 {include file="old/old_header.html"}
-<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css?{time()}"/>
 
 <div id="nav">
     <div class="top">
@@ -17,11 +17,9 @@
         <div class="detail_head">
             <div class="detail_head_left">
                 <img src="{$detail.avatar}" class="img-circle circle img_width" >
-                <span class="cer">{$detail.username}</span><i class="cer"></i><!--<img src="{$TMPL}/old/images/cer.png" onmouseover="this.src='{$TMPL}/old/images/cer.png'" onmouseout="this.src='{$TMPL}/old/images/nocer.png'"></a>-->
+                <span {if $detail.card_state eq 1}class="cer"{/if}>{$detail.username}</span>
             </div>
-            <div class="detail_head_right">{$detail.exchange_num}次
-                <!--<img src="{$TMPL}/old/images/exchange.png">-->
-            </div>
+            <div class="detail_head_right">{$detail.exchange_num}次</div>
         </div>
         <div class="detail_body clearfix">
             <p>{$detail.info}</p>
@@ -65,7 +63,7 @@
             <a href="#"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
         </div>
         <div class="detail_foot_three">
-            <a href="#">我想要</a>
+            <a href="javascript:void(0)" id="goSelect">我想要</a>
         </div>
     </div>
     <div id="toTop">
@@ -79,6 +77,7 @@
 <script type="text/javascript" src="{$TMPL}/old/js/old.js"></script>
 
  <script type="text/javascript">
+     /*回到顶部*/
  var topObj = document.getElementById("toTop");
  window.onscroll = function() {
  var sTop = document.body.scrollTop + document.documentElement.scrollTop;
@@ -86,7 +85,21 @@
  }
 </script>
 <script>
-
+    $(function(){
+        var seUrl = "{url_wap r="old#select"}";
+        var ownerId = "{$detail.user_id}";
+        var userId = "{$user.id}";
+        var goods_id = "{$detail.id}";
+        var $D = $(document);
+        $D.on(EVENT_TYPE,"#goSelect",function(){
+            if(ownerId==userId){
+                var a = new dialog('不能和自己交换阿，亲','light',function(){});
+                console.log(seUrl);
+                return false;
+            }
+            window.location.href = seUrl+"&from_user_id="+ownerId+'&from_goods_id='+goods_id;
+        });
+    })
 </script>
   </body>
  <html>

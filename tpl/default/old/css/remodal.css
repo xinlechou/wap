@@ -128,7 +128,7 @@
 
     min-width: 75px;
     margin: 0;
-    padding: 3% 0;
+    padding: 3% 3px;
 
     cursor: pointer;
     transition: background 0.2s;

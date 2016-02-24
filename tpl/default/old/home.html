@@ -3,7 +3,7 @@
 <div id="nav">
     <div class="top">
         <div class="top_left">
-            <a href="{$pre}"><img src="{$TMPL}/old/images/exit.png"></a>
+            <a href="javascript:window.history.go(-1)"><img src="{$TMPL}/old/images/exit.png"></a>
         </div>
         <div class="top_center">{$page_title}</div>
         <div class="top_right"></div>
@@ -15,7 +15,7 @@
            <img src="{$TMPL}/old/images/home_can.png" border=0 width=96%>
            <div class="home_absolute">
               <span>我的物品</span>
-              <p>(185)</p>
+              <p>({$good_num})</p>
            </div>
         </a>
 	</div>
@@ -24,7 +24,7 @@
             <img src="{$TMPL}/old/images/home_change.png" border=0 width=96%>
              <div class="home_absolute">
               <span>交换申请</span>
-              <p>(99)</p>
+              <p>({$order_num})</p>
            </div>
         </a>
 	</div>

@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/remodal.css"/>
-
+<div class="light-tips"></div>
 <script type="text/javascript" src="{$TMPL}/old/js/remodal.js"></script>
 <!--两个按钮-->
 <div class="remodal" data-remodal-id="confirmModal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -9,8 +9,18 @@
     </div>
     <hr style="height:1px;border:none;border-top:1px solid #DEDEDE;margin: 2% auto"/>
 
-    <button data-remodal-action="cancel" class="remodal-cancel">确认</button>
-    <button data-remodal-action="confirm" class="remodal-confirm">取消</button>
+        <button data-remodal-action="cancel" class="remodal-cancel">取消</button>
+        <button data-remodal-action="confirm" class="remodal-confirm">确认</button>
+</div>
+<!--可自定义按钮名称，二个按钮-->
+<div class="remodal" data-remodal-id="defaultModal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+    <div>
+        <p id="defaultModal"></p>
+    </div>
+    <hr style="height:1px;border:none;border-top:1px solid #DEDEDE;margin: 2% auto"/>
+    <button data-remodal-action="cancel" class="remodal-cancel">取消</button>
+    <button data-remodal-action="confirm" class="remodal-confirm">确认</button>
 </div>
 <!--1个按钮-->
 <div data-remodal-id="alertModal" role="dialog">
@@ -28,16 +38,18 @@
     </div>
 </div>
 <script>
-    function dialog(msg,type,okFun){
+    function dialog(msg,type,okFun,cancelFun,options){
         this.type = type;
         this.okFun = okFun;
+        this.cancelFun = cancelFun?cancelFun:null;
         this.modal = type+"Modal";
+        this.options = arguments[4]?arguments[4]:"";//可自定义按钮名称
+        if(msg==""){return false};
+//        console.log(msg)
         var modal1Desc = document.getElementById(this.modal);
 
         modal1Desc.innerHTML = msg;
-        console.log(modal1Desc)
         this.open();
-//        setTimeout(function(){this.open();},50);
     }
     dialog.prototype.open = function(){
         switch (this.type){
@@ -51,11 +63,14 @@
                 this.light()//延时消失
                 break;
             default :
+                //自定义按钮
+                this.default(this.options)
                 break;
         }
     }
     dialog.prototype.confirm = function(){
         var inst = $('[data-remodal-id='+this.modal+']').remodal();
+        console.log($('[data-remodal-action=cancel]').html())
         inst.open();
         okFun = this.okFun;
         $(document).on('confirmation', '[data-remodal-id='+this.modal+']', function () {
@@ -77,8 +92,26 @@
             inst.close()
         },1500);
     }
-     /* $(function() {
-          var a = new dialog('sddddddddds','confirm',function(){});
+    dialog.prototype.default = function(options){
+        var inst = $('[data-remodal-id='+this.modal+']').remodal();
+        inst.open();
+        okFun = this.okFun;
+        cancelFun = this.cancelFun;
+        $(document).on('confirmation', '[data-remodal-id='+this.modal+']', function () {
+            okFun && okFun();
+        });
+        $(document).on('cancellation', '[data-remodal-id='+this.modal+']', function () {
+            cancelFun && cancelFun();
+        });
+        $.each(options,function(index,item){
+            $('[data-remodal-action="'+item.action+'"]').html(item.name);
+        });
+
+    }
+      /*$(function() {
+          var a = new dialog('sddddddddds','default',function(){console.log('玩意')},[{name:"ok",action:'confirm'},{name:"no",action:'cancel'}],function(){
+              console.log('玩意111')
+          });
       });*/
 </script>
 

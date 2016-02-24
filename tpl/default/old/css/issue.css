@@ -7,44 +7,46 @@
 	margin-top:60px;
 }
 .issue{
-	width:96%;
+	/*width:96%;
 	margin:2% auto;
 	padding:4%;
 	text-align:center;
 	background:#fff;
-	border:0.2em dashed #dbdbdb;
+	border:0.2em dashed #dbdbdb;*/
 }
 .issue_add{
 	width:100%;
 	margin:0 auto;
 	text-align:center;
 	position:relative;
-	/*padding:5% 0;*/
+	padding:10px;
 	padding:0 auto;
 }
 .issue_add_div,.issue_add_div:hover{
 	position:relative;
 	text-decoration:none;
 }
-.issue_add_div p,.issue_add_div p:hover{
-	
-	text-decoration:none;
-	color:#cccccc;
-	/*position:absolute;*/
-	top:30%;
-	width:100%;
-	font-size:5em;
-	
-}
 
-.issue_add .issue_add_add{
+/*.issue_add .issue_add_add{
 	font-size:20em;
 	color:#cccccc;
 	width:100%;
-}
+}*/
 .issue_add_img{
 	cursor:pointer;
     display: none;
+}
+.issue_add.str::after{
+    content: '添加封面';
+    /*text-decoration:none;*/
+    color:#cccccc;
+    position:absolute;
+    bottom:25%;
+    left: 0;
+    right: 0;
+    /*width:100%;*/
+    font-size:3em;
+    display: block;
 }
 .issue_input{
     width: 100%;
@@ -70,9 +72,9 @@
     transition: background-position 0.3s;
     line-height: 23px;
 }
-.filter label.checked{
+/*.filter label.checked{
     background-position: 0px -29px;
-}
+}*/
 .filter,.filter:hover{
 	text-decoration:none;
 	color:#565a5c;
@@ -102,6 +104,7 @@
     /*font-size: 12px;*/
     position: relative;
     vertical-align: middle;
+    /*为了占位*/
     visibility: hidden;
 }
 /*div.issue_upload_list:nth-child(2n) {
@@ -131,9 +134,10 @@
 	content:'+';
     padding-bottom: .2em;
     display: block;
+    z-index: 300000;
 }
 .issue_upload_list_span+i{
-    display: block;
+    /*display: block;
     width: 1.8em;
     height: 1.8em;
     background: url("../images/click_colse.png") no-repeat;
@@ -141,6 +145,15 @@
     position: absolute;
     top: -.7em;
     right: -.5em;
+    z-index: 30;*/
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url("../images/click_colse.png") no-repeat;
+    background-size: 18px;
+    position: absolute;
+    top: -4px;
+    right: -3px;
     z-index: 30;
 }
 .issue_upload .issue_upload_list a,.issue_upload .issue_upload_list a:hover{
@@ -186,6 +199,7 @@
 	width:8%;
 	cursor:pointer;
 }
+
 .issue_upload_logo{
     position: absolute;
     bottom: 0;
@@ -196,6 +210,7 @@
     color: #fff;
     text-align: center;
     z-index: 2;
+    visibility: hidden;
 }
 .issue_dialog{
 	width:100%;
@@ -247,4 +262,13 @@
 }
 .top_center>.filter{
     font-size: 1em;
+}
+#is_filter:checked+label,#setCover:checked+label{
+    background-position: 0px -29px;
+}
+input[type="checkbox"],input[type="radio"]  {
+    visibility: hidden;
+}
+input[type='radio']:checked + i{
+    visibility: visible;
 }

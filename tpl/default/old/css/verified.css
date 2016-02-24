@@ -33,10 +33,10 @@ body{
 	background:#f5f5f5;
 	
 	margin:4% 0;
-	padding:20%;
+	/*padding:20%;*/
 }
 .verified_uoload ul  li p{
-	width:60%;
+	width:100%;
 	margin:0 auto;
 	padding:0 auto;
 	text-align:center;
@@ -56,10 +56,23 @@ body{
 .verified_li_input{
 	position:absolute;
 	width:100%;
-	top:50%;
+	top:0;
 	left:0;
+    height: 100%;
 	filter:alpha(opacity:0);
 	-moz-opacity:0;
 	opacity:0;
 	cursor:pointer;
+}
+.verified_uoload label img.upload{
+    margin: 50px auto;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.verified_uoload label img.upload.preview{
+    width: 100%;
+    margin: 0 auto;
 }

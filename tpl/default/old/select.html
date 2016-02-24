@@ -1,94 +1,53 @@
-<html>
- <head>
-   <meta name="Generator">
-   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
-   <meta name="apple-mobile-web-app-capable" content="yes">
-   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-   <meta name="format-detection" content="telephone=no">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>提出交换</title>
-   <meta name="keywords" content="">
-   <meta name="description" content="">
-   <link href="../css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" type="text/css" href="../css/common.css"/>
-   <link rel="stylesheet" type="text/css" href="../css/select.css"/>
-   <script src="../js/jquery.min.js"></script>
-   <script src="../js/bootstrap.min.js"></script>
-
- </head>
-  <body>
-    <div id="nav">
-     <div class="top" id="nv">
-      <div class="top_left">
-	      <a href="#"><img src="../images/exit.png" width=10></a>
-	  </div>
-	  <div class="top_center">提出交换</div>
-	  <div class="top_right">
-	       <a href="#">确认</a>
-	  </div>
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/select.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{url_wap r="old#detail" p="id=$from_goods_id"}"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"><a href="javascript:void(0)" id="submit">确认</a></div>
     </div>
-   </div>
-  <form action="" method="">
-   <div class="select">
-      <ul class="clearfix">
-	     <li>
-		      <img src="../images/images3.png" border=0 width=90%>
-		       <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		 </li>
-		 <li>
-		     <img src="../images/images4.png" border=0 width=90%>
-		     <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		 </li>
-		 <li>
-		     <img src="../images/images5.png" border=0 width=90%>
-		      <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		 </li>
-	  </ul>
-	  <ul class="clearfix">
-	     <li>
-		   <img src="../images/images3.png" border=0 width=90%>
-		    <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		 
-		 </li>
-		 <li>
-		     <img src="../images/images4.png" border=0 width=90%>
-			 <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		</li>
-		 <li>
-		    <img src="../images/images5.png" border=0 width=90%>
-			  <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		</li>
-	  </ul> 
-	   <ul class="clearfix">
-	     <li>
-		    <img src="../images/images3.png" border=0 width=90%>
-			  <div class="mask">
-			    <img src="../images/select.png" width=50%/>
-              </div>
-		</li>
-		
-		 <li>
-		    
-              <span class="glyphicon glyphicon-plus select_li_span"></span>
-			   <input type="file" value="" name="" class="select_li_input">
-          
-		 </li>
-	  </ul> 
-   </div>
-   </form>
-	
-  </body>
- <html>
+</div>
+<div class="select">
+  <!--<ul class="clearfix select-list">-->
+      <ul class="select-list">
+          {foreach from=$goods item=good_list key=keyd}
+          {if $good_list.online_state eq 1 && $good_list.state eq 1}
+          <li>
+              <figure style="background-image:url({$good_list.head_image})">
+                  <!--laber放在input后面-->
+                  <input id="{$good_list.id}" type="radio" name="select-item" value="{$good_list.id}"><label for="{$good_list.id}"></label>
+              </figure>
+          </li>
+          {/if}
+          {/foreach}
+          <li>
+              <figure style="background-image:url({$TMPL}/old/images/add_good.png)">
+                  <a href="{url_wap r="old#release"}"></a>
+              </figure>
+          </li>
+      </ul>
+</div>
+</body>
+{include file="old/old_inc_footer.html"}
+<script>
+    $(function(){
+        $('#submit').on('click',function(e){
+            if (e && e.preventDefault )e.preventDefault();
+            var to_goods_id = $('input[name="select-item"]:checked').val(),to_user_id='{$user.id}';
+            var p = {from_goods_id:"{$from_goods_id}",from_user_id:"{$from_user_id}",to_user_id:to_user_id,to_goods_id:to_goods_id};
+            if(to_user_id== p.from_user_id){
+                var a = new dialog('不能和自己交换阿，亲','light',function(){});
+                return false;
+            }
+            if(to_goods_id == undefined||to_goods_id == ''){
+                var d = new dialog('你想选哪个货交换？先选一个！','light',function(){});
+                return false;
+            }
+//            console.log(p)
+            old.add_exchange(p);
+        })
+    })
+</script>
+<html>

@@ -1,0 +1,20 @@
+.chat_foot {
+    width: 100%;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    text-align: right;
+}
+.chat_foot>input{
+    width: 80%;
+    margin-right: 20%;
+}
+.chat_list_to,.chat_list_from{
+    width: 100%;
+}
+.chat_list_to_img,.chat_list_from_img{
+    width: 35px;
+}
+.chat_list_to_img img,.chat_list_from_img img{
+    width: 100%;
+}

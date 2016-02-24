@@ -1,59 +1,98 @@
 ﻿.tab-content .cans{
 	width:100%;
 	margin:0 auto;
-	padding:2em 3em;
+	/*padding:2% 3%;*/
 	background:#fff;
 }
 .tab-content .cans li{
 	width:100%;
 	border:0;
 	text-align:center;
-	line-height:5em;
-	border-bottom:0.1em solid #dbdbdb;
-	padding-bottom:5em;
-	margin-top:3em;
+	line-height:25px;
+	border-bottom:1px solid #f5f5f5;
 	position:relative;
+    padding: 8px;
+    height: 100px;
+    /*overflow: hidden;*/
+
 }
-.cans_left{
+.cans_left,.cans_left_left{
 	float:left;
+    height: 80px;
+    overflow: hidden;
+    width: 66%;
 }
 .cans_left img{
-	float:left;
+    float:left;
+    border: none;
+    width: 30%;
 }
 .cans_left_left{
-	float:left;
+    text-align: left;
+    padding-top: 10px;
+    width: 58%;
 }
-.cans_left .cans_left_left .cans_left_top{
-	color:#565a5c;
-	font-size:20em;
-	display:inline-block;
-
-	margin-left:1em;
-	margin-top:1em;
+.cans_left_left>span{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.cans_left .cans_left_left  .cans_left_bottom{
+.cans_left_top,.cans_left_bottom{
+    display: block;
+    padding-left: 12px;
+    line-height: 30px;
+    height: 30px;
+}
+.cans_left_top{
+    color:#565a5c;
+    font-size: 15px;
+}
+.cans_left_bottom{
 	color:#b3b3b3;
-	font-size:15em;
-	display:inline-block;
-
-	margin-left:1em;
-	margin-top:1em;
 }
 .cans_right{
 	float:right;
-	line-height:5em;
+    width: 21%;
+	/*line-height:5em;*/
+}
+.cans_right.thin{
+    width: 31%;
+    padding-right: 55px;
+}
+.cans_right_btns{
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+
+}
+.cans_right_btns .edit_btn,.cans_right_btns .del_btn{
+    height: 50px;
+    width: 50px;
+    height: 50px;   width: 50px;   margin: 0;   padding: 0;   background: transparent;   border: 1px solid #f5f5f5;
+    border-top: 0;
+}
+.cans_right_btns .edit_btn{
+    background: url("../images/icon_edit.png") no-repeat center center;
+    background-size: 40%;
+}
+.cans_right_btns .del_btn{
+    background: url("../images/icon_del.png") no-repeat center center;
+    background-size: 40%;
+    border-top: 0;
 }
 .tab-content .cans li .cans_right a{
 	text-decoration:none;
 	color:#fff;
 	background:#ff5a5f;
-	width:5em;
-	line-height:2em;
+	width:100%;
 	text-align:center;
 	display:block;
-	font-size:10em;
-	border-radius:0.3em;
-	margin-top:1em;
+	border-radius:3px;
+	margin-top:22px;
+    line-height: 36px;
+    height: 36px;
 }
 
 .cans_bottom{
@@ -69,11 +108,10 @@
 	text-decoration:none;
 	text-align:center;
 	outline:none;
-	font-size:0.5em;
 }
 .cans_left1{float:left;
            width:20em;
-		   padding-top:10em;}
+		   /*padding-top:10em;*/}
 /*单选框样式*/
 .roundedTwo {
   width: 20em;
@@ -153,7 +191,7 @@
 .cans_right_warehouse{
 	line-height:5em;
     float:left;
-	margin-left:50em;
+	/*margin-left:50em;*/
 }
 .tab-content .cans li .cans_right_warehouse a{
 	text-decoration:none;

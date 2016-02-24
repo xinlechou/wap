@@ -1,0 +1,69 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/notify.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+<div class="box">
+        {if $error}<div class="exchange_empty"><span>{$error}</span><a href="{url_wap r="old#release"}">去看看别的</a></div>{else}
+    <ul class="notify clearfix">
+        {foreach from=$notify item=list key=keyd}
+        {if $list.type eq 0}
+        <!--消息通知-->
+        <li>
+            <div class="notify_list {if $list.is_read eq 0}spot{/if}">
+                <a href="{url_wap r="old#home_exchange"}" onclick="old.set_notify_isread(this,{$list.id})">
+                    <div>
+                        <img src="{$TMPL}/old/images/icon_notify.png">
+                    </div>
+                    <div>
+                        <span class="bold">消息通知</span>
+                        <span>{$list.log_info}</span>
+                    </div>
+                    <time>{$list.log_time}</time>
+                </a>
+            </div>
+        </li>
+        {/if}
+        {if $list.type eq 1}
+        <!--物流通知-->
+        <li>
+            <div class="notify_list">
+                <a href="{url_wap r="old#home_exchange"}">
+                    <img src="{$TMPL}/old/images/icon_express.png">
+                    <div>
+                        <span class="bold">物流通知</span>
+                        <span>{$list.log_info}</span>
+                    </div>
+                    <time>{$list.log_time}</time>
+                </a>
+            </div>
+        </li>
+        {/if}
+        {if $list.type eq 2}
+        <!--私信记录-->
+        <li>
+            <div class="notify_list">
+                <a href="{url_wap r="old"}">
+                <img src="{$TMPL}/old/images/icon_express.png">
+                <div>
+                    <span class="bold">物流通知</span>
+                    <span>{$list.log_info}</span>
+                </div>
+                <time>{$list.log_time}</time>
+                </a>
+            </div>
+        </li>
+        {/if}
+        {/foreach}
+        {/if}
+    </ul>
+</div>
+{include file="old/old_inc_footer.html"}
+</body>
+<html>

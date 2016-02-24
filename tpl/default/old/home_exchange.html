@@ -10,557 +10,931 @@
         <div class="top_right"></div>
     </div>
 </div>
-   <div class="change_invation">
-        <div class="change_invation_top">
-           <ul id="myTab" class="nav nav-tabs">
-            <li class="active">
-              <a href="#home" data-toggle="tab">
-               交换申请
-              </a>
-            </li>
-            <li>
-		       <a href="#ios" data-toggle="tab">我的申请</a>
-		    </li>
-           </ul>
-          <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade in active " id="home">
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images1.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images2.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+<div class="change_invation">
+    <div class="change_invation_top">
+        <!------------------tab_nav-------------------->
+        <ul id="myTab" class="nav nav-tabs">
+            <li><a href="#home" data-toggle="tab">申请我的</a></li>
+            <li><a href="#my_exchange" data-toggle="tab">我申请的</a></li>
+        </ul>
+<!-- From = me ; To = other-->
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade" id="home">
+            <!--Empty-->
+            {if $from_error}
+            <section class="change_Panels"><div class="exchange_empty"><span>{$from_error}</span><a href="{url_wap r="old"}">看看有哪些好玩的东东先</a></div></section>
+            {/if}
+            <!--Not Empty-->
+            {foreach from=$from_user_goods item=good_list key=keyd}
+            <!--step 1 exchange_state＝0 ：尚未交换-->
+                {if $good_list.exchange_state eq 0}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                            <span class="change_title_left">
+                                <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                            </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟想和您交换物品，是否同意？</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">同意</a>
-						  <a href="#" class="change_disagree">忽略</a>
-						 </div>
-				   </div>
-				 </div>
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟想用线上交换保证金300RMB的方式和您交换物品，是否同意？</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">同意</a>
-						  <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal">更改交换方式</a>
-						 </div>
-					   <form action="" method="">
-						 <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
-                        aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog change_modal_dialog">
-                         <div class="modal-content change-content">
-                         <div class="modal-header change_modal_header">
-                           
-                        <h4 class="modal-title change_modal_title" id="myModalLabel">
-                         更改交换方式
-                       </h4>
-                      </div>
-                     <div class="modal-body change_modal_body">
-                       <div class="change_modal_body_top">
-					      <a href="#">线下交换</a>
-					   </div>
-					    <div class="change_modal_body_bottom">
-						   <a href="#">线上交换</a>
-						   <span class="change_modal_body_bottom_span">对方选择了更改交换方式为线上交易+保证金</span>
-						   <label><input type="text" value="" placeholder="300" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RMB</label>
-						   <span class="change_modal_body_bottom_span no_top">您输入的保证金金额不能少于此金额</span>
-						</div>
-                     </div>
-					 
-                     <div class="modal-footer change_modal_footer">
-                     <button type="button" class="btn change_btn btn-default change_certain" 
-                      data-dismiss="modal">确认
-                    </button>
-                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
-                      取消
-                    </button>
-                  </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal -->
-             </div>
-			</form>
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>您已选择交易方式为线上交易保证金500RMB，请等待对方选择。</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">与对方交谈</a>
-						  <a href="#" class="change_disagree">拨打电话</a>
-						 </div>
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                    </div>
+                    <footer class="change_foot clearfix">
+                        <span>{$good_list.to_user_data.user_name}想和您交换物品，是否同意？</span>
+                        <div  class="change_foot_body">
+                            <a href="javascript:old.set_exchange({$good_list.id})" class="change_agree">同意</a>
+                            <a href="javascript:old.ignore_exchange({$good_list.id})" class="change_disagree">忽略</a>
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟同意您的交换申请，请填写物流信息</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree no_margin">填写物流信息</a>
-						 
-						 </div>
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                    </footer>
+                </section><!--State 1-->
+                {/if}
+            <!--step 2 exchangestate＝1 ：正在交换-->
+                {if $good_list.exchange_state eq 1 && $good_list.is_giveup eq 0}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                                        <span class="change_title_left">
+                                            <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                            {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                        </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>交换方式：担保交易(500RMB)顺丰900120345543</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">交换完成</a>
-						    <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal2">投诉</a>
-						 </div>
-				 <form action="" method="">
-						 <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" 
-                        aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog change_modal_dialog">
-                         <div class="modal-content change-content">
-                         <div class="modal-header change_modal_header">
-                           
-                        <h4 class="modal-title change_modal_title" id="myModalLabel">
-                         请将您的不满告诉我们，我们会尽快处理
-                       </h4>
-                      </div>
-                     <div class="modal-body change_modal_body">
-                       <div class="change_modal_body_top no_bottom">
-					      <textarea rows=8 class="change_modal_body_top_textarea"></textarea>
-					   </div>
-					 
-                     </div>
-					 
-                     <div class="modal-footer change_modal_footer">
-                     <button type="button" class="btn change_btn btn-default change_certain" 
-                      data-dismiss="modal">确认
-                    </button>
-                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
-                      取消
-                    </button>
-                  </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal -->
-             </div>
-			</form> 
-				   </div>
-				 </div>					 
-              </div>
-              <div class="tab-pane fade" id="ios">
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟想和您交换物品，是否同意？</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">同意</a>
-						  <a href="#" class="change_disagree">忽略</a>
-						 </div>
-				   </div>
-				 </div>
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟想用线上交换保证金300RMB的方式和您交换物品，是否同意？</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">同意</a>
-						  <a href="#" class="change_disagree"  data-toggle="modal" data-target="#myModal3">更改交换方式</a>
-						 </div>
-					   <form action="" method="">
-						 <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" 
-                        aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog change_modal_dialog">
-                         <div class="modal-content change-content">
-                         <div class="modal-header change_modal_header">
-                           
-                        <h4 class="modal-title change_modal_title" id="myModalLabel">
-                         更改交换方式
-                       </h4>
-                      </div>
-                     <div class="modal-body change_modal_body">
-                       <div class="change_modal_body_top">
-					      <a href="#">线下交换</a>
-					   </div>
-					    <div class="change_modal_body_bottom">
-						   <a href="#">线上交换</a>
-						   <span class="change_modal_body_bottom_span">对方选择了更改交换方式为线上交易+保证金</span>
-						   <label><input type="text" value="" placeholder="300" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RMB</label>
-						   <span class="change_modal_body_bottom_span no_top">您输入的保证金金额不能少于此金额</span>
-						</div>
-                     </div>
-					 
-                     <div class="modal-footer change_modal_footer">
-                     <button type="button" class="btn change_btn btn-default change_certain" 
-                      data-dismiss="modal">确认
-                    </button>
-                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
-                      取消
-                    </button>
-                  </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal -->
-             </div>
-			</form>						 
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10% class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images1.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images2.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
+                    </div>
+                    {if $good_list.exchange_log.to_user_state eq 4}
+                        <!--对方已收货-->
+                        <footer class="change_foot clearfix">
+                            <span>对方已收到了呦！您收到物品就点确认吧！</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','from')">完成交换</a>
+                                <a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="from"  data-toggle="modal">投诉</a>
+                                <!--<a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>-->
+                            </div>
+                        </footer>
+                    {/if}<!--State 21-->
+                    {if $good_list.exchange_log.to_user_state eq 0}
+                    <footer class="change_foot clearfix">
+                        <span>你已经同意交换，请等待对方选择交换方式。</span>
+                        <div class="change_foot_body">
+                            <a href="#" class="change_agree">与对方交谈</a>
+                            <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
                         </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>您已选择交易方式为线上交易保证金500RMB，请等待对方选择。</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">与对方交谈</a>
-						  <a href="#" class="change_disagree">拨打电话</a>
-						 </div>
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
-                        </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>小弟同意您的交换申请，请填写物流信息</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree no_margin">填写物流信息</a>
-						 
-						 </div>
-				   </div>
-				 </div>	
-			     <div class="change_Panels">
-                   <div class="change_title clearfix">
-				        <span class="change_title_left">
-						    <img src="{$TMPL}/old/images/avatar.png" border=0 width=10 class="img-circle">
-							小弟
-						</span>
-						<span class="change_title_right">
-						   2016.01.08
-						</span>
-				   </div>
-				   <div class="change_body clearfix">
-				       <div class="change_body1">
-					         <img src="{$TMPL}/old/images/images8.png" border=0 width=100%>
-					   
-					   </div>
-				       <div class="change_body2">
-					       <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
-					   </div>
-					   <div class="change_body3">
-					        <img src="{$TMPL}/old/images/images9.png" border=0 width=100%>
-					   </div>
-				   </div>
-				   <div class="change_progess clearfix">
-				         <span >您还剩3小时3分钟完成确认，quickly ~</span>
-				         <div class="progress progress-striped process_height">
-                             <div class="progress-bar progress-bar-info" role="progressbar"
-                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
-                                style="width: 30%;">
-                                </div>
-                        </div>
-				   </div>
-				   <div class="change_foot clearfix">
-				      <span>交换方式：担保交易(500RMB)顺丰900120345543</span>
-					     <div  class="change_foot_body"> 
-						  <a href="#" class="change_agree">交换完成</a>
-						    <a href="#" class="change_disagree" data-toggle="modal" data-target="#myModal4">投诉</a>
-						 </div>
-				  <form action="" method="">
-						 <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" 
-                        aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog change_modal_dialog">
-                         <div class="modal-content change-content">
-                         <div class="modal-header change_modal_header">
-                           
-                        <h4 class="modal-title change_modal_title" id="myModalLabel">
-                         请将您的不满告诉我们，我们会尽快处理
-                       </h4>
-                      </div>
-                     <div class="modal-body change_modal_body">
-                       <div class="change_modal_body_top no_bottom">
-					      <textarea rows=8 class="change_modal_body_top_textarea"></textarea>
-					   </div>
-					 
-                     </div>
-					 
-                     <div class="modal-footer change_modal_footer">
-                     <button type="button" class="btn change_btn btn-default change_certain" 
-                      data-dismiss="modal">确认
-                    </button>
-                    <button type="button" class="btn  change_btn btn-primary change_cancle" data-dismiss="modal">
-                      取消
-                    </button>
-                  </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal -->
-             </div>
-			</form> 						 
-				   </div>
-				 </div>	                  
-              </div>
-         </div>
+                    </footer><!--State 3-->
+                    {/if}
+                    <!--对方填完地址了-->
+                    {if $good_list.exchange_log.to_user_state eq 2}
+                        {if $good_list.exchange_log.from_user_state eq 1}
+                        <!--选择收货地址-->
+                        <footer class="change_foot clearfix">
+                            <span>已确认{$good_list.to_user_data.user_name}的交换方式(线上担保交换，保证金{$good_list.exchange_log.to_deposit}RMB)</span>
+                            <div class="change_foot_body">
+                                {if $user_consignee}
+                                {foreach from=$user_consignee item=c_list key=keyd}
+                                {if $c_list.is_default eq '1'}
+                                <span>默认：{$c_list.consignee}&nbsp;&nbsp;{$c_list.mobile}&nbsp;&nbsp;{$c_list.province}{$c_list.city}{$c_list.address}</span>
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.set_exchange_consignee('{$good_list.id}','{$c_list.id}','from')">使用默认地址</a>
+                                {/if}
+                                {/foreach}
 
-      </div>
-   
-   </div>
+                                <a href="#" class="change_disagree no_margin" data-toggle="modal" data-target="#consigneeModal" data-exchange-id="{$good_list.id}" data-user-type="from">选择收货地址</a>
+                                {else}
+                                <a href="{url_wap r="old#edit_consignee"}"  class="change_agree no_margin">
+                                填写收货地址</a>
+                                {/if}
+                            </div>
+                        </footer><!--State 9-->
+                        {/if}
+                    <!--From & To 都填完地址了-->
+                        {if $good_list.exchange_log.from_user_state eq 2}
+                        <footer class="change_foot clearfix">
+                            <span>对方收货地址：{$good_list.exchange_log.to_consignee}&nbsp;&nbsp;{$good_list.exchange_log.to_mobile}&nbsp;&nbsp;{$good_list.exchange_log.to_province}{$good_list.exchange_log.to_city}{$good_list.exchange_log.to_address}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.to_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree" data-target="#expressModal" data-exchange-id="{$good_list.id}" data-user-type="from"  data-toggle="modal">请填写您发出的物流信息</a>
+                            </div>
+                        </footer><!--State 10-->
+                        {/if}
+                        <!--From填完了物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 3}
+                        <footer class="change_foot clearfix">
+                            <span>等待对方填写物流信息。您的物流信息：{$good_list.exchange_log.from_express}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.to_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree">与对方交谈</a>
+                                <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                            </div>
+                        </footer><!--State 12-->
+                        {/if}
+                    {/if}
+                    {if $good_list.exchange_log.to_user_state eq 3}
+                        <!--From填完了物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 3}
+                        <footer class="change_foot clearfix">
+                            <span>您的物流信息：{$good_list.exchange_log.from_express}；对方物流信息：{$good_list.exchange_log.to_express}</span>
+                            <span>您收到对方物品后点击‘完成交换’</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','from')">完成交换</a>
+                                <a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="from"  data-toggle="modal">投诉</a>
+                                <!--<a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>-->
+                            </div>
+                        </footer><!--State 11-->
+                        {/if}
+                        <!--From没填完物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 2}
+                        <footer class="change_foot clearfix">
+                            <span>对方收货地址：{$good_list.exchange_log.to_consignee}&nbsp;&nbsp;{$good_list.exchange_log.to_mobile}&nbsp;&nbsp;{$good_list.exchange_log.to_province}{$good_list.exchange_log.to_city}{$good_list.exchange_log.to_address}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.to_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree" data-target="#expressModal" data-exchange-id="{$good_list.id}" data-user-type="from"  data-toggle="modal">请填写您发出的物流信息</a>
+                            </div>
+                        </footer><!--State 13-->
+                        {/if}
+                        {if $good_list.exchange_log.from_user_state eq 4}
+                        <footer class="change_foot clearfix">
+                            <span>已完成</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="">删除</a>
+                            </div>
+                        </footer><!--State 18-->
+                        {/if}
+                    {/if}
+                    {if $good_list.exchange_log.to_user_state eq 1}
+                        <!--A选择线下-->
+                        {if $good_list.exchange_log.from_change_type eq 1}
+                            {if $good_list.exchange_log.to_change_type eq 1}
+                            <footer class="change_foot clearfix">
+                                <span>都同意线下交换了，愉快的去约时间见面吧！</span>
+                                <div class="change_foot_body">
+                                    <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','from')">完成交换</a>
+                                    <a href="#" class="change_disagree">与对方交谈</a>
+                                    <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                </div>
+                            </footer><!--State 15-->
+                            {/if}
+                            {if $good_list.exchange_log.to_change_type eq 2}
+                            <footer class="change_foot clearfix">
+                                <span>您选择交换方式(线下交换)，请等待对方确认。</span>
+                                <div class="change_foot_body">
+                                    <a href="#" class="change_agree">与对方交谈</a>
+                                    <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                </div>
+                            </footer><!--State 14-->
+                            {/if}
+                        {/if}
+                        {if $good_list.exchange_log.from_change_type eq 0}
+                        <footer class="change_foot clearfix">
+                            <span>{if $good_list.exchange_log.to_change_type eq 1}对方交换方式：线下交换{/if}
+                                {if $good_list.exchange_log.to_change_type eq 2}对方交换方式：线上交换保证金（{$good_list.exchange_log.to_deposit}RMB){/if}</span><!--State 16-->
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','from')">同意</a>
+                                <a href="#" class="change_disagree" data-toggle="modal" data-target="#exMethodModal" data-exchange-id="{$good_list.id}" data-user-type="from" data-other-deposit="{$good_list.exchange_log.to_deposit}">更换交换方式</a>
+                            </div>
+                        </footer><!--State 4-->
+                        {/if}
+                        {if $good_list.exchange_log.from_change_type eq 2}
+                        <!-- 判断两人的交换方式是否都是线上-->
+                            {if ($good_list.exchange_log.from_change_type eq $good_list.exchange_log.to_change_type) && ($good_list.exchange_log.from_deposit eq $good_list.exchange_log.to_deposit)}
+                                {if $good_list.exchange_log.from_user_state eq 1}
+                                <!--都一样啊,选择收货地址-->
+                                <footer class="change_foot clearfix">
+                                    <span>已确认{$good_list.to_user_data.user_name}的交换方式(线上担保交换，保证金{$good_list.exchange_log.to_deposit}RMB)</span>
+                                    <div class="change_foot_body">
+                                        {if $user_consignee}
+                                        {foreach from=$user_consignee item=c_list key=keyd}
+                                        {if $c_list.is_default eq '1'}
+                                        <span>默认：{$c_list.consignee}&nbsp;&nbsp;{$c_list.mobile}&nbsp;&nbsp;{$c_list.province}{$c_list.city}{$c_list.address}</span>
+                                        <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.set_exchange_consignee('{$good_list.id}','{$c_list.id}','from')">使用默认地址</a>
+                                        {/if}
+                                        {/foreach}
+
+                                        <a href="#" class="change_disagree no_margin" data-toggle="modal" data-target="#consigneeModal" data-exchange-id="{$good_list.id}" data-user-type="from">选择收货地址</a>
+                                        {else}
+                                        <a href="{url_wap r="old#edit_consignee"}"  class="change_agree no_margin">
+                                        填写收货地址</a>
+                                        {/if}
+                                    </div>
+                                </footer><!--State 5-->
+                                {/if}
+                                <!--都一样啊，我填完地址了-->
+                                {if $good_list.exchange_log.from_user_state eq 2}
+
+                                    <!--{if $good_list.exchange_log.to_user_state eq 1}-->
+                                        <!--对方没填完地址-->
+                                        <footer class="change_foot clearfix">
+                                        <span>正在等待{$good_list.to_user_data.user_name}填写收获地址，填好了马上通知您！</span>
+                                        <div  class="change_foot_body">
+                                            <a href="#" class="change_agree">与对方交谈</a>
+                                            <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                        </div>
+                                        </footer><!--State 8-->
+                                    <!--{/if}-->
+                                {/if}
+                            {else}
+                                <!-- 判断两人的交换方式是否相同:钱不一样-->
+                                <footer class="change_foot clearfix">
+                                    <span>您选择交换方式(线上担保交换，保证金{$good_list.exchange_log.from_deposit}RMB)，请等待对方确认。</span>
+                                    <div class="change_foot_body">
+                                        <a href="#" class="change_agree">与对方交谈</a>
+                                        <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                    </div>
+                                </footer><!--State 6 & State 17-->
+                            {/if}
+                        {/if}
+                    {/if}
+                </section>
+                {/if}
+            <!--step 2 exchangestate＝1  is_giveup=1 ：B放弃交换-->
+                {if $good_list.exchange_state eq 1 && $good_list.is_giveup eq 1}
+                    <section class="change_Panels">
+                        <header class="change_title clearfix">
+                                    <span class="change_title_left">
+                                        <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                        {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                    </span>
+                            <span class="change_title_right">{$good_list.create_time}</span>
+                        </header>
+                        <div class="change_body clearfix">
+                            <div class="change_body1">
+                                {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                                {if $img_list.is_top eq 1}
+                                <!--获取封面-->
+                                <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                                {/if}
+                                {/foreach}
+                            </div>
+                            <div class="change_body2">
+                                <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                            </div>
+                            <div class="change_body3">
+                                {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                                {if $img_list.is_top eq 1}
+                                <!--获取封面-->
+                                <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                                {/if}
+                                {/foreach}
+                            </div>
+                        </div>
+                        <footer class="change_foot clearfix">
+                            <span>{$good_list.to_user_data.user_name}放弃此次交换</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:old.old.put_on_first({$good_list.id})" class="change_agree no_margin">重新上架</a>
+                            </div>
+                        </footer>
+                    </section><!--State 7-->
+                {/if}
+            <!--step 3 exchangestate＝2 ：完成交换-->
+                {if $good_list.exchange_state eq 2}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                                <span class="change_title_left">
+                                    <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                    {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                        </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    <footer class="change_foot clearfix">
+                        <span>已完成</span>
+                        <div class="change_foot_body">
+                            <a href="javascript:void(0)" class="change_agree no_margin" onclick="">删除</a>
+                        </div>
+                    </footer>
+                </section>
+                {/if}
+            {/foreach}
+        </div>
+<!-- To = me ; From = other-->
+        <div class="tab-pane fade" id="my_exchange">
+            <!--Empty-->
+            {if $to_error}
+            <section class="change_Panels"><div class="exchange_empty"><span>{$to_error}</span><a href="{url_wap r="old"}">看看有哪些好玩的东东先</a></div></section>
+            {/if}
+            <!--Not Empty-->
+            {foreach from=$to_user_goods item=good_list key=keyd}
+                {if $good_list.exchange_state eq 0}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                            <span class="change_title_left">
+                                <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" "" border=0 width=15 class="img-circle">
+                                <!--我的名字-->
+                                {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                            </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                        </div>
+                        <div class="change_body3">
+                            <!--想要交换的对方的物品图片-->
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    {if $good_list.is_show}
+                    <footer class="change_foot clearfix">
+                        <span>您已请求交换，请等待对方响应。</span>
+                        <div  class="change_foot_body">
+                            <a href="#" class="change_agree">与对方交谈</a>
+                            <a href="tel://{$good_list.from_user_data.mobile}" class="change_disagree">拨打电话</a>
+                        </div>
+                    </footer>
+                    {else}
+                    <footer class="change_foot clearfix">
+                        <span>很遗憾，对方咩有看好你的物品呦</span>
+                        <div  class="change_foot_body">
+                            <a href="#" class="change_agree">删除</a><!--此时应该删除本条log-->
+                        </div>
+                    </footer><!--State 2-->
+                    {/if}
+                </section><!--State 1-->
+                {/if}
+                {if $good_list.exchange_state eq 1 && $good_list.is_giveup eq 0}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                                    <span class="change_title_left">
+                                        <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                        {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                    </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                        </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    {if $good_list.exchange_log.to_user_state eq 4}
+                    <!--对方已收货-->
+                    <footer class="change_foot clearfix">
+                        <span>对方已收到了呦！您收到物品就点确认吧！</span>
+                        <div class="change_foot_body">
+                            <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','to')">完成交换</a>
+                            <a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">投诉</a>
+                            <!--<a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>-->
+                        </div>
+                    </footer>
+                    {/if}<!--State 21-->
+                    {if $good_list.exchange_log.to_user_state eq 0}
+                    <div class="change_progess clearfix">
+                        <span >您还有{$good_list.from_rest_time.time}完成确认，quickly ~</span>
+                        <div class="progress progress-striped process_height">
+                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: {$good_list.from_rest_time.percent}%;">
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="change_foot clearfix">
+                        <span>{$good_list.from_user_data.user_name}同意您的交换申请，请选择交换方式。</span>
+                        <div  class="change_foot_body">
+                            <a href="#" class="change_agree" data-toggle="modal" data-target="#exMethodModal" data-exchange-id="{$good_list.id}" data-user-type="to">
+                                选择交换方式
+                            </a>
+                        </div>
+                    </footer><!--State 3-->
+                    {/if}
+                    <!--wo填完地址了-->
+                    {if $good_list.exchange_log.to_user_state eq 2}
+                        {if $good_list.exchange_log.from_user_state eq 1}
+                        <!--选择收货地址-->
+                        <footer class="change_foot clearfix">
+                            <!--对方没填完地址-->
+                                <span>正在等待{$good_list.from_user_data.user_name}填写收货地址，填好了马上通知您！</span>
+                                <div  class="change_foot_body">
+                                    <a href="#" class="change_agree">与对方交谈</a>
+                                    <a href="tel://{$good_list.from_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                </div>
+                        </footer><!--State 9-->
+                        {/if}
+                        <!--From & To 都填完地址了-->
+                        {if $good_list.exchange_log.from_user_state eq 2}
+                        <footer class="change_foot clearfix">
+                            <span>对方收货地址：{$good_list.exchange_log.from_consignee}&nbsp;&nbsp;{$good_list.exchange_log.from_mobile}&nbsp;&nbsp;{$good_list.exchange_log.from_province}{$good_list.exchange_log.from_city}{$good_list.exchange_log.from_address}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.from_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree" data-target="#expressModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">请填写您发出的物流信息</a>
+                            </div>
+                        </footer><!--State 10-->
+                        {/if}
+                        <!--From 填完物流了-->
+                        {if $good_list.exchange_log.from_user_state eq 3}
+                        <footer class="change_foot clearfix">
+                            <span>对方收货地址：{$good_list.exchange_log.from_consignee}&nbsp;&nbsp;{$good_list.exchange_log.from_mobile}&nbsp;&nbsp;{$good_list.exchange_log.from_province}{$good_list.exchange_log.from_city}{$good_list.exchange_log.from_address}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.from_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree" data-target="#expressModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">请填写您发出的物流信息</a>
+                            </div>
+                        </footer><!--State 12-->
+                        {/if}
+                    {/if}
+                    {if $good_list.exchange_log.to_user_state eq 3}
+                        <!--From填完了物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 4}
+                        <footer class="change_foot clearfix">
+                            <span>对方已收到了呦！您收到物品就点确认吧！</span>
+                            <span>对方物流信息：{$good_list.exchange_log.to_express}</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','to')">完成交换</a>
+                                <a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">投诉</a>
+                            </div>
+                        </footer><!--State 11-->
+                        {/if}
+                        <!--From填完了物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 3}
+                        <footer class="change_foot clearfix">
+                            <span>您的物流信息：{$good_list.exchange_log.to_express}；对方物流信息：{$good_list.exchange_log.from_express}</span>
+                            <span>您收到对方物品后点击‘完成交换’</span>
+                            <div class="change_foot_body">
+                                <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','to')">完成交换</a>
+                                <a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">投诉</a>
+                            </div>
+                        </footer><!--State 11-->
+                        {/if}
+                        <!--From没填完物流信息-->
+                        {if $good_list.exchange_log.from_user_state eq 2}
+                        <footer class="change_foot clearfix">
+                            <span>等待对方填写物流信息。您的物流信息：{$good_list.exchange_log.to_express}</span>
+                            <!--<span>交换方式：担保交易保证金（{$good_list.exchange_log.to_deposit}RMB）{$good_list.exchange_log.to_express}ps:这里显示我填写的物流信息</span>-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree">与对方交谈</a>
+                                <a href="tel://{$good_list.from_user_data.mobile}" class="change_disagree">拨打电话</a>
+                            </div>
+                        </footer><!--State 13-->
+                        {/if}
+                    {/if}
+                    {if $good_list.exchange_log.to_user_state eq 1}
+                        <!--A选择线下-->
+                        {if $good_list.exchange_log.from_change_type eq 1}
+                            {if $good_list.exchange_log.to_change_type eq 1}
+                            <footer class="change_foot clearfix">
+                                <span>都同意线下交换了，愉快的去约时间见面吧！</span>
+                                <div class="change_foot_body">
+                                    <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange(this,'{$good_list.id}','to')">完成交换</a>
+                                    <a href="#" class="change_disagree">与对方交谈</a>
+                                    <a href="tel://{$good_list.from_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                </div>
+                            </footer><!--State 15-->
+                            {/if}
+                            {if $good_list.exchange_log.to_change_type eq 2}
+                            <footer class="change_foot clearfix">
+                                <span>{$good_list.from_user_data.user_name}选择交换方式(线下交换)</span>
+                                <div class="change_foot_body">
+                                    <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to')">同意</a>
+                                    <a href="javascript:void(0)" class="change_agree" onclick="old.giveup_exchange(this,'{$good_list.id}','to')">放弃交换</a>
+                                    <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                                </div>
+                            </footer><!--State 14-->
+                            {/if}
+                        {/if}
+                        {if $good_list.exchange_log.from_change_type eq 0}
+                        <footer class="change_foot clearfix">
+                                <span>{if $good_list.exchange_log.to_change_type eq 1}已选择交换方式：线下交换{/if}
+                                    {if $good_list.exchange_log.to_change_type eq 2}已选择交换方式：线上交换保证金（{$good_list.exchange_log.to_deposit}RMB){/if}，请等待对方确认。</span><!--State 16-->
+                            <div class="change_foot_body">
+                                <a href="#" class="change_agree">与对方交谈</a>
+                                <a href="tel://{$good_list.to_user_data.mobile}" class="change_disagree">拨打电话</a>
+                            </div>
+                        </footer><!--State 4-->
+                        {/if}
+                        {if $good_list.exchange_log.from_change_type eq 2}
+                        <!-- 判断两人的交换方式是否都是线上-->
+                            {if ($good_list.exchange_log.from_change_type eq $good_list.exchange_log.to_change_type) && ($good_list.exchange_log.from_deposit eq $good_list.exchange_log.to_deposit)}
+                            <!--都一样啊,选择收货地址-->
+                            <footer class="change_foot clearfix">
+                                <span>已确认{$good_list.from_user_data.user_name}的交换方式(线上担保交换，保证金{$good_list.exchange_log.from_deposit}RMB)</span>
+                                <div class="change_foot_body">
+                                    {if $user_consignee}
+                                    {foreach from=$user_consignee item=c_list key=keyd}
+                                    {if $c_list.is_default eq '1'}
+                                    <span>默认：{$c_list.consignee}&nbsp;&nbsp;{$c_list.mobile}&nbsp;&nbsp;{$c_list.province}{$c_list.city}{$c_list.address}</span>
+                                    <a href="javascript:void(0)" class="change_agree no_margin" onclick="old.set_exchange_consignee('{$good_list.id}','{$c_list.id}','to')">使用默认地址</a>
+                                    {/if}
+                                    {/foreach}
+
+                                    <a href="#" class="change_disagree no_margin" data-toggle="modal" data-target="#consigneeModal" data-exchange-id="{$good_list.id}" data-user-type="to">选择收货地址</a>
+                                    {else}
+                                    <a href="{url_wap r="old#edit_consignee"}"  class="change_agree no_margin">
+                                    填写收货地址</a>
+                                    {/if}
+                                </div>
+                            </footer><!--State 5-->
+                            {else}
+                                <!-- 判断两人的交换方式是否相同:钱不一样-->
+                                <footer class="change_foot clearfix">
+                                    <span>{$good_list.from_user_data.user_name}选择交换方式(线上担保交换，保证金{$good_list.exchange_log.from_deposit}RMB)</span>
+                                    <div class="change_foot_body">
+                                        <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to')">同意</a>
+                                        <a href="javascript:void(0)" class="change_agree" onclick="old.giveup_exchange(this,'{$good_list.id}','to')">放弃交换</a>
+                                    </div>
+                                </footer><!--State 17 & State 6-->
+                            {/if}
+                        {/if}
+                    {/if}
+                </section>
+                {/if}
+                {if $good_list.exchange_state eq 1 && $good_list.is_giveup eq 1}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                                <span class="change_title_left">
+                                    <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                    {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                        </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    <footer class="change_foot clearfix">
+                        <span>您已放弃此次交换</span>
+                    </footer>
+                </section><!--State 7-->
+                {/if}
+                <!--step 3 exchangestate＝2 ：完成交换-->
+                {if $good_list.exchange_state eq 2}
+                <section class="change_Panels">
+                    <header class="change_title clearfix">
+                                    <span class="change_title_left">
+                                        <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
+                                        {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}
+                                    </span>
+                        <span class="change_title_right">{$good_list.create_time}</span>
+                    </header>
+                    <div class="change_body clearfix">
+                        <div class="change_body1">
+                            {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="change_body2">
+                            <img src="{$TMPL}/old/images/change.png" border=0 width=100%>
+                        </div>
+                        <div class="change_body3">
+                            {foreach from=$good_list.from_images_data.list item=img_list key=keyd}
+                            {if $img_list.is_top eq 1}
+                            <!--获取封面-->
+                            <a href="{url_wap r="old#detail" p="id=$img_list.goods_id"}"><img src="{$img_list.url}" border=0 width=100%></a>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    <footer class="change_foot clearfix">
+                        <span>已完成</span>
+                        <div class="change_foot_body">
+                            <a href="javascript:void(0)" class="change_agree no_margin" onclick="">删除</a>
+                        </div>
+                    </footer>
+                </section>
+                {/if}
+            {/foreach}
+        </div>
+        </div><!--myTabContent end-->
+    </div>
+</div>
+<!-----------------------------------Modal-->
+
+<!--收货地址-modal-->
+<div class="modal fade" id="consigneeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请选择您的收货地址</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    {foreach from=$user_consignee item=c_list key=keyd}
+                    <input id="{$c_list.id}" hidden="hidden" type="radio" name="consignee" value="{$c_list.id}" {if $c_list.is_default eq '1'}checked{/if}><label for="{$c_list.id}" class="consigneeLabel">{$c_list.consignee}&nbsp;&nbsp;{$c_list.mobile}&nbsp;&nbsp;{$c_list.province}{$c_list.city}{$c_list.address}</label>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--投诉-modal-->
+<div class="modal fade" id="complaintModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请将您的不满告诉我们，我们会尽快处理！</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    <textarea name="complaintValue" rows=8 class="change_modal_body_top_textarea" placeholder="讲讲你遇到的问题😊"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--更换交换方式-modal-->
+<div class="modal fade" id="exMethodModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h4 class="modal-title change_modal_title">更改交换方式</h4>
+            </div>
+            <div class="modal-body change_modal_body">
+                <form id="exMethodForm">
+                    <div class="change_modal_body_top">
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_offline" value="1" checked><label for="change_type_offline">线下交换</label>
+                    </div>
+                    <div class="change_modal_body_bottom">
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_online" value="2" ><label for="change_type_online">线上交换</label>
+                        <div class="change_type_offline_bottom">
+                            <!--点击线上交换时显示-->
+                            <span class="change_modal_body_bottom_span no_top">对方选择了更改交换方式为线上交易+保证金(<em></em>RMB)</span>
+                            <span class="change_modal_body_bottom_span">您输入的保证金金额不能少于此金额</span>
+                            <!--<span class="change_modal_body_bottom_span">请输入保证金：</span>-->
+                            <input type="text" id="deposit" name="deposit" placeholder="请输入保证金" ><i>RMB</i>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain" data-dismiss="modal" id="exMethodFormSubmit">确认</button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--物流信息-modal-->
+<div class="modal fade" id="expressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请填写您邮递物品的物流信息</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    <input type="text" class="form-control" name="express"
+                               placeholder="顺丰900120345543">
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="expressSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{include file="old/old_footer.html"}
+<script>
+    $(function () {
+        var hash = location.hash;
+        $tab = hash?$('#myTab li a[href="'+hash+'"]'):$('#myTab li:eq(0) a');
+        $tab.tab('show');
+        /*修改时间戳格式*/
+        $(".change_title_right").each(function(){
+            var time = $(this).html();
+            var newDate = new Date();
+            newDate.setTime(time * 1000);
+//            console.log(newDate.toLocaleDateString());
+            $(this).html(newDate.toLocaleDateString());
+        })
+        console.log("{$good_list.id}")
+        //设置封面弹出
+        $('#exMethodModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var parent = button.parents('.change_foot');
+            var exchange_id = button.data('exchange-id');
+            var user_type = button.data('user-type');
+            var other_deposit = button.data('other-deposit');
+//            var other_deposit = 400;
+            var p = {exchange_id:exchange_id,user_type:user_type};
+            var modal = $(this);
+            var submit = $('#exMethodFormSubmit');
+            var form = $('#exMethodForm');
+            var onlineRadio = $('#change_type_online'),offlineRadio = $('#change_type_offline');
+            var offlinePart =  $('.change_type_offline_bottom');
+//            console.log(other_deposit);
+            onlineRadio.on(EVENT_TYPE,function(){
+                if(this.checked){
+                    if(other_deposit==undefined || other_deposit==0){
+                        offlinePart.find('.change_modal_body_bottom_span').hide();
+                    }else{
+                        offlinePart.find('.no_top>em').html(other_deposit)
+                    }
+                    offlinePart.slideDown();
+                };
+            });
+            offlineRadio.on(EVENT_TYPE,function(){
+                if(this.checked){
+                    offlinePart.slideUp();
+                };
+            })
+            submit.on(EVENT_TYPE,function(){
+                var formP = form.serializeArray();
+                //线下交易：1，线上交易：2
+                if(formP[0].name=='change_type'&&formP[0].value==1){
+                    //线下交换
+                    p.change_type = 1;
+                    p.deposit = 0;
+                }else if(formP[0].name=='change_type'&&formP[0].value==2){
+                    p.change_type = 2;
+                    p.deposit = formP[1].value;
+                }
+//                console.log(p);
+                console.log(p);
+                if(p.change_type==2&& p.deposit==0){
+                    var d = new dialog('｀保证金需要填呦｀','light',function(){});
+                    return false;
+                }else if(p.deposit<parseFloat(offlinePart.find('.no_top>em').html())){
+                    var d = new dialog('｀保证不能少于对方呦｀','light',function(){});
+                    return false;
+                }else{
+                    //设置交换方式
+                    old.set_exchange_type(p,function(json){
+                        console.log(json);
+                        //设置完成开始支付
+                        //完成支付后，修改按钮
+                        /*var btnStr = '<a href="#" class="change_agree">与对方交谈</a><a href="#" class="change_disagree">拨打电话</a>';
+                         if(p.change_type==2){
+                         parent.find('span').html('您选择交易方式为线上交换保证金为'+p.deposit+'RMB，请等待对方响应。')
+                         }else{
+                         parent.find('span').html('您选择交易方式为线下交换，请等待对方响应。')
+                         }
+                         parent.find('.change_foot_body').html(btnStr);*/
+                        window.location.reload()
+                    },function(json){
+                        var d = new dialog(json.data.msg,'light',function(){})
+                    });
+                }
+            });
+
+            /*$(this).on('hidden.bs.modal', function (event) {
+
+             })*/
+        })
+        /*选择地址*/
+        $('#consigneeModal').on('show.bs.modal', function (event) {
+            var consginee_id = $('input[name="consignee"]:checked').val();
+            var button = $(event.relatedTarget);
+            var exchange_id = button.data('exchange-id');
+            var user_type = button.data('user-type');
+            var p = {exchange_id:exchange_id,user_type:user_type,consginee_id:consginee_id};
+            $(this).on('hidden.bs.modal', function (event) {
+                console.log(p);
+                if(consginee_id==''||consginee_id==undefined){
+                    var d = new dialog('｀没设置成功，是不是没选上？重新选一下吧｀','light',function(){})
+                    return false;
+                }
+                old.set_exchange_consignee(exchange_id,consginee_id,user_type);
+            })
 
 
+        })
 
- 
+        /*填写物流信息*/
+        $('#expressModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var exchange_id = button.data('exchange-id');
+            var user_type = button.data('user-type');
+            $('#expressSubmit').on(EVENT_TYPE,function(){
+                var p = {exchange_id:exchange_id,user_type:user_type,express:$('input[name="express"]').val()};
+                if(p.express==""){
+                    var d = new dialog('｀单号不能为空呦｀','light',function(){});
+                    return false;
+                };
+                old.set_exchange_express(p,function(json){
+                    /*var callbackStr = '<span>交换方式：担保交易(RMB)顺丰900120345543</span>';
+                    callbackStr += '<div class="change_foot_body">'
+                    callbackStr += '<a href="javascript:void(0)" class="change_agree no_margin" onclick="old.finish_exchange()">完成交换</a>';
+                    callbackStr += '<a href="#" class="change_disagree" data-target="#complaintModal" data-exchange-id="{$good_list.id}" data-user-type="to"  data-toggle="modal">投诉</a>';
+                    callbackStr += '</div>';
+                    console.log(json)*/
+                    window.location.reload();
+                })
+            });
+        })
+    });
+</script>
 
 
-  </body>
- <html>
+</body>
+<html>

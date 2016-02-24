@@ -11,133 +11,83 @@
     </div>
 </div>
 <div class="change_invation">
+
         <div class="change_invation_top">
            <ul id="myTab" class="nav nav-tabs">
-            <li class="active">
-              <a href="#home" data-toggle="tab">
-               货架
-              </a>
-            </li>
-            <li>
-		       <a href="#ios" data-toggle="tab">仓库</a>
-		    </li>
+            <li><a href="#on" data-toggle="tab">货架</a></li>
+            <li><a href="#off" data-toggle="tab">仓库</a></li>
            </ul>
           <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade in active " id="home">
-					        <ul class="cans clearfix">
-							    <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-							
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">上架</a>
-								   </div>
-								</li>
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-							</ul>	 
+              <!--上架物品-->
+              <div class="tab-pane fade" id="on">
+                    <ul class="cans clearfix">
+                        {if $error}<div class="exchange_empty"><span>{$error}</span><a href="{url_wap r="old#release"}">发一个</a></div>{else}
+                        {foreach from=$goods item=good_list key=keyd}
+                        {if $good_list.online_state eq 1}
+                        <li>
+                           <div class="cans_left">
+                               <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
+                                   <img src="{$good_list.head_image}">
+                                   <div class="cans_left_left">
+                                       <span class="cans_left_top">{$good_list.name}</span>
+                                       <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
+                                   </div>
+                               </a>
+
+                           </div>
+                           <div class="cans_right">
+                             <a href="#" onclick="javascript:old.pull_off(this,'{$good_list.id}')">下架</a>
+                           </div>
+                        </li>
+                        {/if}
+                        {/foreach}
+                        {/if}
+                    </ul>
               </div>
-              <div class="tab-pane fade" id="ios">
-			                 <ul class="cans clearfix">
-							    <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">上架</a>
-								   </div>
-								</li>
-								 <li>
-								   <div class="cans_left">
-								   <img src="{$TMPL}/old/images/can1.png" border=0 width=30>
-								        <div class="cans_left_left">
-										  <span class="cans_left_top">U格台灯</span><br>
-									      <span class="cans_left_bottom"> 43申请交换</span>
-										 </div>
-								   </div>
-								   <div class="cans_right">
-								     <a href="#">下架</a>
-								   </div>
-								</li>
-							</ul>	                 
+              <!--未上架物品-->
+              <div class="tab-pane fade" id="off">
+                 <ul class="cans clearfix">
+                     {if $error}<div class="exchange_empty"><span>{$error}</span><a href="{url_wap r="old#release"}">发一个</a></div>{else}
+                     {foreach from=$goods item=good_list key=keyd}
+                     {if $good_list.online_state neq 1}
+                     <li>
+                         <div class="cans_left">
+                             <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
+                             <img src="{$good_list.head_image}">
+                             <div class="cans_left_left">
+                                 <span class="cans_left_top">{$good_list.name}</span>
+                                 <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
+                             </div>
+                             </a>
+
+                         </div>
+                         {if $good_list.online_state eq 0}<div class="cans_right"><a href="#" class="disabled">待上线</a></div>{/if}
+                         {if $good_list.online_state eq 2}
+                         <div class="cans_right thin">
+                             <a href="#" onclick="javascript:old.put_on(this,'{$good_list.id}')">上架</a>
+                                <span class="cans_right_btns">
+                                    <div type="button" class="edit_btn"></div>
+                                    <button type="button" class="del_btn"></button>
+                                </span>
+
+                         </div>
+                         {/if}
+                     </li>
+                     {/if}
+                     {/foreach}
+                     {/if}
+                </ul>
               </div>
          </div>
-
       </div>
-   
    </div>
- 
-
-
- 
-
-
-  </body>
- <html>
+{include file="old/old_footer.html"}
+<script>
+    $(function () {
+        var hash = location.hash;
+        $tab = hash?$('#myTab li a[href="'+hash+'"]'):$('#myTab li:eq(0) a');
+        $tab.tab('show');
+    });
+</script>
+</body>
+<html>
