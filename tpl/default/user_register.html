@@ -27,10 +27,10 @@
                          </tr>
                          <tr>
                              <td class="r_position">
-                                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入短信验证码">
+                                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入验证码">
                                  <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>&lt;!&ndash;方法尚有疑问&ndash;&gt;-->
                                  <!--<div class="code_numbera">-->
-                                     <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code code_numbera">发送验证码</button>
+                                 <img src="/verify.php" id="verify" onclick="reget_verify();"/>
                                  <!--</div>-->
 
                              </td>
@@ -76,7 +76,7 @@
      <!--内嵌二维码微信登录JS-->
      <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
      <script type="text/javascript" src="{$TMPL}/js/wechat.js"></script>
-     <script>
+     <script type="text/javascript">
          {if app_conf("USER_VERIFY") eq 2}
          var is_mobile=1;
          {else}
@@ -88,5 +88,11 @@
              urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
              urls.checkVerifyCodeUrl = '{url_wap r="user#check_verify_code"}';
      </script>
+     <script type="text/javascript">
+				function reget_verify(){
+					var timenow = new Date().getTime();
+					$("#verify").attr("src",$("#verify").attr("src")+"?rand="+timenow);
+				}
+		</script>
  </body>
 </html>

@@ -13,6 +13,7 @@
 	overflow:hidden;
 	line-height:2em;
 	border-bottom:0.1em solid #d2d2d2;
+    padding-bottom: 2%;
 }
 .detail_head .detail_head_left{
 	width:70%;
@@ -53,11 +54,11 @@
 	width:100%;
 	margin:3% auto;
 	padding:0 auto;
-	
 	overflow:hidden;
 	font-size:1.2em;
 	line-height:1.5em;
 	color:#565a5c;
+    padding-bottom: 10px;
 }
 .detail_body img{
 	width:100%;
@@ -89,13 +90,14 @@
 	margin:3% auto;
 	padding:0 auto;
 	text-align:center;
-	display:-moz-flex;
-	display:-webkit-flex;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
 	display:flex;
 		
 }
 .detail_content_body_ul .detail_content_body_ul_list{
-	
 	margin:0 auto;
 	padding:0 auto;
 	text-align:center;
@@ -179,8 +181,15 @@
 }
 #toTop{
     position: fixed;
-    bottom: 10%;
-    right: 5%;
+    bottom: 6%;
+    left: 5%;
     text-align: right;
-    width: 100%;
+    width: 2em;
+}
+#toTop img{width: 100%;}
+/*detail_content-new*/
+.detail_content>.select{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 50px;
 }

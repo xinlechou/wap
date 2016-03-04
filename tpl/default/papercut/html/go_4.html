@@ -1,0 +1,57 @@
+<html>
+ <head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>窗花秀</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link href="{$TMPL}/papercut/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/papercut/css/style.css"/>
+  
+    <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+	  <script type="text/javascript" src="{$TMPL}/js/h5img.js"></script>
+	  <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
+	  <script type="text/javascript">
+	  	var m = {$num};
+      var APP_ROOT = '{$APP_URL}';
+      var APP_ROOT_ORA = '{$PC_URL}';
+    </script>
+ </head>
+ <body>
+    <div class="content_chuang">
+	     <div class="content1">
+		    <img src="{$TMPL}/papercut/images/list8.png" border=0 width=60%>
+		 </div>
+		 <div class="content1">
+		    <img src="{$TMPL}/papercut/images/{$num}-1.png" border=0 width=35%>
+			
+		 </div>
+		  <div class="content_position">
+		   {if $pageArray.up neq ''}<div class="next3"><a href="{url_wap r="papercut#go" p="p=$pageArray.up&num=$num"}" ><img src="{$TMPL}/papercut/images/next1.gif" border=0 width=40%></a></div>{/if}
+		 {if $pageArray.down neq ''}<div class="next4"><a href="{url_wap r="papercut#go" p="p=$pageArray.down&num=$num"}" ><img src="{$TMPL}/papercut/images/next2.gif" border=0 width=40%></a></div>{/if}
+		 </div>
+		 <form id="papershare" action="{url_wap r="papercut#share"}" method="post">
+    <div class="camera">
+      <div class="form_submit5">
+		     <a onClick="javascript:upd_file(this,'h5img_file');"><img src="{$TMPL}/papercut/images/sub_came.png" border=0 width=70% onClick="javascript:upd_file(this,'h5img_file');"><input type="file" capture="camera" class="filebox" name="h5img_file" id="h5img_file"  style=" position:absolute;top:0;left:0;cursor:pointer;padding: 0;height:100%;width:100%;filter: alpha(opacity=0);-moz-opacity: 0;-khtml-opacity: 0;opacity: 0;"/></a>
+	  	</div>
+		</div>
+			<input type="hidden" name="img_url" id="img_url">
+		 </form>
+		 
+		  <div id="share_div" style="display:none;position:absolute;top:30%;left:40%">
+			    <img src="{$TMPL}/images/loading.gif" width=100%>
+		  </div>
+	</div>
+
+ </body>
+ </html>

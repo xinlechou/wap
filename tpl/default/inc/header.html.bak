@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta name="Generator">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script type="text/javascript">
+        wx.onMenuShareAppMessage({
+            title: '新乐筹欢迎您', // 分享标题
+            desc: '新乐筹欢迎您新乐筹欢迎您新乐筹欢迎您', // 分享描述
+            link: 'http://www.xinlechou.cn', // 分享链接
+            imgUrl: 'http://www.xinlechou.cn/fenxiang.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    </script>
+
+    <!--<script type="text/javascript" src="{$TMPL}/js/js.js"></script>-->
+    <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="{$TMPL}/css/Font-Awesome-4.2.0/css/font-awesome.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{$TMPL}/css/style.css?v=3.1"/><!--增加版本号防止缓存-->
+    <script type="text/javascript">
+        var APP_ROOT = '{$APP_URL}';
+        var APP_ROOT_ORA = '{$PC_URL}';
+        {if app_conf("APP_MSG_SENDER_OPEN") eq "1"};
+        var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+        {/if}
+//            var EVENT_TYPE = 'touchend';
+            var EVENT_TYPE = 'click';//先默认成click，否则电脑不识别
+    </script>
+    <!--<html xmlns:wb="http://open.weibo.com/wb">-->
+    <!--<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>-->

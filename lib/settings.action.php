@@ -13,7 +13,11 @@ class settingsModule{
         $aqj_user=$GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_partner_user where user_id=".$GLOBALS['user_info']['id']);
         if($aqj_user){
             $GLOBALS['tmpl']->assign("is_ap",1);
-            $GLOBALS['tmpl']->assign("ap",$aqj_user['ap']);
+            require_once APP_ROOT_PATH."system/payment/Appay_payment.php";
+						$o = new Appay_payment();
+						//获取用户积分
+						$user_ap = $o->get_user_ap($GLOBALS['user_info']['id']);
+            $GLOBALS['tmpl']->assign("ap",$user_ap);
         }
 		$GLOBALS['tmpl']->assign("userinfo",$GLOBALS['user_info']);
 		$GLOBALS['tmpl']->assign("level_name",$level_name);

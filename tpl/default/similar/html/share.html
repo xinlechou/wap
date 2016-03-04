@@ -1,0 +1,122 @@
+<html>
+ <head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>我和父母有多像</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link href="{$TMPL}/similar/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/similar/css/third.css"/>
+     <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+		var is_share = 0;
+  	var similarid = {$similar_info.id};
+  	wx.config({
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    appId: '{$signPackage.appId}', // 必填，公众号的唯一标识
+		    timestamp: '{$signPackage.timestamp}', // 必填，生成签名的时间戳
+		    nonceStr: '{$signPackage.nonceStr}', // 必填，生成签名的随机串
+		    signature: '{$signPackage.signature}',// 必填，签名，见附录1
+		    jsApiList: [
+		    	'checkJsApi',
+          'openLocation',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage'
+        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		wx.ready(function(){
+			wx.checkJsApi({
+	        jsApiList: [
+	            'onMenuShareTimeline',
+	            'onMenuShareAppMessage'
+	        ],
+	        success: function (res) {
+	            //alert(JSON.stringify(res));
+	        }
+	    });
+	    var imgUrl = '{$TMPL}/draw/images/fenxiang.png'; // 分享后展示的一张图片
+	    var lineLink = 'http://www.xinlechou.com/wap/index.php?ctl=similar&act=result&id='+similarid; // 点击分享后跳转的页面地址
+	    var descContent = "{$similar_info.name}和父母有多像"; // 分享后的描述信息
+	    var shareTitle = '{$similar_info.name}和父母有多像'; // 分享后的标题
+	    var appid = ''; // 应用id,如果有可以填，没有就留空
+	   
+	    wx.onMenuShareTimeline({
+			    title: shareTitle, // 分享标题
+			    link: lineLink, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        is_share = 1;
+			        shareget();
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+			wx.onMenuShareAppMessage({
+			    title: shareTitle, // 分享标题
+			    desc: descContent, // 分享描述
+			    link: lineLink, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    type: '', // 分享类型,music、video或link，不填默认为link
+			    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			    success: function () {
+			      is_share = 1;
+			    	shareget();
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+		});
+	  function showShare(){
+	  	if($("#info").val()==""){
+	  		alert("请留下爱的留言");
+	  		$("#info").focus();
+	  		return false;
+	  	}
+	  	$("#share_div").show();
+	  }
+	  
+	  function hideShare(){
+	  	$("#share_div").hide();
+	  }
+	  
+	  function shareget(){
+	  	$("#similar_form").submit();
+	  }
+  </script>
+ </head>
+ <body>
+    
+	 <div class="center center_con center_conb">
+	      <form id="similar_form" action="{url_wap r="similar#result"}" method="post">
+		      <div class="center_top clearfix">
+			      <img src="{$similar_info.image}" class="img-circle circle circleleft" >
+			      <img src="{$similar_info.parent_image}" class="img-circle circle circleright" >
+				     
+			  </div>
+			  <div class="center_cona clearfix">
+			      <p>相似度高达</p>
+				  <p>{$similar_info.like_num}% ！</p>
+			  </div>
+			  <div class="center_cona_input">
+			     <input type="text" id="info" name="info" value="" placeholder="写给父母爱的留言" class="center_cona_input_input">
+			  </div>
+			  <div class="submit">
+			     <input type="hidden" value="{$similar_info.id}" id="similar_id" name="id">
+			     <input type="button" value="分享给朋友"  class="submit_sub img-rounded" onclick="showShare();">
+			  </div>
+		  </form>
+		  <div id="share_div" class="trans_bg" style="display:none;" onclick="hideShare();">
+			    <img src="{$TMPL}/similar/images/trans_bg1.png" width=100%>
+		  </div>
+	 </div>
+ </body>
+ </html>

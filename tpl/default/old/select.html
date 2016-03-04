@@ -10,6 +10,7 @@
     </div>
 </div>
 <div class="select">
+
   <!--<ul class="clearfix select-list">-->
       <ul class="select-list">
           {foreach from=$goods item=good_list key=keyd}
@@ -24,10 +25,13 @@
           {/foreach}
           <li>
               <figure style="background-image:url({$TMPL}/old/images/add_good.png)">
-                  <a href="{url_wap r="old#release"}"></a>
+                  <a href="#" onclick="old.get_card_state('{$user.id}')"></a>
               </figure>
           </li>
       </ul>
+    {if $goods eq ''}
+    <p class="select_empty">您还没有可交换的物品，请先发布一个</p>
+    {/if}
 </div>
 </body>
 {include file="old/old_inc_footer.html"}
@@ -42,7 +46,7 @@
                 return false;
             }
             if(to_goods_id == undefined||to_goods_id == ''){
-                var d = new dialog('你想选哪个货交换？先选一个！','light',function(){});
+                var d = new dialog('请选择要交换的物品','light',function(){});
                 return false;
             }
 //            console.log(p)

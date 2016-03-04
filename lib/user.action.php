@@ -147,8 +147,8 @@ class userModule{
             }
             $return = $this->register_check_all();
             if($return['status']==0){ajax_return($return);}
-            $has_code=$GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."mobile_verify_code where mobile='".$mobile."' and verify_code='".strim($verify_coder)."' ");
-            if(!$has_code){
+            
+            if(es_session::get("verify") != md5($verify_coder)){
                 showErr("验证码错误",1,"");
             }
 
@@ -448,7 +448,7 @@ class userModule{
  		$settings_mobile_code=strim($_REQUEST['code']);
   		$mobile=strim($_REQUEST['mobile']);
 		//判断验证码是否正确=============================
- 		if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."mobile_verify_code WHERE mobile=".$mobile." AND verify_code='".$settings_mobile_code."'")==0){
+ 		if(es_session::get("verify") != md5($settings_mobile_code)){
 			$data['status'] = 0;
 			$data['info'] = "手机验证码出错";
 			ajax_return($data);

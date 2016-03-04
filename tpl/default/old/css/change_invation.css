@@ -4,6 +4,7 @@
 	width:100%;
 	margin-top:50px;
     font-size: 2em;
+    margin-bottom: 50px;
 }
 .change_invation_top{
 	width:100%;
@@ -20,7 +21,7 @@
 	float:left;
 	list-style:none;
 	text-align:center;
-	border-left:1px solid #dadada;
+	/*border-left:1px solid #dadada;*/
 	
 }
 .nav-tabs li a,.nav-tabs li a:hover{
@@ -42,11 +43,9 @@
     border-bottom:1px solid #dadada;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-	border-bottom: 1px solid #ff5a5f;
-    border-left: medium none;
-    border-right: medium none;
-    color: #ff5a5f;
-	background:#fafafa;
+    color: #fff;
+    background: #ff5a5f;
+    border: none;
 }
 /*.change_invation_top ul li:active,
 .change_invation_top ul li:hover,

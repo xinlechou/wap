@@ -391,6 +391,19 @@ function get_gopreview_wap()
 		}	
 		return $gopreview;
 }
+function get_gopreview_old()
+{
+    $gopreview = es_session::get("oldgopreview");
+    if($gopreview==get_current_url())
+    {
+        $gopreview = url_wap("old");
+    }
+    if(!isset($gopreview)||$gopreview=="")
+    {
+        $gopreview = es_session::get('before_login')?es_session::get('before_login'):url_wap("old");
+    }
+    return $gopreview;
+}
 function get_current_url()
 {
 	$url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?");   

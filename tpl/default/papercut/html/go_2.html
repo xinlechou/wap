@@ -1,0 +1,36 @@
+<html>
+ <head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>窗花秀</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link href="{$TMPL}/papercut/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/papercut/css/style.css"/>
+  
+ </head>
+ <body>
+    <div class="content_chuang">
+	     <div class="content1">
+		    <img src="{$TMPL}/papercut/images/list3.png" border=0 width=60%>
+		 </div>
+		 <div class="content1">
+		    <img src="{$TMPL}/papercut/images/list4.png" border=0 width=60%>
+		 </div>
+		
+		<div class="content_position">
+		 {if $pageArray.up neq ''}<div class="next3"><a href="{url_wap r="papercut#go" p="p=$pageArray.up&num=$num"}" ><img src="{$TMPL}/papercut/images/next1.gif" border=0 width=40%></a></div>{/if}
+		 {if $pageArray.down neq ''}<div class="next4"><a href="{url_wap r="papercut#go" p="p=$pageArray.down&num=$num"}" ><img src="{$TMPL}/papercut/images/next2.gif" border=0 width=40%></a></div>{/if}
+		 </div>
+		 
+		 
+		 
+	</div>
+
+ </body>
+ </html>

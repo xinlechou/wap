@@ -1,14 +1,15 @@
+.a_item{font-size: 1.8em;}
 .edit_con{
     margin-top: 50px;
     font-size: 12px;
     width: 100%;
     border: none;
-    color: #999999;
+    color: #565a5c;
 }
 .edit_con p{
     border-bottom: 0.1em solid #dbdbdb;
 }
-.a_btn{
+/*.a_btn{
     padding: 0;
 }
 .a_btn a, .a_btn button{
@@ -16,16 +17,17 @@
     height: 50px;
     background: #ff5a5f;
     font-size: 12px;
-}
+}*/
 .area em{
     background-image: url("../images/arrow_next.png");
+    background-size: 15px;
 }
 .a_list {
     margin-top: 50px;
     color: #565a5c;
 }
-.a_btn a {
-    line-height: 50px;}
+/*.a_btn a {
+    line-height: 50px;}*/
 .a_item_bottom_right a {
     border-color: #ff5a5f;
     color: #ff5a5f;
@@ -43,4 +45,10 @@
 .light-tips{
     background: #fff;
     color: #ff5a5f;
+}
+.edit_con .isdefault_ckb label{
+    background-image: url(../images/filter.png);
+}
+.edit_con .isdefault_ckb label.onchecked{
+    background-image: url(../images/filter_hover.png);
 }

@@ -8,12 +8,37 @@ class dealModule{
 	public function index()
 	{	
 		$id = intval($_REQUEST['id']);
-        $t = $_REQUEST['t'];
-        $is_ap=$_REQUEST['isap'];
+    $t = $_REQUEST['t'];
+    $is_ap=$_REQUEST['isap'];
+    if($is_ap == 1){
+    	if($_REQUEST['token']){
+	    	$token=$_REQUEST['token'];
+    		$token_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_token where token='".$token."'");
+    		if(!$token_info){
+    			app_redirect(url_wap("user#login"));
+    		}
+    		if($GLOBALS['user_info']){
+	    		$partner_user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_partner_user where partner_user_id='".$token_info['iqj_user_id']."'");
+	    		if($partner_user_info['user_id'] != $GLOBALS['user_info']['id']){
+		    		$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+						es_session::set("gopreview",$url);
+		    		app_redirect(url_wap("deals#ap_login",array('token'=>$token)));
+		    	}
+	    	}else{
+		    	$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+					es_session::set("gopreview",$url);
+	    		app_redirect(url_wap("deals#ap_login",array('token'=>$token)));
+		    }
+    	}else{
+	    	if(!$GLOBALS['user_info']){
+	    		app_redirect(url_wap("user#login"));
+	    	}
+	    }
+    }
 
-        $deal_info = $GLOBALS['db']->getRow("select d.*,dl.level as deal_level,dc.name as deal_type from ".DB_PREFIX."deal as d left join ".DB_PREFIX."deal_level as dl on dl.id=d.user_level left join ".DB_PREFIX."deal_cate as dc on dc.id=d.cate_id where d.id = ".$id." and d.is_delete = 0 and (d.is_effect = 1 or (d.is_effect = 0 and d.user_id = ".intval($GLOBALS['user_info']['id'])."))");
+    $deal_info = $GLOBALS['db']->getRow("select d.*,dl.level as deal_level,dc.name as deal_type from ".DB_PREFIX."deal as d left join ".DB_PREFIX."deal_level as dl on dl.id=d.user_level left join ".DB_PREFIX."deal_cate as dc on dc.id=d.cate_id where d.id = ".$id." and d.is_delete = 0 and (d.is_effect = 1 or (d.is_effect = 0 and d.user_id = ".intval($GLOBALS['user_info']['id'])."))");
 
-        $is_ap = ($is_ap || ($deal_info['is_ap']==1||$deal_info['is_ap']==2))?1:0;
+    $is_ap = ($is_ap || ($deal_info['is_ap']==1||$deal_info['is_ap']==2))?1:0;
  		if(!$deal_info)
 		{
 			app_redirect(url_wap("index"));
@@ -188,9 +213,13 @@ class dealModule{
                 $deal_item_top_price = $deal_item_top_price*$ratio;
                 $support_amount = $deal_info['support_amount']*$ratio;
                 //获取用户积分数
-                $aq=$GLOBALS['db']->getOne("select ap from ".DB_PREFIX."ap_partner_user where user_id=".intval($GLOBALS['user_info']['id']));
+                //$aq=$GLOBALS['db']->getOne("select ap from ".DB_PREFIX."ap_partner_user where user_id=".intval($GLOBALS['user_info']['id']));
                 $GLOBALS['tmpl']->assign("is_ap",$is_ap);
-                $GLOBALS['tmpl']->assign("user_ap",$aq);
+                require_once APP_ROOT_PATH."system/payment/Appay_payment.php";
+								$o = new Appay_payment();
+								//获取用户积分
+								$user_ap = $o->get_user_ap($GLOBALS['user_info']['id']);
+                $GLOBALS['tmpl']->assign("user_ap",$user_ap);
             }
 
             $GLOBALS['tmpl']->assign("bottom_price",number_price_format($deal_item_bottom_price));

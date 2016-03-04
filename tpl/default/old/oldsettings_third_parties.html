@@ -1,0 +1,74 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_settings.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+ <div class="box">
+     <div class="bind">
+         <p>{if $idx}<img src="{$user.headimgurl}" width="20%" class="img-circle">{/if}</p>
+         <p class="login_register_font">{if $idx}当前账号：{$idx.nickname}{else}绑定状态：未绑定<br>绑定账号后，您将享受更好的服务<br>猛戳下面&nbsp;&#8659;{/if}</p>
+         <div class="pay_bind_bottom">
+             {if $idx}
+             <button class="pay_bind_acta" type="button" data-act="unbindWechat" id="unbind">点击解绑</button>
+             {else}
+             <button class="pay_bind_acta" type="button" id="bind">绑定</button>
+             {/if}
+         </div>
+     </div>
+     <div class="qr" style="display: none;"><p id="qr_container"></p><div class="wxtips"></div></div>
+ </div>
+
+
+ {include file="old/old_inc_footer.html"}
+    <!--内嵌二维码微信登录JS-->
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script type="text/javascript" src="{$TMPL}/old/js/old_wechat.js"></script>
+     <script>
+         $(function(){
+             var userid = "{$user.id}",unbindUrl = APP_ROOT+'/?ctl=ajax&userid='+userid+'&act=';
+             $("#unbind").bind(EVENT_TYPE,function(e){
+                 var url = unbindUrl+$(this).attr('data-act');
+                 $.showSuccess("确定解绑微信吗？",function(){
+                     $("#loading").show();
+                     $.ajax({url:url,dataType:"json",type:"get",
+                         success:function(json){
+                             $("#loading").hide();
+                             if(json.status==1){
+                                 $.showSuccess("解绑成功！");
+                                 setTimeout(function(){
+                                     window.location.reload();
+                                 },3000)
+                             }else{
+                                 $.showErr(json.info);
+                             }
+
+                         },error:function(json){
+                             if(json.responseText!=''){alert(json.responseText);}}
+                     });
+                 });
+             });
+             $("#bind").bind(EVENT_TYPE,function(e){
+                var a = tools.isWeiXin();
+                 if(a){
+                     weChatUtils.getWechatUserInfo();
+                 }else{
+                     //非微信浏览器获取微信登录二维码
+                     $('.bind').fadeOut(function(){
+                         $(".qr").fadeIn();
+                         weChatUtils.getWechatLoginQr();
+                     })
+                     if(typeof WxLogin == 'undefined'){
+                         $('.wxtips').html('出问题啦。是不是网络没连上？');
+                     };
+                 }
+             });
+         })
+     </script>
+ </body>
+</html>

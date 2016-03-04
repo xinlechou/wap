@@ -6,6 +6,7 @@ var DEAL_ITEM_ID = 0,//选择的支持项ID
     CONSIGNEE_ID = 0,//收件人ID
     IS_DELIVERY = 0,//是否需要配送
     PAYMENT_ID = 0;//支付方式ID
+    EVENT_TYPE = 'touchstart';
 var url = window.location.href,is_ap = url.query('isap');
 $(function(){
     /*绑定弹框事件*/

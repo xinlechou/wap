@@ -1,0 +1,45 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/preview.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{url_wap r="old#detail" p="id=$from_goods_id"}"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"><a href="javascript:void(0)" id="submit">编辑</a></div>
+    </div>
+</div>
+<div class="preview">
+    <img src="{$good_list.head_image}" class="img-responsive backdrop">
+    <div class="preview_top">
+        <img src="{$good_list.avatar}" class="img-circle circle">
+        <p>{$good_list.name}</p>
+    </div>
+    <div class="preview_bottom">
+        {if $good_list.is_focus}
+        <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+        {else}
+        <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+        {/if}
+        <span>{$good_list.focus_num}</span>
+    </div>
+</div>
+<p class="preview_tips gray">本次发布价格为<del class="pink">10</del>0元</p>
+<div class="one_btn_footer">
+    <button type="button" onClick="releaseCallback({$good_list.id})">确认发布</button>
+</div>
+</body>
+{include file="old/old_inc_footer.html"}
+<script>
+    function releaseCallback(goods_id){
+        old.put_on_first(goods_id,function(json){
+            if(json.error==0){
+                old.success(goods_id);
+            }else{
+                old.failed();
+            }
+        })
+    }
+
+</script>
+<html>

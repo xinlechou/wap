@@ -1,0 +1,59 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_user.css"/>
+<script>
+    /*user.js中所用的url*/
+    var urls = {}
+    urls.submitUrl = '{url_wap r="olduser#do_login"}';
+</script>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"><a href="javascript:void(0)" style="display: none;" class="color" id="del_btn">编辑</a></div>
+    </div>
+</div>
+<div class="box">
+    <!--手机号登录开始-->
+    <div class="register">
+        <form action="{url_wap r="olduser#do_login"}" id="user_login_form" name="user_login_form">
+        <table>
+            <tr>
+                <td>
+                    <input class="input_td" name="mobile" required="required" type="text" placeholder="请输入手机号">
+                    <!--登陆时不需要验证码-->
+                    <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="input_td" required="required" name="user_pwd"  id="user_pwd" type="password" placeholder="请输入登录密码">
+                </td>
+                <input type="hidden" name="ajax" value="1">
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <a href="{url_wap r="olduser#register"}" class="reg pink">快速注册</a>
+                    <a href="{url_wap r="olduser#getpassword"}" class="pwd pink">找回密码</a>
+                    <!--<a href="weixin://contacts/profile/gh_c28e28a2510d" class="reg">open wechat
+                       <img src="{$TMPL}/images/qrcode_for_gh_402a958dc563_344.jpg">
+                    </a>-->
+                    <!--weixin://profile/gh_c28e28a2510d-->
+                </td>
+            </tr>
+        </table>
+        <div class="one_btn_footer">
+            <button type="button" data-submit-type="doLogin" id="submit_btn">登录</button>
+        </div>
+        </form>
+    </div>
+    <!--手机号登录结束-->
+</div>
+{include file="old/old_inc_footer.html"}
+<script type="text/javascript" src="{$TMPL}/old/js/old_user.js"></script>
+</body>
+</html>

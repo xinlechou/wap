@@ -1,0 +1,99 @@
+*{
+	margin:0;
+	padding:0;
+}
+/*清除浮动*/
+.clearfix:after{
+ content:"";
+ display:block;
+ height:0;
+ clear:both;
+}
+.clearfix{
+  zoom:1;
+}
+body{
+	font-size:62.5%;
+	font-family: 'Microsoft YaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu,Helvetica Neue,Helvetica,Arial,sans-serif';
+}
+.bg{
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	background:url(../images/content_bg.png) no-repeat center center;
+	background-size:100% 100%;
+	overflow:hidden;
+	
+}
+.bg_content{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	padding-top:2em;
+	height:50%;
+	/*background:green;*/
+}
+.bg_content_left{
+	float:left;
+	position:relative;
+	
+}
+.bg_content_left_font{
+	position:absolute;
+	top:54%;
+	left:26%;
+	-moz-transform:rotate(90deg);
+	transform:rotate(90deg);
+	font-weight:bold;
+	color:#b41919;
+	font-size:1.6em;
+	display:block;
+	text-align:center;
+}
+.bg_content_right{
+	width:60%;
+	float:left;
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	
+	padding-top:15%;
+}
+.bg_foot{
+	width:100%;
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	margin-top:8%;
+	
+}
+.bg_foot_a{
+	margin:0 auto;
+	padding:0 auto;
+	text-align:center;
+	position:relative;
+}
+.bg_foot_input{
+	position:absolute;
+	left:50%;
+	top:3%;
+	line-height:2em;
+	background:none;
+	border:0;
+	width:20%;
+	font-size:2em;
+	color:red;
+}
+.sub{
+	width:50%;
+	height:4.5em;
+	line-height:4.5em;
+	display:inline-block;
+	margin-top:13%;
+	border:0;
+	background:url(../images/sub.png) center center no-repeat;
+	background-size:100% 100%;
+}

@@ -53,7 +53,7 @@
 
  <script>
      $(function(){
-         var url = window.location.href,mobile = url.query('m'),aqj_id = url.query('aqjid');
+         var url = window.location.href,mobile = {$aqj_m},aqj_id = {$aqj_id};
          var $authorize = $(".login_loga"),$login = $(".login_logb");
          $('input[name="log_mobile"]').val(mobile);
          $('input[name="log_aqjid"]').val(aqj_id);
@@ -86,7 +86,7 @@
              });
              return false;
          });
-         $("#doReg").bind(EVENT_TYPE,function(){
+         $("#doReg").bind("click",function(){
              var p = {reg_aqjid:aqj_id,reg_m:mobile};
              $.ajax({
                  url: './index.php?ctl=ajax&act=aqj_do_register',
@@ -95,7 +95,7 @@
                  success: function(json){
                      var e = eval("("+json+")");
                      //注册成功
-                     if(e.status !== 0){
+                     if(e.status!=0){
                          window.location.href = e.jump;
                      }
                      $("#showLoginForm").html(e.data);

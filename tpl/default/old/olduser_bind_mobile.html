@@ -1,0 +1,135 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_user.css"/>
+
+<script>
+ /*user.js中所用的url*/
+ var urls = {}
+ urls.submitUrl = '{url_wap r="olduser#do_register"}';
+ urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
+ urls.checkVerifyCodeUrl = '{url_wap r="olduser#check_verify_code"}';
+</script>
+ </head>
+ <body>
+ <div id="nav">
+     <div class="top">
+         <div class="top_left">
+             <!--<a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>-->
+         </div>
+         <div class="top_center">{$page_title}</div>
+         <div class="top_right"></div>
+     </div>
+ </div>
+ <!--选择登录方式-->
+ <div class="pay_bind box">
+     <div class="pay_bind_top">
+         <div class="pay_bind_top_left">
+             <img src="{if $wx_info.headimgurl}{$wx_info.headimgurl}{else}{$TMPL}/old/images/u36icon.png{/if}" class="avatar">
+             <img src="{$TMPL}/images/certain.png" class="avatar_img">
+         </div>
+         <div class="pay_bind_top_right">
+             <p class="font_aa">欢迎您！</p>
+             <p><strong class="font_age">{$wx_info.nickname}</strong></p>
+             <p class="font_bb">正在使用微信账号登录新乐筹</p>
+         </div>
+
+     </div>
+     <div class="both"></div>
+     <div class="pay_bind_bottom">
+         <div class="bind_tips">{$error}</div>
+         <input type="text" class="input_td" placeholder="手机号" id="settings_mobile" name="mobile" value="{if $mobile}{$mobile}{/if}">
+         <input class="input_td" required="required" name="user_pwd"  id="user_pwd" type="password" placeholder="登录密码">
+         <div id="registerInput">
+             <input class="input_td" name="confirm_user_pwd" id="confirm_user_pwd" type="password" placeholder="确认密码">
+             <div style="position: relative">
+                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入短信验证码">
+                 <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code code_numbera">发送验证码</button>
+             </div>
+
+         </div>
+         <ul>
+             <li><button class="pay_bind_act {if $error}disabled{/if}" id="submitBindBtn" {if $error}disabled{/if}>绑定并登录</button></li>
+         </ul>
+     </div>
+ </div>
+
+
+     {include file="old/old_inc_footer.html"}
+     <script type="text/javascript" src="{$TMPL}/old/js/old_user.js"></script>
+     <!--bind-->
+    <script>
+        $(function(){
+            $("#settings_mobile").on('blur',bind.next);// check mobile status
+            $("#submitBindBtn").bind(EVENT_TYPE,bind.submit);
+        })
+        var bind = {
+            type:'reg',//默认注册
+            next:function(){
+                if(user.checkPhone()){
+                    bind.checkMobileStatus();
+                };
+            },
+            checkMobileStatus:function(){
+                var url = APP_ROOT_ORA+"/appdata.php?act=app_check_mobile";
+                var p = {'mobile':$("#settings_mobile").val()};
+                user.sendAjax(url,p,function(json){
+                    var oBtn = $('#submitBindBtn');
+//                   alert(json.error);
+                    switch (json.error){
+                        case '0':
+                            //新用户
+                            showBindtips('请输入密码和验证码完成绑定');
+                            bind.type = 'reg';
+                            $('#registerInput').slideDown();
+                            if(oBtn.hasClass('disabled')){oBtn.attr('disabled',false).removeClass('disabled')}
+//                            $('#registerInput').addClass('show');
+                            break;
+                        case '-1':
+                            //老用户，可输入密码绑定
+                            showBindtips('请输入密码完成绑定');
+                            bind.type = 'login';
+                            $('#registerInput').slideUp();
+                            if(oBtn.hasClass('disabled')){oBtn.attr('disabled',false).removeClass('disabled')}
+                            break;
+                        case '-2':
+                            showBindtips('此账号已与其它微信绑定，请更换手机号，或用手机号登录');
+                            oBtn.attr('disabled',true).addClass('disabled');
+                            break;
+
+                    }
+                });
+            },
+            submit:function(){
+                    var u_info = user.formData,username = "{$wx_info.nickname}",
+                        param = {user_name:username,mobile:u_info.phone.val(),user_pwd:u_info.password.val(),type:bind.type},
+                            url = APP_ROOT+'/?ctl=olduser&act=do_bind_mobile';
+                    if(bind.type=="reg"){
+                        param.confirm_user_pwd = u_info.rePassword.val();
+                        param.verify_coder = u_info.verifyCode.val();
+                        if(!(user.checkPhone()&&user.checkPassword())) return false;
+                    }else{
+                        console.log('1:'+user.checkPhone())
+                        if(!user.checkPhone()) return false;
+                        if(param.user_pwd==""||param.user_pwd.length<4){
+                            $.showErr('密码格式不正确');return false;
+                        }
+                    }
+//                return;
+//                console.log('2'+url);
+                    user.sendAjax(url,param,function(json){
+//                        console.log('3'+json)
+                        if (json.status == 1) {
+                            location.href = json.jump;
+                        } else {
+                            $.showErr(json.info);
+                        }
+                    });
+            }
+        }
+        function showBindtips(msg){
+            var $div = $('.bind_tips');
+            $div.html(msg).fadeIn();
+        }
+    </script>
+ </body>
+</html>

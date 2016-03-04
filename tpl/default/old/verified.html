@@ -14,17 +14,17 @@
 
 <div class="box">
     <div class="verified_font">
-        {if $state eq 'onechance'}<p>提示：您在未实名认证时有一次发布机会，发完了要等小编们审核通过后才可以继续发布物品，请耐心等待的说。</p>{/if}
-        {if $state eq 'nochance'}<p>提示：您的审核还没有完成，现在不能发物品的说。</p>{/if}
-        上传<div class="verified_font_color">身份证正反面和手持身份证照</div>，完成实名认证后，将允许物品用现金交换哦。
+         <p>实名认证后，您可以交换到更多好玩意儿哦～～～<br>
+             如果上传的照片不满意，可以点击图片重新上传</p>
+        {if $info.data.card_state eq 2}<p>提示：{$info.data.card_info}这里是被拒绝原因</p>{/if}
+
     </div>
     <div class="verified_uoload">
         <ul>
             <li>
                 <label for="face">
                     <input type="file" name="face" class="verified_li_input" id="face">
-                    <img src="{$TMPL}/old/images/icon_add.png" class="upload">
-
+                    <img {if $info.data.card_face}src="{$info.data.card_face}"{else} src="{$TMPL}/old/images/icon_add.png" class="upload"{/if}>
                 </label>
                 <p>身份证正面照</p>
             </li>
@@ -32,7 +32,7 @@
                 <label for="back">
                     <!--<span class="glyphicon glyphicon-plus verified_li_span"></span>-->
                     <input type="file" name="back" class="verified_li_input" id="back">
-                    <img src="{$TMPL}/old/images/icon_add.png" class="upload">
+                    <img {if $info.data.card_back}src="{$info.data.card_back}"{else} src="{$TMPL}/old/images/icon_add.png" class="upload"{/if}>
 
                 </label>
                 <p>身份证反面照</p>
@@ -41,8 +41,7 @@
                 <label for="take">
                     <!--<span class="glyphicon glyphicon-plus verified_li_span"></span>-->
                     <input type="file" name="take" class="verified_li_input" id="take">
-                    <img src="{$TMPL}/old/images/icon_add.png" class="upload">
-
+                    <img {if $info.data.card_take}src="{$info.data.card_take}"{else} src="{$TMPL}/old/images/icon_add.png" class="upload"{/if}>
                 </label>
                 <p>手持身份证照</p>
             </li>
@@ -71,23 +70,33 @@
             })
         })
         $D.on(EVENT_TYPE,'#submit',function(){
-            var state = "{$state}";
-            if(state == 'nochance'){
-                var d = new dialog('`请耐心等待审核`','light',function(){})
+            var state = "{$info.card_state}";
+            if(state == 1){
+                var d = new dialog(CARDSTATE[1],'light',function(){})
             }else{
-                var goods_id = "{$goods_id}";
-                console.log(goods_id)
-                if(goods_id){
-                    old.put_on_first(goods_id,function(json){
-                        if(json.error==0){
-                            old.success();
-                        }else{
-                            old.failed();
-                        }
-                    })
-                }else{
-                    old.failed();
-                }
+                //先确认提交审核
+                old.set_user_card_state("{$info.data.id}",function(){
+                    var goods_id = "{$goods_id}";
+                    if(goods_id){
+                        //跳转到预览
+                        window.location.href = APP_ROOT+'?ctl=old&act=preview&id='+goods_id;
+                    }else{
+                        window.location.href = APP_ROOT+'?ctl=old&act=home';
+                    }
+//                    alert(goods_id)
+
+                    /*if(goods_id){
+                        old.put_on_first(goods_id,function(json){
+                            if(json.error==0){
+                                old.success(goods_id);
+                            }else{
+                                old.failed();
+                            }
+                        })
+                    }else{
+                        old.failed();
+                    }*/
+                });
 
             }
         })

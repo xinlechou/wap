@@ -1,22 +1,16 @@
-{include file="inc/header.html"}
-    <title>个人中心-地址管理</title>
-<link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+{include file="old/old_header.html"}
 <link rel="stylesheet" type="text/css" href="{$TMPL}/css/consignee.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/common.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_consignee.css"/>
-
-</head>
- <body id="body">
- <div id="loading"><img src="{$TMPL}/images/loading.gif" width="50"></div>
- <div id="nav">
-     <div class="top">
-         <div class="top_left">
-             <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
-         </div>
-         <div class="top_center">{$page_title}</div>
-         <div class="top_right"></div>
-     </div>
- </div>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
  <div class="edit_con">
      <form id="editConForm">
          <p><span>收件人：</span><input type="text" name="consignee" value="{$item.consignee}" placeholder="{$item.consignee}"></p>
@@ -47,15 +41,11 @@
          {if $item.id}<input name="id" hidden="hidden" value="{$item.id}">{/if}
      </form>
  </div>
- <div class="a_btn"><button type="button" id="saveEditCon">保存</button></div>
- <div class="light-tips"></div>
+ <div class="one_btn_footer"><button type="button" id="saveEditCon">保存</button></div>
  <!--footer-->
- <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
- <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
- <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
- <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+{include file="old/old_inc_footer.html"}
  <script type="text/javascript" src="{$TMPL}/old/js/old_consignee.js"></script>
  <script type="text/javascript" src="../system/region.js"></script>
- <script type="text/javascript" src="{$TMPL}/js/switch_city.js"></script>
+ <script type="text/javascript" src="{$TMPL}/old/js/switch_city.js"></script>
  </body>
 </html>

@@ -7,7 +7,29 @@ class dealsModule{
         $is_ap = $_REQUEST['isap'];//判断是否是爱前进积分商城
         //积分商城现判断用户合法性
         if($is_ap == 1){
-            $this->ap_login();
+        	if($_REQUEST['token']){
+			    	$token=$_REQUEST['token'];
+        		$token_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_token where token='".$token."'");
+        		if(!$token_info){
+        			app_redirect(url_wap("user#login"));
+        		}
+        		if($GLOBALS['user_info']){
+			    		$partner_user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_partner_user where partner_user_id='".$token_info['iqj_user_id']."'");
+			    		if($partner_user_info['user_id'] != $GLOBALS['user_info']['id']){
+				    		$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+								es_session::set("gopreview",$url);
+				    		app_redirect(url_wap("deals#ap_login",array('token'=>$token)));
+				    	}
+			    	}else{
+				    	$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+							es_session::set("gopreview",$url);
+			    		app_redirect(url_wap("deals#ap_login",array('token'=>$token)));
+				    }
+		    	}else{
+			    	if(!$GLOBALS['user_info']){
+			    		app_redirect(url_wap("user#login"));
+			    	}
+			    }
         }
         $page_title = $is_ap==1?"积分商城":"推荐项目";
         //获取页码
@@ -118,22 +140,29 @@ class dealsModule{
     //进入积分商城时检查用户合法性
     public function ap_login()
     {
-        $aqj_id = trim($_REQUEST['aqjid']);
-        $aqj_mobile = trim($_REQUEST['m']);
-        if($aqj_id){
-            //查询aqj_id是否已绑定过
-            $aqj_user=$GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_partner_user where partner_user_id='".$aqj_id."'");
-            //如果已经绑定过自动登录并进入积分商城页面
-            if($aqj_user){
-                $xlc_user=$GLOBALS['db']->getRow("select mobile,user_pwd from ".DB_PREFIX."user where id=".$aqj_user['user_id']);
-                require_once APP_ROOT_PATH."system/libs/user.php";
-                auto_do_login_user($xlc_user['mobile'],md5($xlc_user['user_pwd']."_EASE_COOKIE"));
-            }else{
-                $GLOBALS['tmpl']->assign("aqj_id",$aqj_id);
-                $GLOBALS['tmpl']->assign("aqj_m",$aqj_mobile);
-                $GLOBALS['tmpl']->display("ap_login.html");
-                exit;
-            }
+        $token = trim($_REQUEST['token']);
+        if($token){
+        		$aqj_token_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_token where token='".$token."'");
+        		if($aqj_token_info){
+        			//查询aqj_id是否已绑定过
+	            $aqj_user=$GLOBALS['db']->getRow("select * from ".DB_PREFIX."ap_partner_user where partner_user_id='".$aqj_token_info['iqj_user_id']."'");
+	            //如果已经绑定过自动登录并进入积分商城页面
+	            if($aqj_user && $aqj_user['user_id']!=0){
+	                $xlc_user=$GLOBALS['db']->getRow("select mobile,user_pwd from ".DB_PREFIX."user where id=".$aqj_user['user_id']);
+	                require_once APP_ROOT_PATH."system/libs/user.php";
+	                auto_do_login_user($xlc_user['mobile'],md5($xlc_user['user_pwd']."_EASE_COOKIE"));
+	                app_redirect(get_gopreview());
+	            }else{
+	                $GLOBALS['tmpl']->assign("aqj_id",$aqj_token_info['iqj_user_id']);
+	                $GLOBALS['tmpl']->assign("aqj_m",$aqj_token_info['mobile']);
+	                $GLOBALS['tmpl']->display("ap_login.html");
+	                exit;
+	            }
+        		}else{
+        			app_redirect(url_wap("index"));
+        		}
+        }else{
+        	app_redirect(url_wap("index"));
         }
     }
 	public function get_child($cate_list,$pid){

@@ -1,0 +1,84 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_user.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">注册</div>
+        <div class="top_right"><a href="javascript:void(0)" style="display: none;" class="color" id="del_btn">编辑</a></div>
+    </div>
+</div>
+<div class="box">
+    <!--注册开始-->
+    <div class="register">
+        <form id="user_register_form" name="user_register_form" action="{url_wap r="olduser#do_register"}">
+        <input type="hidden" name="referer" id="referer" value="{$referer}" />
+        <table>
+            <tr>
+                <td>
+                    <input class="input_td" name="mobile" id="settings_mobile" type="text" placeholder="手机号">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="input_td" name="user_name" type="text" placeholder="请填写用户名" required="required" hidden="hidden">
+                </td>
+            </tr>
+            <tr>
+                <td class="r_position">
+                    <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入短信验证码">
+                    <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code code_numbera">发送验证码</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="input_td" name="user_pwd" id="user_pwd" type="password" placeholder="设置密码">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="input_td" name="confirm_user_pwd" id="confirm_user_pwd" type="password" placeholder="确认密码">
+                </td>
+            </tr>
+        </table>
+        <div class="one_btn_footer">
+            <button class="butn butn1" type="button" data-submit-type="doRegister" id="submit_btn">注册</button>
+        </div>
+        </form>
+    </div>
+    <!--注册结束-->
+    <!--注册完成时显示-->
+    <div class="register_complete" style="display: none;">
+        <div class="wechat">
+            <p><!--<span id="s"></span>--></p>
+            <p>欢迎您使用新乐筹，是否立即绑定微信号？</p>
+        </div>
+        <div class="pay_bind_bottom">
+            <ul>
+                <li><button id="wechatLoginBtn" class="pay_bind_act">绑定并登录</a></button>
+                <li><button id="later">以后再说</a></button>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--底部-->
+{include file="old/old_inc_footer.html"}
+<script type="text/javascript" src="{$TMPL}/old/js/old_user.js"></script>
+ <!--内嵌二维码微信登录JS-->
+ <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+ <script type="text/javascript" src="{$TMPL}/old/js/old_wechat.js"></script>
+ <script>
+     {if app_conf("USER_VERIFY") eq 2}
+     var is_mobile=1;
+     {else}
+     var is_mobile=0;
+     {/if}
+         /*user.js中所用的url*/
+         var urls = {}
+         urls.submitUrl = '{url_wap r="olduser#do_register"}';
+         urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
+         urls.checkVerifyCodeUrl = '{url_wap r="olduser#check_verify_code"}';
+ </script>
+ </body>
+</html>

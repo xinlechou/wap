@@ -67,3 +67,10 @@ input[type='radio']:checked + label {
 input[type="checkbox"],input[type="radio"]  {
     visibility: hidden;
 }
+.select_empty {
+    position: absolute;
+    bottom: 47%;
+    width: 100%;
+    color: #dddddd;
+    font-size: 14px;
+}

@@ -1,0 +1,80 @@
+<html>
+<head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>灯谜会</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/riddles/css/content.css"/>
+   
+  <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+  <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+  <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+  <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+  <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+  <script type="text/javascript">
+  	var APP_ROOT = '{$APP_URL}';
+    var APP_ROOT_ORA = '{$PC_URL}';
+  function go_next(){
+  	var id=$("#id").val();
+  	var riddle=$("#riddle").val();
+  	var answer=$("#answer").val();
+  	if(answer==''){
+  		alert('请填写答案！');
+  		$("#answer").focus();
+  		return false;
+  	}
+  	var url = APP_ROOT+"/index.php?ctl=riddles&act=go_next&riddle="+riddle+"&answer="+answer+"&id="+id;
+    $.ajax({
+    		url:url,
+    		dataType:"json",
+    		type:"POST",
+        success:function(json){
+          if(json.status==1){
+          	if(json.num == 10){
+          		window.location.href = APP_ROOT+"/index.php?ctl=riddles&act=result&id="+json.riddles_id;
+          	}else{
+          		window.location.href = APP_ROOT+"/index.php?ctl=riddles&act=index&id="+json.riddles_id;
+          	}
+          }else{
+          	alert(json.msg);
+          	window.location.href = APP_ROOT+"/index.php?ctl=riddles&act=result&id="+json.riddles_id;
+          }
+        },error:function(json){
+            if(json.responseText!=''){alert(json.responseText);}}
+    });
+  }
+  </script>
+</head>
+<body>
+    <div class="bg">
+	    <div class="bg_content">
+		      <div class="bg_content_left">
+			       <img src="{$TMPL}/riddles/images/rand.png" border=0 width=60% />
+				   <div class="bg_content_left_font">
+				     {$num}
+				   </div>
+			  </div>
+			  <div class="bg_content_right">
+			      <img src="{$TMPL}/riddles/images/{$tmp_riddle.img}.png" border=0 width=120%>
+			  </div>
+		</div>
+		<div class="bg_foot clearfix">
+		  <form action="" method="">
+		     <div class="bg_foot_a">
+			     <img src="{$TMPL}/riddles/images/answer.png" border=0 width=90% >
+				 <input type="text" id="answer" value="" class="bg_foot_input"/>
+				 <input type="hidden" id="riddle" value="{$tmp_riddle.id}"/>
+				 <input type="hidden" id="id" value="{$tmp_riddles_info.id}"/>
+			 </div>
+			 <input type="button" value="" class="sub" onclick="go_next();"/>
+		  </form>
+		</div>
+	</div>
+</body>
+</html>

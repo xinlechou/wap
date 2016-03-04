@@ -7,15 +7,15 @@
             <a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>
         </div>
         <div class="top_center">{$page_title}</div>
-        <div class="top_right"></div>
+        <div class="top_right"><a href="javascript:void(0)" style="display: none;" class="color" id="del_btn">编辑</a></div>
     </div>
 </div>
 <div class="change_invation">
 
         <div class="change_invation_top">
            <ul id="myTab" class="nav nav-tabs">
-            <li><a href="#on" data-toggle="tab">货架</a></li>
-            <li><a href="#off" data-toggle="tab">仓库</a></li>
+            <li><a href="#on" data-toggle="tab">已上架</a></li>
+            <li><a href="#off" data-toggle="tab">未上架</a></li>
            </ul>
           <div id="myTabContent" class="tab-content">
               <!--上架物品-->
@@ -27,7 +27,7 @@
                         <li>
                            <div class="cans_left">
                                <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
-                                   <img src="{$good_list.head_image}">
+                                   <img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy">
                                    <div class="cans_left_left">
                                        <span class="cans_left_top">{$good_list.name}</span>
                                        <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
@@ -35,9 +35,21 @@
                                </a>
 
                            </div>
+                            {if $good_list.state eq 1}
                            <div class="cans_right">
                              <a href="#" onclick="javascript:old.pull_off(this,'{$good_list.id}')">下架</a>
                            </div>
+                            {/if}
+                            {if $good_list.state eq 2}
+                            <div class="cans_right">
+                                <a href="#" class="disabled">正在交换</a>
+                            </div>
+                            {/if}
+                            {if $good_list.state eq 3}
+                            <div class="cans_right">
+                                <a href="#" class="disabled">已交换</a>
+                            </div>
+                            {/if}
                         </li>
                         {/if}
                         {/foreach}
@@ -51,9 +63,13 @@
                      {foreach from=$goods item=good_list key=keyd}
                      {if $good_list.online_state neq 1}
                      <li>
+                         <div class="cans_checkbox">
+                             <input type="checkbox" value="{$good_list.id}" id="{$good_list.id}" name="del" hidden="hidden">
+                             <label for="{$good_list.id}"></label>
+                         </div>
                          <div class="cans_left">
                              <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
-                             <img src="{$good_list.head_image}">
+                             <img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy">
                              <div class="cans_left_left">
                                  <span class="cans_left_top">{$good_list.name}</span>
                                  <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
@@ -61,16 +77,67 @@
                              </a>
 
                          </div>
-                         {if $good_list.online_state eq 0}<div class="cans_right"><a href="#" class="disabled">待上线</a></div>{/if}
-                         {if $good_list.online_state eq 2}
-                         <div class="cans_right thin">
-                             <a href="#" onclick="javascript:old.put_on(this,'{$good_list.id}')">上架</a>
+                         {if $good_list.online_state eq 0}
+                             {if $card_state eq 3}
+                             <div class="cans_right thin">
+                                 <!--<a href="#" onclick="javascript:old.put_on(this,'{$good_list.id}')">上架</a>-->
+                                 <a href="{url_wap r="old#preview" p="id=$good_list.id"}">上架</a>
+                                        <span class="cans_right_btns">
+                                            <a href="{url_wap r="old#edit" p="id=$good_list.id"}" class="edit_btn"></a>
+                                            <button type="button" class="del_btn" onclick="old.del_goods(this,{$good_list.id})"></button>
+                                        </span>
+
+                             </div>
+                             {/if}
+                             {if $card_state eq 2}
+                             <div class="cans_right thin">
+                                 <a href="#" onclick="javascript:go_verified();">上架</a>
+                                            <span class="cans_right_btns">
+                                                <a href="{url_wap r="old#edit" p="id=$good_list.id"}" class="edit_btn"></a>
+                                                <button type="button" class="del_btn" onclick="old.del_goods(this,{$good_list.id})"></button>
+                                            </span>
+
+                             </div>
+                             {/if}
+                             {if $card_state eq 1}
+                             <div class="cans_right thin">
+                                 <a href="{url_wap r="old#preview" p="id=$good_list.id"}">上架</a>
                                 <span class="cans_right_btns">
-                                    <div type="button" class="edit_btn"></div>
-                                    <button type="button" class="del_btn"></button>
+                                    <a href="{url_wap r="old#edit" p="id=$good_list.id"}" class="edit_btn"></a>
+                                    <button type="button" class="del_btn" onclick="old.del_goods(this,{$good_list.id})"></button>
                                 </span>
 
-                         </div>
+                             </div>
+                             {/if}
+                             {if $card_state eq 4}
+                             <div class="cans_right">
+                                 <a href="{url_wap r="old#bind" p="goods_id=$good_list.id"}">上架</a>
+                             </div>
+                             {/if}
+                         {/if}
+
+                         {if $good_list.online_state eq 2}
+
+                             {if $good_list.state eq 1}
+                             <div class="cans_right thin">
+                                 <a href="#" onclick="javascript:old.put_on(this,'{$good_list.id}')">上架</a>
+                                    <span class="cans_right_btns">
+                                        <a href="{url_wap r="old#edit" p="id=$good_list.id"}" class="edit_btn"></a>
+                                        <button type="button" class="del_btn" onclick="old.del_goods(this,{$good_list.id})"></button>
+                                    </span>
+
+                             </div>
+                            {/if}
+                             {if $good_list.state eq 2}
+                             <div class="cans_right">
+                                 <a href="#" class="disabled">正在交换</a>
+                             </div>
+                             {/if}
+                             {if $good_list.state eq 3}
+                             <div class="cans_right">
+                                 <a href="#" class="disabled">已交换</a>
+                             </div>
+                             {/if}
                          {/if}
                      </li>
                      {/if}
@@ -81,13 +148,54 @@
          </div>
       </div>
    </div>
+<div class="cans_footer"><button type="button" id="del_all_btn">删除选中</button></div>
 {include file="old/old_footer.html"}
 <script>
     $(function () {
         var hash = location.hash;
+        var a = $('.top_right a');
         $tab = hash?$('#myTab li a[href="'+hash+'"]'):$('#myTab li:eq(0) a');
+        a.toggle(hash=='#off');
         $tab.tab('show');
+        $('#myTab li>a').on("shown.bs.tab", function(e) {
+            var id = $(e.target).attr("href").substr(1);
+            window.location.hash = id;
+            a.toggle(id=='off');
+            $('html, body').animate({scrollTop: 0}, 300);
+            show_edit(false);
+        });
+//        $('#del_btn').toggle(show_edit);
+        $('#del_all_btn').on(EVENT_TYPE,function(){
+            var del_goods_id = [];
+            $('input[name="del"]:checked').each(function(){
+                del_goods_id.push($(this).val());
+            });
+            old.del_goods( $('input[name="del"]:checked'),del_goods_id);
+//            console.log(del_goods_id)
+        });
+        a.on(EVENT_TYPE,function(){
+            var btn = $('.cans_footer');
+            show_edit(!btn.hasClass('show'));
+        })
+        function show_edit(flag){
+            var oLi = $('#off>ul>li'),btn = $('.cans_footer');
+            if(flag){
+                oLi.addClass('del');
+                btn.addClass('show');
+                a.html('取消编辑');
+            }else{
+                oLi.removeClass('del');
+                btn.removeClass('show');
+                a.html('编辑');
+            }
+
+        }
     });
+    function go_verified(){
+        var d = new dialog(CARDSTATE[2], 'alert', function () {
+            window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind";
+        })
+    }
 </script>
 </body>
 <html>

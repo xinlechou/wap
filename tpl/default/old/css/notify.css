@@ -11,10 +11,15 @@
 }
 .notify li span{
     display: inline-block;
-    width: 200px;
+    width: 250px;
     height: 25px;
     line-height: 20px;
     overflow: hidden;
+}
+@media screen and ( min-width: 768px ){
+    .notify li span{
+        width: 600px;
+    }
 }
 .notify li span.bold{
     color: #565a5c;
@@ -29,7 +34,7 @@
 }
 .notify_list>a{
     width: 100%;
-    display: block;
+    display: inline-block;
 }
 .notify_list{
     height: 70px;

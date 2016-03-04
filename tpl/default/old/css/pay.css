@@ -1,0 +1,55 @@
+body{
+    /*background: #fff;*/
+}
+.pay_order{
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.pay_wx_btn,.pay_sucsss ul li a{
+    line-height: 45px;
+    height: 45px;
+    width: 150px;
+    border: 1px solid #ff5a5f;
+    border-radius: 3px;
+    background: transparent;
+    color: #ff5a5f;
+    margin: 10% auto;
+    display: block;
+}
+.pay_sucsss ul li a{
+    margin: 10px auto;
+}
+/*支付成功*/
+.pay_sucsss{
+    width:100%;
+    padding-top: 5%;
+}
+.pay_sucsss img{
+    display:block;
+    margin:0 auto;
+    text-align:center;
+    margin-bottom:5%;
+    margin-top: 5%;
+    width: 40%;
+}
+.pay_sucsss p{
+    color:#ff5a5f;
+    font-size:16px;
+    text-align:center;
+    margin:0 auto;
+    font-weight:bold;
+}
+.pay_sucsss ul{
+    width:100%;
+    margin:15% auto;
+    text-align:center;
+
+}
+.pay_result{
+    display: none;
+}
+.pay_info{
+    text-align: center;
+    margin: 15px;
+}

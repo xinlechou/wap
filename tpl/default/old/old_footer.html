@@ -10,7 +10,8 @@
                     <li><a href="{url_wap r="old"}">浏览<img src="{$TMPL}/old/images/home.png"></a></li>
                     <li><a href="{url_wap r="old#notify"}">消息<img src="{$TMPL}/old/images/mes.png"></a></li>
                     <li><a href="{url_wap r="old#home"}">管理<img src="{$TMPL}/old/images/lead.png"></a></li>
-                    <li><a href="{url_wap r="old#release"}">发布<img src="{$TMPL}/old/images/pub.png"></a></li>
+                    <li><a {if $user.id}onclick="old.get_card_state('{$user.id}');" {else} href="{url_wap r="old#release"}"{/if}>发布<img src="{$TMPL}/old/images/pub.png"></a></li>
+                    <li><a href="{url_wap r="olduser#login"}">个人中心<img src="{$TMPL}/old/images/pub.png"></a></li>
                 </ul>
 
             </div>
@@ -22,6 +23,7 @@
 <script src="{$TMPL}/old/js/jquery.min.js"></script>
 <script src="{$TMPL}/old/js/bootstrap.min.js"></script>
 {include file="old/dialog.html"}
+<script type="text/javascript" src="{$TMPL}/old/js/utils.js"></script>
 <script type="text/javascript" src="{$TMPL}/old/js/old.js"></script>
 <script type="text/javascript">
     function initFooter(){

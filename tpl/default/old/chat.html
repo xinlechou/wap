@@ -1,9 +1,9 @@
 {include file="old/old_header.html"}
-<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/chat.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/chat.css?18"/>
 <div id="nav">
     <div class="top">
         <div class="top_left">
-            <a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>
+            <a href="javascript:window.history.go(-1)"><img src="{$TMPL}/old/images/exit.png"></a>
         </div>
         <div class="top_center">{$page_title}</div>
         <div class="top_right"></div>
@@ -11,31 +11,65 @@
 </div>
 <div class="box">
     <div class="chat">
+        {if $msg}
+        {foreach from=$msg item=list key=keyd}
+            {if $list.message_type eq 'inbox'}
+            <!--左边-->
+        {if $list.create_time}<time>{$list.create_time}</time>{/if}
+
+            <div class="chat_list_from">
+                <div class="chat_list_from_img">
+                    <img src="{$list.dest_user_img}" class="img-circle circle">
+                </div>
+                <div class="chat_list_from_info">
+                    <span>{$list.message}</span>
+                </div>
+            </div>
+            {/if}
+            {if $list.message_type eq 'outbox'}
+            <!--右边-->
+        {if $list.create_time}<time>{$list.create_time}</time>{/if}
+            <div class="chat_list_to">
+                <div class="chat_list_to_img">
+                    <img src="{$list.user_img}" class="img-circle circle">
+                </div>
+                <div class="chat_list_to_info">
+                    <span>{$list.message}</span>
+                </div>
+
+            </div>
+            {/if}
+        {/foreach}
+        {/if}
+        <!--<time>12月14日</time>
+
         <div class="chat_list_from">
-            <time>12月14日</time>
             <div class="chat_list_from_img">
                 <img src="{$TMPL}/old/images/avatar.png" class="img-circle circle">
             </div>
             <div class="chat_list_from_info">
-                <span>大哥有事儿您说话</span>
+                <span>大哥有事儿您说我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址话</span>
             </div>
         </div>
+        <time>12月14日</time>
         <div class="chat_list_to">
-            <time>12月14日</time>
             <div class="chat_list_to_img">
                 <img src="{$TMPL}/old/images/avatar2.png" class="img-circle circle">
             </div>
             <div class="chat_list_to_info">
                 <span>我找你是说地址</span>
             </div>
+
         </div>
+        <time>12月14日</time>
         <div class="chat_list_to">
             <div class="chat_list_to_img">
                 <img src="{$TMPL}/old/images/avatar2.png" class="img-circle circle">
             </div>
             <div class="chat_list_to_info">
-                <span>你填错了</span>
+                <span>大哥有事儿您说我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址我找你是说地址话</span>
             </div>
+
         </div>
         <div class="chat_list_to">
             <div class="chat_list_to_img">
@@ -44,12 +78,65 @@
             <div class="chat_list_to_info">
                 <span>在吗</span>
             </div>
-        </div>
+
+        </div>-->
     </div>
 </div>
 <footer>
-    <div class="foot"><input type="text" name="from" class="chat_input" id="chat_input"><label>发送</label></div>
+    <div class="chat_foot">
+        <input type="text" name="msg" class="chat_input" id="msg_info">
+        <label>发送</label>
+    </div>
 </footer>
 {include file="old/old_inc_footer.html"}
+<script>
+    $(function(){
+        var p = {user_id:"{$user.id}",dest_user_id:"{$dest_user_id}"};
+        p.user_name = "{$user.user_name}";
+        p.dest_user_name = "{$dest_user_name}";
+        p.send_user_id = p.user_id;
+        p.receive_user_id = p.dest_user_id;
+
+        var timer = setInterval(function(){
+            var $chat_get = $('.chat');
+            old.get_message({is_read:1,user_id: p.user_id,dest_user_id: p.dest_user_id},function(json){
+                var a = appendGet(json);
+                $chat_get.append(a);
+                $('html, body').animate({scrollTop: $(document).height()}, 300);
+
+            })
+        },5000);
+        $('.chat_foot label').on(EVENT_TYPE,function(){
+            var msg = $('#msg_info').val();
+            var $chat = $('.chat');
+            //is_read 1:未读 0 ：所有
+            p.message = msg;
+
+            old.send_message(p,function(json){
+                $chat.append(appendSend(json));
+                $('#msg_info').val('');
+                $('html, body').animate({scrollTop: $(document).height()}, 300);
+            })
+            function appendSend(json){
+                var htmlStr = '<div class="chat_list_to"><div class="chat_list_to_img"><img src="{function name="get_user_avatar" uid=$user.id type="middle"}" class="img-circle circle"></div><div class="chat_list_to_info"><span>'+msg+'</span></div></div>';
+                return htmlStr;
+            }
+        });
+
+        function appendGet(json){
+            var htmlStr = "";
+            for(var i=0;i<json.length;i++){
+                console.log(json[i].message)
+                htmlStr += '<div class="chat_list_from"><div class="chat_list_from_img"><img src="'+json[i].dest_user_img+'" class="img-circle circle"></div><div class="chat_list_from_info"><span>'+json[i].message+'</span></div></div>';
+            }
+
+            return htmlStr;
+
+        }
+//        old.set_message_isread(p.user_id, p.dest_user_id);
+        $('html, body').animate({scrollTop: $(document).height()}, 300);
+    })
+
+</script>
 </body>
 <html>

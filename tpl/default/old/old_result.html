@@ -1,0 +1,46 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/success.css"/>
+{if $stay eq 0}
+<meta http-equiv="refresh" content="3;URL={$jump}" />
+{/if}
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <!--<a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>-->
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+
+<div class="publish_sucess">
+    {if $page_title eq '错误'}<img src="{$TMPL}/old/images/fail.jpg">{else}<img src="{$TMPL}/old/images/sucess.jpg">{/if}
+    <p>{$msg}</p>
+    <ul>
+        {if $stay eq 0}
+        <li>
+            <div class="return_jump">
+                <a href="{$jump}">还有<span id="timer">3</span>秒钟后自动跳转，或点击返回</a>
+            </div></li>
+        {/if}
+        <li><a href="{url_wap r="old"}">返回首页</a></li>
+        <!--<li><a href="{$pre}">返回</a></li>-->
+    </ul>
+</div>
+<script>
+    var timmer,leftTime;
+    function codeLeftTimeFun(){
+        clearTimeout(timmer);
+        var oSpan = document.getElementById('timer');
+        if(!oSpan) return;
+        var leftTime = parseInt(oSpan.innerHTML);
+        leftTime--;
+        oSpan.innerHTML = leftTime;
+        if (leftTime > 0) {
+            timmer = setTimeout(codeLeftTimeFun, 1000);
+        }
+    }
+    codeLeftTimeFun();
+</script>
+</body>
+</html>

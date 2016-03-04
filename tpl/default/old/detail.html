@@ -1,5 +1,6 @@
 {include file="old/old_header.html"}
-<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css?{time()}"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/select.css"/>
 
 <div id="nav">
     <div class="top">
@@ -8,7 +9,7 @@
         </div>
         <div class="top_center">{$page_title}</div>
         <div class="top_right">
-            <a href="{$pre}"><img src="{$TMPL}/old/images/share.png"></a>
+            <a href="javascript:void(0)" onclick="tools.share()"><img src="{$TMPL}/old/images/share.png"></a>
         </div>
     </div>
 </div>
@@ -26,7 +27,7 @@
             <!--物品图片-->
             <div>
                 {foreach from=$detail.images_data.list item=img_list key=keyd}
-                <img src="{$img_list.url}" {if $detail.is_filter eq '1'}class="backdrop"{/if}>
+                <img original="{$img_list.url}" src="{$TMPL}/old/images/holder.png" class="{if $detail.is_filter eq '1'}backdrop{/if} lazy">
                 <!--<img src="{$TMPL}/old/images/images1.png" class="backdrop">-->
                 <!--<img src="{$TMPL}/old/images/images2.png">-->
                 {/foreach}
@@ -34,21 +35,30 @@
         </div>
     </div>
     <div class="detail_content">
+        {if $ex}
         <div class="detail_content_title">
             其他人想拿Ta交换Ta
         </div>
-        <div class="detail_content_body">
-            <div class="detail_content_body_ul">
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images1.png"></a></div>
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images4.png"></a></div>
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images5.png"></a></div>
-            </div>
-            <div class="detail_content_body_ul">
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images3.png"></a></div>
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images4.png"></a></div>
-                <div class="detail_content_body_ul_list"><a href="#"><img src="{$TMPL}/old/images/images5.png"></a></div>
-            </div>
+        <div class="select">
+            <!--<ul class="clearfix select-list">-->
+            <ul class="select-list">
+                {foreach from=$ex.list item=list key=keyd}
+                <li>
+                    {assign var=imgs value=$list.to_images_data.list}
+                    {foreach from=$imgs item=img_list key=keyd}
+                    {if $img_list.is_top}
+                    <a href="{url_wap r="old#detail" p="id=$list.to_goods_data.id"}"><figure style="background-image:url({$img_list.url})">
+                    </figure></a>
+                    {/if}
+                    {/foreach}
+                </li>
+                {/foreach}
+            </ul>
         </div>
+        {else}
+        <div class="exchange_empty" style="text-align: center"><span>还没有人交换这个呢，<br>快赶在别人前面提出交换吧！</span></div>
+        {/if}
+
     </div>
     <div class="detail_foot">
         <div class="detail_foot_one"  onclick="old.add_focus(this.childNodes[1],'{$user.id}','{$detail.id}')">
@@ -60,31 +70,29 @@
             <span class="focus_num">{$detail.focus_num}</span>
         </div>
         <div class="detail_foot_two detail_foot_two_right">
-            <a href="#"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
+            <a href="{url_wap r="old#chat" p="id=$detail.user_id"}"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
         </div>
         <div class="detail_foot_three">
             <a href="javascript:void(0)" id="goSelect">我想要</a>
         </div>
     </div>
-    <div id="toTop">
-        <a href="javascript:scroll(0,0)" onfocus="this.blur();"><img src="{$TMPL}/old/images/return.png" border=0 width='6%' /></a>
-    </div>
+    <!--<div id="toTop">
+        <a href="javascript:scroll(0,0)" onfocus="this.blur();"><img src="{$TMPL}/old/images/return.png"/></a>
+    </div>-->
 
 </div>
-<script src="{$TMPL}/old/js/jquery.min.js"></script>
-{include file="old/dialog.html"}
-
-<script type="text/javascript" src="{$TMPL}/old/js/old.js"></script>
-
- <script type="text/javascript">
+{include file="old/old_footer.html"}
+{include file="old/modals.html"}
+ <!--<script type="text/javascript">
      /*回到顶部*/
  var topObj = document.getElementById("toTop");
  window.onscroll = function() {
  var sTop = document.body.scrollTop + document.documentElement.scrollTop;
  sTop > 0 ? topObj.style.display = "" : topObj.style.display = "none";
  }
-</script>
+</script>-->
 <script>
+//    alert(document.referrer)
     $(function(){
         var seUrl = "{url_wap r="old#select"}";
         var ownerId = "{$detail.user_id}";
@@ -100,6 +108,50 @@
             window.location.href = seUrl+"&from_user_id="+ownerId+'&from_goods_id='+goods_id;
         });
     })
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage.appId}',
+        timestamp: {$signPackage.timestamp},
+        nonceStr: '{$signPackage.nonceStr}',
+        signature: '{$signPackage.signature}',
+        jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+//        alert(typeof wx.onMenuShareTimeline)
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: '我在HUAN上发现了一个好玩意儿：{$share_info.title}。快去换换换！！！', // 分享标题
+            link: "{$share_info.src}", // 分享链接
+            imgUrl: '{$share_info.head_image}', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: '我在HUAN上发现了一个好玩意儿：{$share_info.title}。快去换换换！！！',
+            desc: '{$share_info.info}', // 分享描述
+            link: "{$share_info.src}",  // 分享链接
+            imgUrl: '{$share_info.head_image}', // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
 </script>
   </body>
  <html>

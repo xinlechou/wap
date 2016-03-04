@@ -161,6 +161,7 @@ class ajaxModule
                 $user_ap_partner['create_time'] = time();
                 $GLOBALS['db']->autoExecute(DB_PREFIX."ap_partner_user",$user_ap_partner);
                 require_once APP_ROOT_PATH."system/libs/user.php";
+                auto_do_login_user($xlc_user['mobile'],md5($xlc_user['user_pwd']."_EASE_COOKIE"));
                 $result['status'] = 1;
                 $result['data'] = "授权成功，正在为您登录...";
 
@@ -170,10 +171,11 @@ class ajaxModule
                 $user_ap_partner['partner_user_id'] = $aqj_id;
                 $user_ap_partner['edit_time'] = time();
                 $GLOBALS['db']->autoExecute(DB_PREFIX."ap_partner_user",$user_ap_partner,"UPDATE","id=".intval($aqj_user['id']));
+                auto_do_login_user($xlc_user['mobile'],md5($xlc_user['user_pwd']."_EASE_COOKIE"));
                 $result['status'] = 2;
                 $result['data'] = "已授权，正在为您登录...";
             }
-            $result['jump'] = url_wap("deals",array('aqjid'=>$aqj_id,'m'=>$aqj_mobile,'isap'=>1));
+            $result['jump'] = get_gopreview();
             ajax_return($result);
         }else{
             //不存在新乐筹用户，自动注册帐号
@@ -189,18 +191,26 @@ class ajaxModule
                 $user_data['is_effect'] = 0;
             }
             $res = save_user($user_data);
-            statistics('register');
-            $user_ap_partner = array();
-            $user_ap_partner['user_id'] = $res['data'];
-            $user_ap_partner['partner_id'] = 2;
-            $user_ap_partner['partner_user_id'] = $aqj_id;
-            $user_ap_partner['create_time'] = time();
-            $GLOBALS['db']->autoExecute(DB_PREFIX."ap_partner_user",$user_ap_partner);
-            $result = do_login_user($user_data['mobile'],$user_data['user_pwd']);
-            $result['data'] = "授权成功，正在为您登录...";
-            $result['jump'] = url_wap("deals",array('aqjid'=>$aqj_id,'m'=>$aqj_mobile,'isap'=>1));
-            send_auto_register_pwd($aqj_mobile,$user_data['user_pwd']);//send pwd message
-            ajax_return($result);
+            if($res){
+            	statistics('register');
+	            $user_ap_partner = array();
+	            $user_ap_partner['user_id'] = $res['data'];
+	            $user_ap_partner['partner_id'] = 2;
+	            $user_ap_partner['partner_user_id'] = $aqj_id;
+	            $user_ap_partner['create_time'] = time();
+	            $GLOBALS['db']->autoExecute(DB_PREFIX."ap_partner_user",$user_ap_partner);
+	            $result = do_login_user($user_data['mobile'],$user_data['user_pwd']);
+	            $result['status'] = 1;
+	            $result['data'] = "授权成功，正在为您登录...";
+	            $result['jump'] = get_gopreview();
+	            send_auto_register_pwd($aqj_mobile,$user_data['user_pwd']);//send pwd message
+	            ajax_return($result);
+            }else{
+            	$result['status'] = -1;
+	            $result['data'] = "授权失败";
+	            $result['jump'] = get_gopreview();
+	            ajax_return($result);
+            }
         }
     }
 
@@ -234,7 +244,7 @@ class ajaxModule
                 $GLOBALS['db']->autoExecute(DB_PREFIX."ap_partner_user",$user_ap_partner);
             }
             $result['msg'] = "登录中...";
-            $result['jump'] = url_wap("deals",array('aqjid'=>$aqj_id,'m'=>$user_mobile,'isap'=>1));
+            $result['jump'] = get_gopreview();
         }else{
             //提示登录失败
             switch($result['data']){

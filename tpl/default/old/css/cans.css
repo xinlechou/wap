@@ -3,6 +3,7 @@
 	margin:0 auto;
 	/*padding:2% 3%;*/
 	background:#fff;
+    overflow: hidden;
 }
 .tab-content .cans li{
 	width:100%;
@@ -72,6 +73,7 @@
     width: 50px;
     height: 50px;   width: 50px;   margin: 0;   padding: 0;   background: transparent;   border: 1px solid #f5f5f5;
     border-top: 0;
+    display: block;
 }
 .cans_right_btns .edit_btn{
     background: url("../images/icon_edit.png") no-repeat center center;
@@ -82,7 +84,7 @@
     background-size: 40%;
     border-top: 0;
 }
-.tab-content .cans li .cans_right a{
+.tab-content .cans li .cans_right>a{
 	text-decoration:none;
 	color:#fff;
 	background:#ff5a5f;
@@ -94,7 +96,9 @@
     line-height: 36px;
     height: 36px;
 }
-
+.tab-content .cans li .cans_right>a.disabled{
+    background: #cccccc;
+}
 .cans_bottom{
 	margin-bottom:2em;
 }
@@ -228,4 +232,62 @@
 	background:none;
 	width:2em;
 	margin-right:1em;
+}
+/*编辑全部*/
+.cans_checkbox{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 35px;
+    transform:translateX(-30px);
+}
+.cans_checkbox input{
+    visibility: hidden;
+}
+.cans_checkbox label{
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 0;
+    top:0;
+    background: url("../images/filter_bg.png") no-repeat left center;
+    background-size: 23px;
+    background-position: 0px 1px;
+    /*-webkit-transition: background-position 0.3s;*/
+    /*transition: background-position 0.3s;*/
+}
+.cans_checkbox input[type='checkbox']:checked + label {
+    background-position: 0 -29px;
+}
+.tab-content .cans li,.cans_checkbox,.cans_footer{
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.tab-content .cans li.del{
+    -webkit-transform: translateX(30px);
+    -moz-transform: translateX(30px);
+    -o-transform: translateX(30px);
+    -ms-transform: translateX(30px);
+    transform:translateX(30px);
+}
+.cans_footer{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: -50px;
+}
+.cans_footer button{
+    width: 100%;
+    line-height: 50px;
+    background: #ff5a5f;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+}
+.cans_footer.show{
+    bottom: -1px;
 }

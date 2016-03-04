@@ -1,0 +1,255 @@
+<!-----------------------------------Modal-->
+
+<!--收货地址-modal-->
+<div class="modal fade" id="consigneeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请选择您的收货地址</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    {foreach from=$user_consignee item=c_list key=keyd}
+                    <input id="{$c_list.id}" hidden="hidden" type="radio" name="consignee" value="{$c_list.id}" {if $c_list.is_default eq '1'}checked{/if}><label for="{$c_list.id}" class="consigneeLabel">{$c_list.consignee}&nbsp;&nbsp;{$c_list.mobile}&nbsp;&nbsp;{$c_list.province}{$c_list.city}{$c_list.address}</label>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--投诉-modal-->
+<div class="modal fade" id="complaintModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请将您的不满告诉我们，我们会尽快处理！</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    <textarea name="complaintValue" rows=8 class="change_modal_body_top_textarea" placeholder="讲讲你遇到的问题😊"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--更换交换方式-modal-->
+<div class="modal fade" id="exMethodModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h4 class="modal-title change_modal_title">更改交换方式</h4>
+            </div>
+            <div class="modal-body change_modal_body">
+                <form id="exMethodForm">
+                    <div class="change_modal_body_top">
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_offline" value="1" checked><label for="change_type_offline">线下交换</label>
+                    </div>
+                    <div class="change_modal_body_bottom">
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_online" value="2" ><label for="change_type_online">线上交换</label>
+                        <div class="change_type_offline_bottom">
+                            <!--点击线上交换时显示-->
+                            <span class="change_modal_body_bottom_span no_top">对方选择了更改交换方式为线上交易+保证金(<em></em>￥)</span>
+                            <span class="change_modal_body_bottom_span">您输入的保证金金额不能少于此金额</span>
+                            <!--<span class="change_modal_body_bottom_span">请输入保证金：</span>-->
+                            <input type="text" id="deposit" name="deposit" placeholder="请输入保证金" ><i>￥</i>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain" data-dismiss="modal" id="exMethodFormSubmit">确认</button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--物流信息-modal-->
+<div class="modal fade" id="expressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">请填写您邮递物品的物流信息</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="change_modal_body_top no_bottom">
+                    <input type="text" class="form-control" name="express"
+                           placeholder="顺丰900120345543">
+                </div>
+            </div>
+            <div class="modal-footer change_modal_footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="expressSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--选择支付方式-modal-->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">选择支付方式</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                <div class="pay_order">
+                    <span>要去微信支付保证金了，保证金在双方交换完成时会立即退还，所以收到物品后记得点‘完成交换’呦.<br><em id="is_refund"></em></span>
+                    {if $payment_list.error eq 0 }
+                        {foreach from=$payment_list.data item=list key=keyd}
+                        <button type="button" class="pay_wx_btn" data-class-name="{$list.class_name}" data-payment-id="{$list.id}">{$list.name}</button>
+                        {/foreach}
+                    {else}
+                    <button type="button" class="pay_wx_btn" data-class-name="Oldwxjspay" data-payment-id="42">微信支付</button>
+                    {/if}
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--分享-modal-->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">分享给小伙伴们</h5>
+            </div>
+            <div class="modal-body change_modal_body">
+                   <br><p>这里是一堆分享按钮，但是现在还没有，真不好意思＝。＝</p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="share" id="shareLayer">
+    <div class="is_weixin">
+        <div class="share_img"><img src="{$TMPL}/images/share1.png"/></div>
+        <div class="share_con">请点击右上角将它发送给指定朋友或分享到朋友圈</div>
+    </div>
+</div>
+<!-----------------------------------Settings-Modal-->
+<!--选择地区-modal-->
+<div class="modal fade" id="areaModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog change_modal_dialog">
+        <div class="modal-content change-content">
+            <div class="modal-header change_modal_header">
+                <h5 class="modal-title change_modal_title">选择地区</h5>
+            </div>
+            <div class="modal-body con_direct_bottom">
+                <ul id="areaList">
+                    <li><span id="provinceValue" class="selectValue">请选择省份</span>
+                        <select name="province" id="province" class="selectStyle">
+                            <option value="" rel="0">请选择省份</option>
+                            {foreach from=$region_lv2 item=region}
+                            <option value="{$region.name}" rel="{$region.id}" {if $region.selected}selected="selected"{/if}>{$region.name}</option>
+                            {/foreach}
+                        </select>
+                    </li>
+                    <li><span id="cityValue"  class="selectValue">请选择城市</span>
+                        <select name="city" id="city" class="selectStyle">
+                            <option value="" rel="0">请选择城市</option>
+                            {foreach from=$region_lv3 item=region}
+                            <option value="{$region.name}" rel="{$region.id}" {if $region.selected}selected="selected"{/if}>{$region.name}</option>
+                            {/foreach}
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="areaSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--选择性别-modal-->
+<div class="modal fade" id="sexModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">选择性别</h5>
+            </div>
+            <div class="modal-body">
+                <div id="sexbox" class="con_direct_bottom">
+                    <!--<div class="con_direct_bottom">-->
+                        <ul id="sexlist">
+                            <li {if $user_info.sex eq 1}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq 1}checked="checked"{/if} value="1" name="sex" style="margin-left:3%;">男</li>
+                            <li {if $user_info.sex eq 0}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq 0}checked="checked"{/if} value="0" name="sex" style="margin-left:3%;">女</li>
+                            <li {if $user_info.sex eq -1}class="onchecked"{/if}><input class="radioclass" type="radio" {if $user_info.sex eq -1}checked="checked"{/if} value="-1" name="sex" style="margin-left:3%;">未知</li>
+                            </li>
+
+                        </ul>
+                    <!--</div>-->
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--email-modal-->
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">填写Email</h5>
+            </div>
+            <div class="modal-body">
+                <input type="text" value="{$user_info.email}" class="input_mail" placeholder="请输入邮箱" id="emailValue">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="emailSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--填简介-modal-->
+<div class="modal fade" id="introModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">填写个人简介</h5>
+            </div>
+            <div class="modal-body">
+                <textarea class="htextarea" rows="3" cols="20" id="introValue">{$user_info.intro}</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="introSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+

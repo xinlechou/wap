@@ -45,10 +45,9 @@
         this.modal = type+"Modal";
         this.options = arguments[4]?arguments[4]:"";//可自定义按钮名称
         if(msg==""){return false};
-//        console.log(msg)
         var modal1Desc = document.getElementById(this.modal);
-
         modal1Desc.innerHTML = msg;
+        console.log(modal1Desc.innerHTML)
         this.open();
     }
     dialog.prototype.open = function(){
@@ -80,6 +79,7 @@
     dialog.prototype.alert = function(){
         var inst = $('[data-remodal-id='+this.modal+']').remodal();
         inst.open();
+        console.log(inst)
         okFun = this.okFun;
         $(document).on('confirmation', '[data-remodal-id='+this.modal+']', function () {
             okFun && okFun();
@@ -90,7 +90,7 @@
         inst.open();
         setTimeout(function(){
             inst.close()
-        },1500);
+        },5000);
     }
     dialog.prototype.default = function(options){
         var inst = $('[data-remodal-id='+this.modal+']').remodal();
@@ -109,9 +109,10 @@
 
     }
       /*$(function() {
-          var a = new dialog('sddddddddds','default',function(){console.log('玩意')},[{name:"ok",action:'confirm'},{name:"no",action:'cancel'}],function(){
+          var a = new dialog('sddddddddds','light',function(){console.log('玩意')},[{name:"ok",action:'confirm'},{name:"no",action:'cancel'}],function(){
               console.log('玩意111')
           });
       });*/
+    //出错时检查一下是不是不小心引用了两个dialog文件
 </script>
 

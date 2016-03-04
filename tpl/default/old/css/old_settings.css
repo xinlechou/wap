@@ -1,0 +1,281 @@
+/*个人中心页*/
+body{
+    font-size: 13px;
+}
+.s_index{margin-bottom: 55px;}
+.conper{
+    width:100%;
+    height:200px;
+    margin:0 auto;
+    text-align:center;
+    overflow:hidden;
+}
+.conper_pic{
+    width:100%;
+    position:absolute;
+    padding-top:25px;
+}
+.conper_pic img{
+
+    -moz-border-radius:120px;
+    -webkit-border-radius:120px;
+    border-radius: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    max-width: 100px;
+    box-shadow:0 0 10px #fff;
+    -moz-box-shadow:0 0 10px #fff;
+    -webkit-box-shadow:0 0 10px #fff;
+}
+.conper_pic h4{
+    color:#fff;
+
+}
+.conper_pic h4 a{
+    color:#fff;
+
+}
+.conper_pic span{
+    color:#fff;
+
+}
+.per{
+    width:95%;
+
+    margin:0 auto;
+    text-align:center;
+    overflow:hidden;
+    margin-bottom:20%;
+}
+.con_self{
+    width:100%;
+    background:#fff;
+    height:70px;
+    padding:3% 0;
+}
+.con_self .con_self_left{
+    float:left;
+    width:18%;
+    padding-left:3%;
+}
+.con_self .con_self_right{
+    width: 70%;
+    float: left;
+    border-bottom: 1px solid #b3b3b3;
+    height: 60px;
+    margin-left: 3%;
+}
+/*by Libeibei*/
+.con_self .con_self_right,.con_self .con_self_right a{
+    /*color:#565a5c;
+    line-height: 50px;*/
+    color: #565a5c;
+    line-height: 50px;
+    width: 87%;
+   margin-left: 5%;
+    text-align: left;
+    /*padding-right: 18px;*/
+}
+.s_index>.con_self>.con_self_right{
+    padding-right: 18px;
+}
+.con_self .con_self_right a{text-align: right;}
+.s_index .con_self .con_self_right a{text-align: left;}
+.con_self .con_self_right .con_self_right_font{
+    color:#565a5c;
+    font-size:16px;
+    font-weight:100;
+    width: 100%;
+}
+.con_self_right_font.next{
+    display: inline-block;
+    background: url("../images/next.png")no-repeat center right;
+    background-size: 18px;
+}
+.con_self .con_self_right .con_self_right_img{
+    float: right;
+    margin-left: -100%;
+}
+.con_self_right_img em{
+    /*margin-right: 5px;
+    font-style: normal;
+    max-width: 30%;
+    overflow:hidden;
+    text-overflow:ellipsis;*/
+    font-style: normal;
+    width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    background: url("../images/next.png") no-repeat right center;
+    padding-right: 25px;
+    height: 50px;
+    background-size: 18px;
+}
+.con_self .con_self_right .con_self_right_img img{
+    vertical-align:middle;
+}
+.con_direct{
+    width:80%;
+    margin:0 auto;
+    text-align:center;
+    background:#fff;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    position:absolute;
+    top:50%;
+    left:5%;
+    padding-left:3%;
+    padding-right:3%;
+    padding-top:3%;
+    padding-bottom:6%;
+}
+.con_direct_top{
+    width:100%;
+    color:#565a5c;
+    font-size:16px;
+    font-weight:bold;
+    position:relative;
+    height:50px;
+    line-height:50px;
+    border-bottom:1px solid #565a5c;
+    text-align:center;
+    margin:0 auto;
+}
+.con_direct_top img{
+    position:absolute;
+    top:-18px;right:-25px;
+}
+.con_direct_bottom{
+    width:100%;
+    margin:0 auto;
+    text-align:center;
+    padding: 5px;
+}
+/*by libeibei*/
+.con_direct_bottom ul li{
+    height: 45px;
+    line-height: 45px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+    border-bottom: 1px solid #cccccc;
+    padding-left: 10px;
+    position: relative;
+}
+.con_direct_bottom ul li:last-child{
+    border-bottom: 0px;
+
+}
+ul#sexlist,ul#areaList{margin: 0}
+ul#sexlist li{
+    background-image: url(../images/filter_bg.png);
+    background-repeat: no-repeat;
+    background-position: 42% 10px;
+    background-size: 25px;
+    /*padding-left: 55px;*/
+}
+ul#areaList li{
+    display: inline-block;
+    width: 40%;
+    border: none;
+    height: 24px;
+}
+.radioclass {
+    opacity: 0;
+    cursor: pointer;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+}
+
+ul#sexlist li.onchecked{
+    background-position:42% -23px;
+}
+.selectValue{
+    display: inline-block;
+    line-height: 45px;
+    height: 45px;
+    text-align: center;
+    float: right;
+    background-image: url("../images/next.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 25px;
+    background-size: 18px;
+    /*padding-top: 1px;*/
+}
+.con_direct_bottom select.selectStyle{
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 14px;
+}
+.con_direct_bottom_left{
+    float:left;
+    padding-left:1%;
+    font-size:14px;
+    color:#565a5c;
+}
+.con_direct_bottom_right{
+    float:right;
+    padding-right:1%;
+    font-size:14px;
+    color:#565a5c;
+}
+.con_direct_bottom_right img{
+    vertical-align:middle;
+
+}
+.direct_pro{
+
+    text-decoration:none;
+    color:#565a5c;
+    font-size:16px;
+    display:block;
+    padding-top:5%;
+}
+.direct_pro:hover{
+    text-decoration:none;
+}
+.input_mail{
+    width:100%;
+    background:none;
+    border:none;
+    height:40px;
+    line-height:40px;
+    padding-left:2%;
+}
+.htextarea{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    margin: 0 auto;
+}
+.bind{
+    padding-top: 10%;
+    text-align: center;
+}
+.login_register_font{
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+}
+.pay_bind_bottom{
+    width: 30%;
+    margin: 0 auto;
+}
+.pay_bind_bottom button{
+    width: 100%;
+    line-height: 45px;
+    background: #ff5a5f;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 3px;
+}
+.qr{
+    text-align: center;
+}

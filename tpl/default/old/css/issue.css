@@ -1,3 +1,6 @@
+body{
+    background:#EFEFF4;
+}
 .issuecontain{
 	width:96%;
 	margin:2%;
@@ -5,6 +8,7 @@
 	background:#fff;
 	text-align:center;
 	margin-top:60px;
+    overflow: hidden;
 }
 .issue{
 	/*width:96%;
@@ -25,6 +29,7 @@
 .issue_add_div,.issue_add_div:hover{
 	position:relative;
 	text-decoration:none;
+    height: auto;
 }
 
 /*.issue_add .issue_add_add{
@@ -32,6 +37,7 @@
 	color:#cccccc;
 	width:100%;
 }*/
+
 .issue_add_img{
 	cursor:pointer;
     display: none;
@@ -47,6 +53,9 @@
     /*width:100%;*/
     font-size:3em;
     display: block;
+}
+.issue_add.str.edit::after{
+    content: '修改封面';
 }
 .issue_input{
     width: 100%;
@@ -68,9 +77,10 @@
     background-size: 23px;
     background-position: 0px 1px;
     padding-left: 26px;
-    -webkit-transition: background-position 0.3s;
-    transition: background-position 0.3s;
+    /*-webkit-transition: background-position 0.3s;*/
+    /*transition: background-position 0.3s;*/
     line-height: 23px;
+    margin: 0 10%;
 }
 /*.filter label.checked{
     background-position: 0px -29px;
@@ -82,6 +92,7 @@
 	display:block;
 	line-height:2em;
 	vertical-align:middle;
+    padding-top: 10px;
 }
 .filter img{
 	margin-right:1%; 
@@ -96,7 +107,6 @@
 .issue_upload{
 	width:100%;
 }
-
 .issue_upload_list {
     display: inline-block;
     width: 15.5%;
@@ -106,6 +116,9 @@
     vertical-align: middle;
     /*为了占位*/
     visibility: hidden;
+}
+.edit>.issue_upload_list{
+    visibility: visible;
 }
 /*div.issue_upload_list:nth-child(2n) {
     background: orange;
@@ -135,6 +148,7 @@
     padding-bottom: .2em;
     display: block;
     z-index: 300000;
+    color: #ff5a5f;
 }
 .issue_upload_list_span+i{
     /*display: block;
@@ -185,7 +199,7 @@
 	width:100%;
 	line-height:2.5em;
 	border:none;
-	color:#cccccc;
+	/*color:#cccccc;*/
 }
 .issue_des >.issue_des_textarea{
 	width:100%;
@@ -263,7 +277,7 @@
 .top_center>.filter{
     font-size: 1em;
 }
-#is_filter:checked+label,#setCover:checked+label{
+#is_filter:checked+label,#is_cover:checked+label{
     background-position: 0px -29px;
 }
 input[type="checkbox"],input[type="radio"]  {
@@ -271,4 +285,188 @@ input[type="checkbox"],input[type="radio"]  {
 }
 input[type='radio']:checked + i{
     visibility: visible;
+}
+
+/*第二次修改*/
+.select-list{
+    width: 96%;
+    margin: 0 auto;
+    display:-moz-box;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:-o-box;
+    display:box;
+    display: none;
+
+
+}
+.select-list{
+    -webkit-animation-duration: .8s;
+    -webkit-animation-delay: .1s;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-duration: 1s;
+    -moz-animation-delay: .1s;
+    -moz-animation-timing-function: ease;
+    -moz-animation-fill-mode: both;
+    -ms-animation-duration: 1s;
+    -ms-animation-delay: .1s;
+    -ms-animation-timing-function: ease;
+    -ms-animation-fill-mode: both;
+    animation-duration: 1s;
+    animation-delay: .1s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+}
+.issue_add_div{
+    -webkit-transition: height .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.select-list li{
+    background: #fff;
+    width: 15%;
+    margin: 0;
+    margin-right: 1.8%;
+    display: flex;
+    position: relative;
+}
+.select-list li figure input{
+    position:absolute;
+    top:30%;
+    filter:alpha(opacity:0);
+    -moz-opacity:0;
+    opacity:0;
+    cursor:pointer;
+    width: 100%;
+    height: 70%;
+    z-index: 1;
+}
+.select-list li:last-child{margin-right: 0;}
+.select-list li figure>i{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 2em;
+    background-color: rgba(12, 19, 27, 0.6);
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+    visibility: hidden;
+}
+i.delItem{
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url("../images/click_colse.png") no-repeat;
+    background-size: 18px;
+    position: absolute;
+    top: -4px;
+    right: -3px;
+    z-index: 30;
+}
+
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+@-moz-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -moz-transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -moz-transform: translateY(0);
+    }
+}
+
+@-ms-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -ms-transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -ms-transform: translateY(0);
+    }
+}
+
+@-o-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -ms-transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -ms-transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    -moz-animation-name: fadeInDown;
+    -ms-animation-name: fadeInDown;
+    -o-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+}
+@-webkit-keyframes pulse {
+    0% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale(1.1); }
+    100% { -webkit-transform: scale(1); }
+}
+@-moz-keyframes pulse {
+    0% { -moz-transform: scale(1); }
+    50% { -moz-transform: scale(1.1); }
+    100% { -moz-transform: scale(1); }
+}
+@-ms-keyframes pulse {
+    0% { -ms-transform: scale(1); }
+    50% { -ms-transform: scale(1.1); }
+    100% { -ms-transform: scale(1); }
+}
+@-o-keyframes pulse {
+    0% { -o-transform: scale(1); }
+    50% { -o-transform: scale(1.1); }
+    100% { -o-transform: scale(1); }
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    -webkit-animation-name: pulse;
+    -moz-animation-name: pulse;
+    -ms-animation-name: pulse;
+    -o-animation-name: pulse;
+    animation-name: pulse;
 }

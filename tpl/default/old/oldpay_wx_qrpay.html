@@ -1,0 +1,68 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/pay.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <!--<a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>-->
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+<style>body{background: #fff}</style>
+<div class="box">
+    {if $data.pay_status eq 0}
+    <div style="margin:0 auto;text-align:center;" id="imgdiv">
+        <img alt="请使用微信扫码支付" src="http://paysdk.weixin.qq.com/example/qrcode.php?data={$picurl}" style="width: 80%;"/>
+        <p>请使用微信扫码支付</p>
+    </div>
+    {/if}
+    <!--支付错误时显示-->
+    <div class="pay_sucsss pay_result" id="pay_error">
+        <img src="{$TMPL}/old/images/fail.jpg">
+        <p>支付遇到问题</p>
+        <ul>
+            <li><a href="{url_wap r="old#home_exchange"}">继续支付</a></li>
+            <li><a href="{url_wap r="old"}">返回首页</a></li>
+        </ul>
+    </div>
+
+    <!--支付成功时显示-->
+    <div class="pay_sucsss {if $data.pay_status neq 1}pay_result{/if}" id="pay_success">
+        <img src="{$TMPL}/old/images/sucess.jpg">
+        <p>支付成功，5秒后自动退出</p>
+        <ul>
+            <li><a href="{url_wap r="old#home_exchange"}">查看申请</a></li>
+            <li><a href="{url_wap r="old"}">返回首页</a></li>
+        </ul>
+    </div>
+
+</div>
+{include file="old/old_inc_footer.html"}
+</body>
+<script type="text/javascript">
+    var timer = setInterval(checkpay,5000);
+    var noticeId = {$notice_id};
+
+    function checkpay(){
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: '/wxpay_web/checkpay.php?notice_id='+noticeId,
+            data: "&notice_id="+noticeId,
+            success: function (data) {
+                if (data=="is_paid") {
+                    window.clearInterval(timer);
+                    $("#pay_success").show();
+                    $("#imgdiv").hide();
+                    setTimeout(jump,5000);
+                }
+            }
+        });
+    }
+    function jump(){
+        location.href = APP_ROOT+'/index.php?ctl=old&act=home_exchange';
+    }
+</script>
+
+</html>

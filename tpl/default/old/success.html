@@ -14,10 +14,66 @@
 	 <p>看到它来跟您交换吧!</p>
       {/if}
 	 <img src="{$TMPL}/old/images/sucess.jpg">
-	 <a href="#" class="publish_circle">分享至朋友圈</a>
+	 <a href="#" class="publish_circle" id="shareBtn">确认</a>
       <a href="{$pre}" class="publish_skip">跳过</a>
   </div>
 
+{include file="old/modals.html"}
 {include file="old/old_inc_footer.html"}
+
+<script>
+    $(function(){
+        $('#shareBtn').on(EVENT_TYPE,tools.share)
+    })
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+                debug: false,
+                appId: '{$signPackage.appId}',
+                timestamp: {$signPackage.timestamp},
+            nonceStr: '{$signPackage.nonceStr}',
+            signature: '{$signPackage.signature}',
+            jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+
+    ]
+    });
+    wx.ready(function () {
+//        alert(typeof wx.onMenuShareTimeline)
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: '我在HUAN上发布了一个新玩意儿：{$share_info.title}。快来跟我换换换！！！', // 分享标题
+            link: "{$share_info.src}", // 分享链接
+            imgUrl: '{$share_info.head_image}', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                var url = '{$pre}';
+                if(url) {window.location.href = url;}
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: '我在HUAN上发布了一个新玩意儿：{$share_info.title}。快来跟我换换换！！！',
+            desc: '{$share_info.info}', // 分享描述
+            link: "{$share_info.src}",  // 分享链接
+            imgUrl: '{$share_info.head_image}', // 分享图标
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                var url = '{$pre}';
+                if(url) {window.location.href = url;}
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
  </body>
  </html>

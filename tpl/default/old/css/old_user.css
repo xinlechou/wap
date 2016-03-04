@@ -1,0 +1,149 @@
+body{
+    background: #fff;
+}
+
+.light_gray{color: #b3b3b3;}
+/*user_welcome*/
+.welcome_list{
+    margin-top: 30%;
+    font-size: 1.2em;
+}
+.welcome_list ul{
+    width: 100%;
+}
+.welcome_list ul li{
+    text-align: center;
+    margin: 4% auto;
+    width: 67%;
+}
+.welcome_list ul li a{
+    color: #ff5a5f;
+    line-height: 45px;
+    width: 100%;
+    display: block;
+    border: 1px solid #ff5a5f;
+    border-radius: 3px;
+    text-decoration:none;
+}
+.welcome_list ul li a.act{
+    color: #fff;
+    background: #ff5a5f;
+}
+/*wx_login*/
+.login_register{
+    width: 100%;
+    margin: 0 auto;
+    padding: 10% 0 50px 0;
+    text-align: center;
+}
+.login_register a,.login_register a:hover{
+    text-decoration: none;
+}
+.login_register a:hover{
+    color: #b3b3b3;
+}
+/*****/
+/*注册页*/
+.register{
+    width:100%;
+    padding:5% 3%;
+    margin:0 auto;
+    text-align:center;
+    overflow:hidden;
+}
+.register table {
+    width:100%;
+    margin:0 auto;
+    text-align:center;
+}
+.input_td{
+    width:100%;
+    height:50px;
+    line-height:30px;
+    /*padding-left:2%;*/
+    padding: 10px 0 10px 2%;
+    color:#656262;
+    border:1px solid #dddddd;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    font-size:14px;
+    margin-bottom:3%;
+}
+.input_td.incorrect{
+    border:1px solid #ff5a5f;
+ }
+.input_td.correct{
+    background-image: url(../images/filter_hover.png);
+    background-repeat: no-repeat;
+    background-position: 90% 15px;
+    background-size: 18px;
+    padding-right: 29px;
+}
+.input_tel.disabled{
+    border:none;
+    background-color: transparent;
+}
+.input_tel{
+    width:55%;
+    height:50px;
+    line-height:50px;
+    padding-left:2%;
+    color:#656262;
+    border:1px solid #dddddd;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    font-size:14px;
+    margin-bottom:3%;
+    float:left;
+}
+
+a.code:hover,a.code:focus{color:#fff;}
+.code{
+    width:40%;
+    height:50px;
+    line-height:50px;
+
+    /*color:#656262;*/
+    border:1px solid #dddddd;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    font-size:14px;
+    margin-bottom:3%;
+    background:#ff5a5f;
+    color:#fff;
+    display:block;
+    float:right;
+}
+.code.disabled{
+    background:#dddddd;
+    color:#999999;
+}
+a.reg{float: left}
+a.pwd{float: right}
+/*绑定手机号*/
+.pay_bind_bottom{position: relative}
+.pay_bind_bottom .pay_bind_act{
+    height: 45px;
+    font-size: 1.5em;
+
+}
+#registerInput{
+    display: none;
+}
+.bind_tips{
+    position: absolute;
+    top: -40px;
+    line-height: 20px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    height: 40px;
+    font-size: 12px;
+}
+.pay_bind_bottom ul li button.pay_bind_act, .pay_bind_bottom ul li button:hover{
+    background: #ff5a5f;
+    border: 1px solid #ff5a5f;
+}

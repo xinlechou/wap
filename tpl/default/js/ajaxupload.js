@@ -70,7 +70,7 @@ jQuery.extend({
         }            
         
         var uploadCallback = function(isTimeout)
-  {  
+  {
    // Wait for a response to come back 
    var io = document.getElementById(frameId);
             try 

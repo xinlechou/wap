@@ -1,0 +1,123 @@
+<html>
+<head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>{$riddles_info.name} 猜灯谜闯过了第{$riddles_info.right_num}关，快来挑战</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/riddles/css/result.css"/>
+     <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+		var is_share = 0;
+  	var riddles_id = {$riddles_info.id};
+  	wx.config({
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    appId: '{$signPackage.appId}', // 必填，公众号的唯一标识
+		    timestamp: '{$signPackage.timestamp}', // 必填，生成签名的时间戳
+		    nonceStr: '{$signPackage.nonceStr}', // 必填，生成签名的随机串
+		    signature: '{$signPackage.signature}',// 必填，签名，见附录1
+		    jsApiList: [
+		    	'checkJsApi',
+          'openLocation',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage'
+        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		wx.ready(function(){
+			wx.checkJsApi({
+	        jsApiList: [
+	            'onMenuShareTimeline',
+	            'onMenuShareAppMessage'
+	        ],
+	        success: function (res) {
+	            //alert(JSON.stringify(res));
+	        }
+	    });
+	    var imgUrl = '{$TMPL}/riddles/images/fenxiang.png'; // 分享后展示的一张图片
+	    var lineLink = 'http://www.xinlechou.com/wap/index.php?ctl=riddles&act=result&id='+riddles_id; // 点击分享后跳转的页面地址
+	    var descContent = "{$riddles_info.name} 猜灯谜闯过了第{$riddles_info.right_num}关，获得成就：{$show}"; // 分享后的描述信息
+	    var shareTitle = '{$riddles_info.name} 猜灯谜闯过了第{$riddles_info.right_num}关，快来挑战'; // 分享后的标题
+	    var appid = '{$signPackage.appId}'; // 应用id,如果有可以填，没有就留空
+	   
+	    wx.onMenuShareTimeline({
+			    title: shareTitle, // 分享标题
+			    link: lineLink, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        is_share = 1;
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+			wx.onMenuShareAppMessage({
+			    title: shareTitle, // 分享标题
+			    desc: descContent, // 分享描述
+			    link: lineLink, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    type: '', // 分享类型,music、video或link，不填默认为link
+			    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			    success: function () {
+			      is_share = 1;
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+		});
+		wx.error(function(res){
+			//alert(JSON.stringify(res));
+	    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+	
+		});
+	  function showShare(){
+	  	$("#share_div").show();
+	  }
+	  
+	  function hideShare(){
+	  	$("#share_div").hide();
+	  }
+  </script>
+</head>
+<body>
+    <div style="display:none;"><img src="{$TMPL}/riddles/images/fenxiang.png" width=90% border=0 /></div>
+    <div class="result">
+	       <div class="rsult_top">
+		       <!--回答部分提示-->
+		       <div class="result_top_a">
+			      <!--第九关-->
+			     <!-- <img src="../images/result_steap.png" width=90% border=0 />-->
+				   <!--第九关-->
+				    <!--第七八关-->
+			      <!--<img src="../images/result_tanhua.png" width=90% border=0 />-->
+				   <!--第七八关-->
+				    <!--第四六关-->
+			      <!--<img src="../images/result_jinshi.png" width=90% border=0 />-->
+				   <!--第四六关-->	
+                   <!--第一三关-->
+			      <img src="{$TMPL}/riddles/images/result_{$bg_img}.png" width=90% border=0 />
+				   <!--第一三关-->					   
+			      {if $img_show eq 1}<div class="result_top_count"><img src="{$TMPL}/riddles/images/count{$riddles_info.right_num}.png" border=0  width=60% /></div>{/if}
+				
+			   </div>
+		   </div>
+		   <div class="result_bottom">
+		       <a onclick="showShare();" class="share"><img src="{$TMPL}/riddles/images/share.png" width=40% /></a>
+			   <a href="http://www.xinlechou.com/topic/riddles/index.html" class="again">{if $is_new eq 1}<img src="{$TMPL}/riddles/images/challenge.png" width=40% />{else}<img src="{$TMPL}/riddles/images/again.png" width=40% />{/if}</a>
+		   </div>
+		   <div class="monkey">
+		       <img src="{$TMPL}/riddles/images/monkey.png" border=0 width=60% />
+		   </div>
+		  <div id="share_div" class="trans_bg" style="display:none;" onclick="hideShare();">
+			    <img src="{$TMPL}/riddles/images/trans_bg1.png" width=100%>
+		  </div>
+	</div>
+</body>
+</html>

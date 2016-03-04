@@ -1,0 +1,59 @@
+<html>
+ <head>
+   <meta name="Generator">
+   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   <meta name="format-detection" content="telephone=no">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>我和父母有多像</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <link href="{$TMPL}/similar/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{$TMPL}/similar/css/third.css"/>
+   
+    <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+    <script type="text/javascript" src="{$TMPL}/js/js.js"></script>
+	  <script type="text/javascript" src="{$TMPL}/js/h5imgupload.js"></script>
+	  <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
+	  <script type="text/javascript">
+      var APP_ROOT = '{$APP_URL}';
+      var APP_ROOT_ORA = '{$PC_URL}';
+      var upimgurl = APP_ROOT+'/index.php?ctl=similar&act=uploadimg&id={$similar_info.id}';
+      $(document).ready(function(){
+	      $("#similar_form").bind("submit",function(){
+			  	if($("#state").val()==0){
+			  		alert("请上传您父母的照片");
+			  		return false;
+			  	}
+			  	$("#similar_form").submit();
+			  });
+			});
+    </script>
+ </head>
+ <body>
+     <div class="top">
+	    <img src="{$TMPL}/similar/images/dialoga.png" width=50%/>
+	 </div>
+	 <div class="center">
+	      <form id="similar_form" action="{url_wap r="similar#share"}" method="post">
+		      <div class="center_top clearfix">
+			      <a onClick="javascript:upd_file(this,'h5img_file');"><img id="h5img" src="{$TMPL}/similar/images/circlea.png" class="img-circle circle" onClick="javascript:upd_file(this,'h5img_file');"><input type="file" capture="camera" class="filebox" name="h5img_file" id="h5img_file"  style=" position:absolute;top:0;left:0;cursor:pointer;padding: 0;height:100%;width:100%;filter: alpha(opacity=0);-moz-opacity: 0;-khtml-opacity: 0;opacity: 0;"/></a>
+			  </div>
+			  <div class="submit">
+			     <input type="hidden" value="0" id="state">
+			     <input type="hidden" value="" id="similar_id" name="id">
+			     <input type="submit" value="开启系统对比"  class="submit_sub img-rounded">
+			  </div>
+		  </form>
+		  
+		  <div id="share_div" style="display:none;position:absolute;top:30%;left:40%">
+			    <img src="{$TMPL}/images/loading.gif" width=100%>
+		  </div>
+	 </div>
+ </body>
+ </html>

@@ -1,0 +1,30 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_user.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">登录</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+<div class="box">
+    <div class="welcome_list">
+        <ul>
+            <li><a href="{url_wap r="olduser#register"}" class="act">手机号注册</a></li>
+            <li><a href="{url_wap r="olduser#start_login"}">手机号登录</a></li>
+            <li class="login_tips"><p class="gray">您也可以用第三方账号直接登录</p></li>
+            <li id="wechatLoginBtn"><a href="javascript:void(0)" class="login-btn-wx">微信登录</a></li>
+        </ul>
+    </div>
+</div>
+ {include file="old/old_inc_footer.html"}
+ <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>-->
+ <!--<script type="text/javascript" src="{$TMPL}/js/user.js"></script>-->
+ <!--内嵌二维码微信登录JS-->
+ <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+ <script type="text/javascript" src="{$TMPL}/old/js/old_wechat.js"></script>
+
+ </body>
+</html>
