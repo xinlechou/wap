@@ -11,12 +11,12 @@
  </div>
  <div class="box">
      <!--<div><button type="button" style="width: 80px" onclick="up()">up</button><button type="button" style="width: 80px" onclick="down()">down</button></div>-->
-     <div class="content">
-         <div class="grid-sizer"></div><!--控制初始宽度-->
+     <div id="content">
+         <!--<div class="grid-sizer"></div>&lt;!&ndash;控制初始宽度&ndash;&gt;-->
          {if $error}<div class="empty">{$error}</div>{/if}
          {foreach from=$goods item=good_list key=keyd}
          {if $good_list.online_state eq 1}
-         <div class="content_list add">
+         <div class="content_list">
              <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="content_list_link"><img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive {if $good_list.is_filter eq 1}backdrop{/if}"></a>
              <div class="content_list_bottom">
                  <img src="{$good_list.avatar}" class="img-circle circle">
@@ -42,229 +42,110 @@
  <script type="text/javascript" src="{$TMPL}/old/js/masonry.pkgd.min.js"></script>
  <script type="text/javascript" src="{$TMPL}/old/js/imagesloaded.pkgd.js"></script>
  <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
-<script>var page = "{$page}",ajax_flag=null,user_id = "{$user.id}",imgurl="{$TMPL}";</script>
 <!--<script type="text/javascript" src="{$TMPL}/old/js/old_index.js"></script>-->
-<script type="text/javascript">
-    $(document).ready(function(){
-        var $grid = $('.content');
-        $grid.imagesLoaded( function() {
-            $grid.masonry({
-                itemSelector: '.content_list',
-                percentPosition: true,
-                columnWidth: '.grid-sizer',
-//                gutterWidth : 20,
-                isAnimated: true,
-//                transitionDuration: '0.8s'
-//                     isFitWidth:true,
-            });
-        });
-        $grid.imagesLoaded().progress( function() {
-            $grid.masonry('layout');
-        });
-        $grid.dropload({
-            scrollArea : window,
-            loadUpFn:function(me){
-                var $items = $(".add").clone();
-//                $grid.append( $items ).masonry( 'prepended', $items );
-                me.resetload();
-            },
-            loadDownFn : function(me){
-//                var nowpage = page;
-//                nowpage++;
-                var $items = $(".add").clone();
-//                $grid.append($items).masonry('appended', $items);
-                /*ajaxIndex(nowpage,function(json) {
-                    if (json.goods.error == 0) {
-                        page = json.now_page;
-                        var a = writeIndex(json.goods.data);
-//                          $grid.append($items).masonry('appended', $items);
-                        $grid.append($(a)).masonry('appended', $(a));
-                        me.resetload();
+<script>
+    var ajax_flag=null,
+        page = '{$page}',
+        url = APP_ROOT + '?ctl=old';
+    var $grid = $('#content');
+    var $loading = $('#loading');
+    $(function(){
+        init_masonry();
+        $(window).scroll(function(){
+            if ($(document).height() - $(this).scrollTop() - $(this).height() < 100) {
+                //判断滚到底部时,请求数据
+                var nowpage = page;
+                nowpage++;
+                var p = {p: nowpage, ajax: 1, pagesize: 5};
+                if (ajax_flag) return;
+                $loading.show();
+                ajax_flag = $.ajax({
+                    url: url, dataType: "json", type: "get", data: p,
+                    success: function (json) {
+                        $loading.hide();
+                        if (json.goods.error == 0) {
+                            page = json.now_page;
+                            /*var a = writeIndex(json.goods.data);
+                            console.log($(a));
+                            $grid.append($(a)).masonry('appended', $(a));
+                            $(a).imagesLoaded(function () {
+                                init_masonry();
+                            });*/
+                            (function(){
+                                var i = 0,goods=json.goods.data;
+                                // 这里设置每0.9秒添加一个小块。如果不用计时器而用for，我测试结果是会造成重叠。
+                                setInterval(function(){
+                                    if(i >= $(goods).size()){
+                                        return false;
+                                    }
+
+                                    //$elem是每个小块的模版
+                                    var htmlStr = '<div class="content_list"><a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img original="'+goods[i].head_image+'" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive backdrop"></a><div class="content_list_bottom">';
+                                    htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
+                                    htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
+                                    if(goods[i].is_focus){
+                                        htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                                    }else{
+                                        htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                                    }
+                                    htmlStr += '<span>{$good_list.focus_num}</span></div></div>';
+
+
+                                    $grid.append($(htmlStr));
+
+                                    //等图片加载完后才渲染新添加的小块
+                                    $(htmlStr).imagesLoaded( function() {
+                                        $grid.masonry('appended',  $(htmlStr));
+                                        $grid.masonry( 'reloadItems' );
+                                        $grid.masonry( 'layout' );/*重点在这里！！！！！*/
+                                        $grid.find('.lazy').lazyload();
+                                    });
+                                    i++;
+                                },10);
+                            })();
+
+                            ajax_flag=null;
+                        }
+                    }, error:function(e){
+                        alert(e.responseText);
                     }
-                });*/
-                me.resetload();
-
+                });
             }
         });
-//        $('.content').find('img').lazyload();
-    });
-</script>
-<!--
- <script type="text/javascript">
-    var page = "{$page}",ajax_flag=null;
-     $(document).ready(function(){
-         var $grid = $('.content');
-// layout Isotope after each image loads
-         $grid.imagesLoaded( function() {
-             // init Masonry after all images have loaded
-             $grid.masonry({
-                 itemSelector: '.content_list',
-                 percentPosition: true,
-                 columnWidth: '.grid-sizer',
-                     gutterWidth : 20,
-                 isAnimated: true,
-                 transitionDuration: '0.8s'
-//                     isFitWidth:true,
-             });
-         });
 
-         $grid.imagesLoaded().progress( function() {
-             $grid.masonry('layout');
-         });
-         $grid.on( 'layoutComplete', function( event, items ) {
-             console.log( items.length );
-         });
-         $(window).scroll(function(){
-             // 当滚动到最底部以上100像素时， 加载新内容
-             if ($(document).height() - $(this).scrollTop() - $(this).height()<100) {
-                 var nowpage = page;
-                 nowpage++;
-                 var $items = $(".add").clone();
-                 var url = APP_ROOT+'?ctl=old',p = {p:nowpage,ajax:1};
-                 if(ajax_flag) return;
-                 ajax_flag = $.ajax({url:url,dataType:"json",type:"get",data: p,
-                     success:function(json){
-                         if (json.goods.error == 0) {
-                             page = json.now_page;
-                             var a = writeIndex(json.goods.data);
-                             $grid.append($(a)).masonry('appended', $(a));
-                             console.log($(a));
-//                             $grid.masonry('reloadItems')
-                             ajax_flag=null;
-                         }
-                     },error:function(e){
-                         alert(e.responseText);
-                     }
-                 });
-
-                 /*ajaxIndex(nowpage,function(json) {
-                     console.log(json);
-                     if (json.goods.error == 0) {
-                         page = json.now_page==page?page:json.now_page;
-                         var a = writeIndex(json.goods.data);
-                          $grid.append($items).masonry('appended', $items);
-//                         $grid.masonry( 'addItems', a )
-//                         $grid.append($(a)).masonry('appended', $(a));
-
-//                         me.resetload();
-                     }
-                 });
-                 $grid.masonry('reloadItems')*/
-             }
-         });
-         /*$grid.dropload({
-              scrollArea : window,
-              loadUpFn:function(me){
-                  var $items = $(".add").clone();
-                  $grid.append( $items )
-                  // add and lay out newly appended items
-                  .masonry( 'prepended', $items );
-                  me.resetload();
-                },
-              loadDownFn : function(me){
-                  var nowpage = page;
-                  nowpage++;
-                  var $items = $(".add").clone();
-
-                  ajaxIndex(nowpage,function(json) {
-                      if (json.goods.error == 0) {
-                          page = json.now_page;
-                          var a = writeIndex(json.goods.data);
-//                          $grid.append($items).masonry('appended', $items);
-                          $grid.append($(a)).masonry('appended', $(a));
-                          me.resetload();
-                      }
-                  });
-
-
-              }
-          });*/
-
-
-
-//             var scrollHeight = $(document).height();
-         /*$(window).scroll(function() {
-          //当内容滚动到底部时加载新的内容
-          window.moving = true;
-          if(!window.moving)return;
-          var r =  setTimeout(function(){
-          var scrollTop = $(this).scrollTop(),windowHeight = $(this).height();
-          console.log('scrollTop:'+scrollTop);
-          console.log('windowHeight:'+windowHeight);
-          console.log('scrollHeight:'+scrollHeight);
-          if((scrollTop + windowHeight > scrollHeight+100)){
-          console.log('loading');
-          var $items =$('#s').clone();
-          // append items to grid
-          $grid.append( $items )
-          // add and lay out newly appended items
-          .masonry( 'appended', $items );
-          //                     }
-          }
-          //                     if ($(this).scrollTop() + $(window).height()== $(document).height() && $(this).scrollTop() > 120) {
-
-
-          window.moving = false;
-          },100);*/
-
-//                                  })
-
-//             $grid.masonry('layout');
-         /*$grid.imagesLoaded().progress( function() {
-          //                 $grid.masonry('layout');
-          console.log('ddd')
-          });*/
-
-     });
-    function up(){
-        var nowpage = parseInt(page);
-        if(page==1) return false;
-        nowpage--;
-        ajaxIndex(nowpage);
-    }
-    function down(){
-        var nowpage =  parseInt(page);
-
-        nowpage++;
-        ajaxIndex(nowpage,function(json){
-            page = json.now_page;
-            var a = writeIndex(json.goods.data);$('.content').append(a);
-            console.log(a);
-            $('.content').masonry();
-        });
-    }
-    function ajaxIndex(nowpage,fun){
-        var url = APP_ROOT+'?ctl=old',p = {p:nowpage,ajax:1};
-        if(nowpage == page) return;
-        old.sendAjax(url,p,function(json){
-            fun(json);
-        })
-    }
-    function writeIndex(goods){
-        var len = $(goods).size();
-        var htmlStr = '';
-        if(len){
-            for(var i = 0;i < len;i ++){
-
-                 htmlStr += '<div class="content_list">';
-                 htmlStr += '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img src="'+goods[i].head_image+'" class="img-responsive"></a>';
-                 htmlStr += '<div class="content_list_bottom">';
-                htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
-                htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
-                if(goods[i].is_focus){
-                    htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                }else{
-                    htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                }
-                htmlStr += '<span>{$good_list.focus_num}</span></div></div>';
-
-            }
-            return htmlStr;
-//            console.log(htmlStr);
-//            $('.content').append(htmlStr);
+        function init_masonry() {
+            var $grid = $('#content');
+            $grid.imagesLoaded( function() {
+                $grid.masonry({
+                    itemSelector: '.content_list',
+                    percentPosition: true,
+                    columnWidth: 5,//两item的间隔
+                    isAnimated: false,transitionDuration: '0.4s'
+                });
+            });
         }
+        function writeIndex(goods){
+            var len = $(goods).size();
+            var htmlStr = '';
+            if(len){
+                for(var i = 0;i < len;i ++){
+                    htmlStr += '<div class="content_list add">';
+                    htmlStr += '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img src="'+goods[i].head_image+'" class="img-responsive"></a>';
+                    htmlStr += '<div class="content_list_bottom">';
+                    htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
+                    htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
+                    if(goods[i].is_focus){
+                        htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                    }else{
+                        htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                    }
+                    htmlStr += '<span>{$good_list.focus_num}</span></div></div>';
 
-    }
- </script>-->
+                }
+                return htmlStr;
+            }
+        }
+    })
+</script>
  </body>
  </html>

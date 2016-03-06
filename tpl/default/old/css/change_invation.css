@@ -152,18 +152,21 @@
 	width:100%;
 	background:#fafafa;
 	margin:0 auto;
-	padding:5px 2%;
+	padding:5px 4%;
 	text-align:center;
 	border-bottom:0.1em solid #dadada;
 	border-top:0.1em solid #dadada;
 	margin-top:1em;
 }
 .change_foot span{
-	width:100%;
-	display:block;
+	/*width:100%;*/
+	display:inline-block;
 	/*font-size:5em;*/
 	color:#565a5c;
 	margin-bottom:7px;
+    text-align: left;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 .change_foot_body{
 	width:100%;
@@ -290,6 +293,9 @@
 	background:#ff5a5f;
 	/*margin-top:1.5em;*/
 }
+.change_modal_body_top input[type='radio']:checked+label+.question_tips,.change_modal_body_bottom input[type='radio']:checked+label+.question_tips{
+    display: block;
+}
 .change_modal_body_bottom  > .change_modal_body_bottom_span{
 	width:100%;
 	margin:0 auto;
@@ -307,11 +313,12 @@
     line-height: 30px;
     padding-left: 4px;
     margin-top: 5px;
+    margin-left: -5px;
     /*position: relative;*/
 }
 .change_modal_body_bottom input+i{
     color: #dadada;
-    margin-left: -40px;
+    margin-left: -20px;
 }
 /*.change_modal_body_bottom  > .no_top{
 	margin-top:-0.5em;
@@ -362,4 +369,27 @@
     background:linear-gradient( left, #4fc2dc, #6459c3);
     background:-moz-linear-gradient(left, #4fc2dc, #6459c3);
     background:-webkit-linear-gradient( left, #4fc2dc, #6459c3);
+}
+/*新增保证金提示*/
+.question_mark_tips{
+    visibility: hidden;
+    position: absolute;
+
+}
+.popover-content{
+    z-index: 99999;
+    font-size: 12px;
+}
+/*编辑地址入口*/
+.icon_edit{
+    float: right;
+    width: 30px;
+    margin-top: -5px;
+}
+.icon_edit img{
+    width: 100%;
+}
+/*编辑物流*/
+.change_modal_body h5{
+    margin-top: 20px;
 }

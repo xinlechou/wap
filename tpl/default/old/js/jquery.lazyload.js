@@ -105,7 +105,7 @@
                     $("<img />")
                         .bind("load", function() {
 
-                            var original = $self.attr("data-" + settings.data_attrixbute);
+                            var original = $self.attr("data-" + settings.data_attribute);
                             $self.hide();
                             if ($self.is("img")) {
                                 $self.attr("src", original);

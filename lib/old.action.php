@@ -4,7 +4,7 @@ class oldModule{
 	function index(){
         $p = $_REQUEST['p']?$_REQUEST['p']:"1";
         $is_ajax = $_REQUEST['ajax'];
-        $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'';
+        $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'5';
         //获取物品列表
         $url = $this->getUrl().'act=get_goods_list&p='.$p.'&pagesize='.$pagesize;
         $goods = json_decode($this->getCurl($url),true);
@@ -150,11 +150,11 @@ class oldModule{
         $payment_list_url = $this->getUrl().'act=get_payment_list';
         $payment_list = json_decode($this->getCurl($payment_list_url),true);
 //echo $payment_list_url;
-//        print_r($payment_list);
+//        print_r($from_user_goods);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("user_consignee",$user_consignee['data']);
         $GLOBALS['tmpl']->assign("payment_list",$payment_list);
-        $GLOBALS['tmpl']->assign("pre",get_gopreview_wap());
+        $GLOBALS['tmpl']->assign("pre",get_gopreview_old());
         $GLOBALS['tmpl']->assign("page_title",'交换申请');
         $GLOBALS['tmpl']->display("old/home_exchange.html");
     }
@@ -179,7 +179,7 @@ class oldModule{
         $old_user = $this->getUrl().'act=get_user_info&user_id='.$id;
         $good_num = $GLOBALS['db']->getOne("select count(*) from old_goods where user_id=".$id.' and is_del=0');
         $old_user_info = json_decode($this->getCurl($old_user),true);
-        //实名认证：1:已认证 2:未认证&未发布，提示可发布一次 0:未认证通过，已发过物品直接进认证页面
+        //实名认证：1:审核中 2:认证失败 0:未认证通过，有一次发布机会 4:发布过了，但在审核中
         $card_state = $old_user_info['data']['card_state'];
         if($card_state==0&&$good_num){
             $card_state = 4;
@@ -195,6 +195,7 @@ class oldModule{
         if(!$GLOBALS['user_info'])
             app_redirect(url_wap("olduser#login"));
         $id = $_REQUEST['id'];
+        $is_new = $_REQUEST['is_new'];//用来判断是编辑旧id的物品（edit_goods）还是生成新id的物品（edit_online_goods）
         $url = $this->getUrl().'act=get_goods_info&id='.$id;
         $goods_info = json_decode($this->getCurl($url),true);
         $goods_info = $this->get_cover($goods_info);
@@ -205,6 +206,8 @@ class oldModule{
 //        print_r($goods_info);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("goods",$goods_info['data']);
+        $GLOBALS['tmpl']->assign("is_new",$is_new);
+        $GLOBALS['tmpl']->assign("num",$goods_info['data']['images_data']['num']['num']);
         $GLOBALS['tmpl']->assign("page_title",'编辑物品');
         $GLOBALS['tmpl']->display("old/edit_release.html");
     }
@@ -223,7 +226,7 @@ class oldModule{
         $messageUrl = $this->getUrl().'act=get_message&user_id='.$GLOBALS['user_info']['id'];
         $message_info = json_decode($this->getCurl($messageUrl),true);
 //        print_r($messageUrl);
-//        print_r($message_info);
+//        print_r($notify_info);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("page_title",'消息');
         $GLOBALS['tmpl']->assign("notify",$notify_info['data']['list']);
@@ -352,10 +355,10 @@ class oldModule{
 //            print_r($share_info);
             $GLOBALS['tmpl']->assign('share_info',$share_info);
         }
-//        echo $from;
+        echo $from;
         if($from){
             $gopreview = url_wap('old#select',array('from_goods_id'=>$from,'from_user_id'=>es_session::get('from_user_id')));
-            es_session::set('from_goods_id','');
+            es_session::delete('from_goods_id');
         }else{
             /*if($goods_id){
                 $gopreview = url_wap('old#detail',array('id'=>$goods_id));

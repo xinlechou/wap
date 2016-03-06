@@ -2,57 +2,57 @@
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/select.css"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/issue.css"/>
 <div id="nav">
- <div class="top" >
-  <div class="top_left">
-      <!--<a href="{url_wap r="old"}"><img src="{$TMPL}/old/images/exit.png"></a>-->
-      <a href="javascript:window.history.go(-1)"><img src="{$TMPL}/old/images/exit.png"></a>
-  </div>
-  <div class="top_center">{$page_title}</div>
-  <div class="top_right">
-       <a href="javascript:void(0)" id="submit">确认</a>
-  </div>
+    <div class="top" >
+        <div class="top_left">
+            <!--<a href="{url_wap r="old"}"><img src="{$TMPL}/old/images/exit.png"></a>-->
+            <a href="javascript:window.history.go(-1)"><img src="{$TMPL}/old/images/exit.png"></a>
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right">
+            <a href="javascript:void(0)" id="submit">确认</a>
+        </div>
+    </div>
 </div>
-</div>
-  <form id="releaseFrom">
-       <div class="issuecontain">
-              <div class="issue">
-                <label class="issue_add str" for="img_0">
-                    <div class="issue_add_div">
-                     <!--添加图片样式的开始-->
-                        <img src="{$TMPL}/old/images/add_bg.png" class="backdrop" width=100% id="preview_area">
-                        <input type="file" hidden="hidden" name="img_0" class="issue_upload_input" id="img_0">
-                       <!--添加图片样式的结束-->
-                    </div>
+<div class="issuecontain">
+    <div class="issue">
+        <label class="issue_add str" for="img_0">
+            <div class="issue_add_div">
+                <!--添加图片样式的开始-->
+                <img src="{$TMPL}/old/images/add_bg.png" class="backdrop" width=100% id="preview_area">
+                <input type="file" hidden="hidden" name="img_0" class="issue_upload_input" id="img_0">
+                <!--添加图片样式的结束-->
+            </div>
 
-                </label>
-              </div>
-              <div class="filter">
-                  <input hidden="hidden" type="checkbox" value="1" name="is_cover" id="is_cover" CHECKED><label id="setCoverBtn" for="img_1">设为封面</label>
-                  <input hidden="hidden" type="checkbox" value="1" name="is_filter" id="is_filter" CHECKED><label for="is_filter" id="filterBtn">滤镜效果</label>
-                    </div><!--<a href="#" class="filter">&lt;!&ndash;<img src="{$TMPL}/old/images/filter_hover.png" border=0 width=10>&ndash;&gt;滤镜效果</a>-->
-                </div>
-               <div class="issue_contain clearfix">
-                   <ul class="select-list">
-                       <li>
-                           <figure style="background-image:url({$TMPL}/old/images/add_good.png)">
-                               <!--<input type="file" hidden="hidden" name="img_1" class="issue_upload_input" id="img_1">-->
-                               <i>封面</i>
-                           </figure>
-                       </li>
-                   </ul>
-               </div>
-               <div class="issue_title">
-                 <input type="text" value="" name="name" class="issue_title_input gray" placeholder="请填写标题：标题不超过14个字">
-               </div>
-                <div class="issue_des">
-                   <textarea class="issue_des_textarea" name="info" rows=5 placeholder="请填写物品描述：物品描述不超过140个字"></textarea>
-               </div>
-      </div>
-  </form>
+        </label>
+    </div>
+    <div class="filter">
+        <input hidden="hidden" type="checkbox" value="1" name="is_cover" id="is_cover" CHECKED><label id="setCoverBtn" for="img_1">设为封面</label>
+        <input hidden="hidden" type="checkbox" value="1" name="is_filter" id="is_filter" CHECKED><label for="is_filter" id="filterBtn">滤镜效果</label>
+    </div><!--<a href="#" class="filter">&lt;!&ndash;<img src="{$TMPL}/old/images/filter_hover.png" border=0 width=10>&ndash;&gt;滤镜效果</a>-->
+</div>
+<!-- 缩略图 -->
+<div class="issue_contain clearfix">
+    <ul class="select-list">
+        <li>
+            <figure style="background-image:url({$TMPL}/old/images/add_good.png)">
+                <!--<input type="file" hidden="hidden" name="img_1" class="issue_upload_input" id="img_1">-->
+                <i>封面</i>
+            </figure>
+        </li>
+    </ul>
+</div>
+<!-- 文本框 -->
+<div class="issue_title">
+    <input type="text" value="" name="name" class="issue_title_input gray" placeholder="请填写标题：标题不超过14个字(必填)">
+</div>
+<div class="issue_des">
+    <textarea class="issue_des_textarea" name="info" rows=5 placeholder="请填写物品描述：物品描述不超过500个字(必填)"></textarea>
+</div>
+
 {include file="old/old_inc_footer.html"}
 <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
 <script>
-    var release = {cover:'0',is_filter:1};
+    var release = {cover:'0'};
     release.uploadFile = function(file_id,successFun,errorFun){
         $(document).on('change',"input[name='"+file_id+"']",function(){
             $('#loading').show();
@@ -65,10 +65,9 @@
                         dataType: 'json',
                         success: function (data){
                             $('#loading').hide();
-                            console.log(data);
-                                if(data.error==0){
+                            if(data.error==0){
                                 successFun && successFun(data);
-                                    //否则会出现重复绑定上传的情况
+                                //否则会出现重复绑定上传的情况
                                 $('form[name="jUploadForm'+file_id+'"]').remove();
                                 $('iframe[name="jUploadFrame'+file_id+'"]').remove();
                             }else{
@@ -83,25 +82,69 @@
             $('input[name="'+file_id+'"]').off('change');
         });
     }
+    release.checkForm = function(p){
+         if(p.name==""){$.showErr('请输入标题',function(){});return false;}
+         if(p.info==""){$.showErr('请输入物品描述',function(){});return false;}
+         if(p.name.length>14){$.showErr('标题太长',function(){});return false;}
+         if(p.info.length>1000){$.showErr('物品描述太啰嗦，请精简物品描述',function(){});return false;}
+         if(p.info.length<10){$.showErr('物品描述太简短，请再详细描述您的物品',function(){});return false;}
+         if(p.images.length==0){$.showErr('请添加图片',function(){});return false;}
+         if(p.top_img_num==""||p.top_img_num==undefined){$.showErr('请选择封面图片',function(){});return false;}
+        return true;
+     }
 </script>
 <script>
     $(function(){
-        var $preview = $('#preview_area'),
-            $preview_container = $('.issue_add'),
-            $file_box = $('.select-list'),
-            $set_cover_btn = $('#setCoverBtn'),
-            $is_cover = $('#is_cover');
+        var $preview = $('#preview_area'),//预览图
+                $preview_container = $('.issue_add'),//上传封面时用到
+                $file_box = $('.select-list'),//缩略图区
+                $set_cover_btn = $('#setCoverBtn'),//设置封面的label
+                $is_cover = $('#is_cover'),//当前预览是否为封面的checkbox
+                $filter = $('input[name="is_filter"]'),//滤镜选择
+                $submit = $('#submit');
+         /*提交事件*/
+        $submit.on(EVENT_TYPE,function(){
+             var is_filter = $filter.is(':checked'),
+             name = $('input[name="name"]').val(),
+             info = $('.issue_des_textarea').val(),
+             top_img_num =$('input[name="top_img_num"]:checked').val(),
+             images = [],
+             catchList = CachedFileBox.getFileItem(),
+             card_state = "{$card_state}";
+//console.log(catchList);
+            if(catchList.length){
+                for(var i=0;i<catchList.length;i++){
+                    images.push(catchList[i].src);
+                }
+            }
+            var p = {name:name,info:info,top_img_num:top_img_num,images:images.toString(),is_filter:is_filter};
+            console.log(p);
+            if(release.checkForm(p)){
+//                console.log(p);return;
+                old.add_goods(p,parseInt(card_state),user_id);
+            };
 
+         });
+        //是否滤镜
+        $filter.on(EVENT_TYPE,function(){
+            var is_filter = $(this).is(':checked');
+            if(is_filter){
+                $preview.addClass('backdrop');
+            }else{
+                $preview.removeClass('backdrop');
+            }
+        })
         /*绑定第一次封面上传图片的事件*/
         $preview_container.on(EVENT_TYPE,function(){
             var _this = $(this),id = _this.attr('for');
             release.uploadFile(id,function(json){
                 _this.removeClass('str').removeAttr('for');//去掉添加封面文字
+                release.cover = $("#img_0").clone();
                 $("#img_0").remove();
                 $preview.attr('src','.'+json.data)//.addClass('pulse');//加着玩的
 
                 //将第一个加入数组
-                CachedFileBox.attachFileBox('img_1',json.data,1);
+                CachedFileBox.attachFileBox('img_1',$preview[0].src,1);
                 /*输出缩略图item*/
                 setTimeout(function(){
                     $file_box.html(CachedFileBox.writeHtmlItem()).addClass('fadeInDown').show();
@@ -112,22 +155,42 @@
         $file_box.on(EVENT_TYPE,'li',function(e){
             var _this = $(this),inp = _this.find('input[type="file"]'),id=inp.prop('id');
 
-//            console.log(e.target.nodeName);
+            console.log(e.target.nodeName);
             /*点击缩略图出现预览&获取封面选中状态*/
-            if(e.target.nodeName=='FIGURE'){
+            if(e.target.nodeName=='FIGURE'||(e.target.nodeName=='I'&&(!$(e.target).hasClass('delItem')))){
+
                 var _id = _this.data('index');
+
                 var item = CachedFileBox.getFileItem(_id);
-                $preview.attr('src','.'+item.src);
+                console.log(CachedFileBox.getFileItem());
+                console.log(CachedFileBox.getFileItem(_id));
+
+                $preview.attr('src',item.src);
                 //设置该图片的封面选中状态
                 $set_cover_btn.prop('for',item.id);
-                $is_cover.prop('checked',item.is_top);
+                $is_cover.prop('checked',(item.is_top==1));
                 //<input type="radio" name="top_img_num" value="0" hidden="hidden" id="img_1">
             }
             /*接收到delItem按钮：删除该缩略图*/
             if(e.target.nodeName=='I'&&$(e.target).hasClass('delItem')){
                 var btn = $(e.target),index = btn.data('index');
+                var item = CachedFileBox.getFileItem(index);
+                if($preview[0].src==item.src){
+                    if(index>0){
+                        var pre_item = CachedFileBox.getFileItem(index-1);
+                        $preview[0].src = pre_item.src;
+                        //设置该图片的封面选中状态
+                        $set_cover_btn.prop('for',pre_item.id);
+                        $is_cover.prop('checked',(pre_item.is_top==1));
+                    }else{
+                        $preview[0].src = "{$TMPL}/old/images/add_bg.png";
+                        $preview_container.find('.issue_add_div').append(release.cover);
+
+                    }
+                }
                 CachedFileBox.clearFileBox(index);
                 $file_box.html(CachedFileBox.writeHtmlItem()).removeClass('fadeInDown');
+                console.log(CachedFileBox.getFileItem());
                 return false;
             }
             /*其他区域：上传*/
@@ -136,13 +199,12 @@
             if(e.target.nodeName=='INPUT'){
                 release.uploadFile(id,function(json){
                     $preview.attr('src','.'+json.data);
-                    CachedFileBox.attachFileBox(id,json.data,0);
+                    CachedFileBox.attachFileBox(id,$preview[0].src,0);
                     $file_box.html(CachedFileBox.writeHtmlItem());
                     //当前label改为该图片对应的radio的id
                     $set_cover_btn.prop('for',id);
                     //将设为封面按钮恢复为未选中
                     $is_cover.prop('checked',false);
-                    console.log(id);
                 })
             }
 
@@ -150,13 +212,14 @@
         //点选设置封面按钮事件
         $set_cover_btn.on(EVENT_TYPE,function(){
             var id = $(this).attr('for'),
-                $for_cover_radio = $('#'+id),
-                for_cover_id = $for_cover_radio.parents('li').data('index'),
-                item = CachedFileBox.setFileItemIsTop(for_cover_id,(!$is_cover.prop('checked')));
+                    $for_cover_radio = $('#'+id),
+                    for_cover_id = $for_cover_radio.parents('li').data('index'),
+                    item = CachedFileBox.setFileItemIsTop(for_cover_id,(!$is_cover.prop('checked')));
+            if($is_cover.prop('checked')) return;
             //设置该id的图片为封面
-            $for_cover_radio.prop('checked',item.is_top);
+            $for_cover_radio.prop('checked',(item.is_top==1));
             //勾选已选中
-            $is_cover.prop('checked',item.is_top);
+            $is_cover.prop('checked',(item.is_top==1));
         });
 
         /*缩略图的array*/
@@ -167,13 +230,12 @@
                     var fsb = this.creatImageItem(id,src,is_top);//新建
                     cache.push(fsb);//更新缓存
                     if(cache.length > 6){
-                      cache.pop();
-                     }
+                        cache.pop();
+                    }
                     return fsb;
                 },
                 clearFileBox : function(id){
-                   cache.splice(id,1);
-                    console.log(cache);
+                    cache.splice(id,1);
                 },
                 creatImageItem : function(id,src,is_top){
                     return {id:id,src:src,is_top:is_top};
@@ -182,9 +244,9 @@
                     var str = '';
 
                     for(var i=0;i<cache.length;i++){
-                        str += '<li data-index="'+i+'"><figure style="background-image:url(.'+cache[i].src+')">';
+                        str += '<li data-index="'+i+'"><figure style="background-image:url('+cache[i].src+')">';
 //                        str += '<input type="file" hidden="hidden" name="'+id+'" class="issue_upload_input" id="'+id+'">';
-                        if(cache[i].is_top){
+                        if(cache[i].is_top==1){
                             str += '<input type="radio" name="top_img_num" value="'+i+'" hidden="hidden" id="'+cache[i].id+'" checked><i>封面</i>';
                         }else{
                             str += '<input type="radio" name="top_img_num" value="'+i+'" hidden="hidden" id="'+cache[i].id+'"><i>封面</i>';
@@ -198,13 +260,14 @@
                     return str;
                 },
                 getFileItem:function(id){
-                    return cache[id];
+//                    return cache[id];
+//                    console.log(id)
+                    return id!==undefined?cache[id]:cache;
                 },
                 setFileItemIsTop:function(id,is_top){
                     for(var i=0;i<cache.length;i++){
                         cache[i].is_top = 0;
                     }
-                    console.log(cache)
                     cache[id].is_top = is_top;
                     return cache[id];
                 }

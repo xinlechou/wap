@@ -5,7 +5,7 @@
     <div class="modal-dialog change_modal_dialog">
         <div class="modal-content change-content">
             <div class="modal-header change_modal_header">
-                <h5 class="modal-title change_modal_title">请选择您的收货地址</h5>
+                <h5 class="modal-title change_modal_title">请选择您的收货地址<a class="icon_edit" href="{url_wap r="old#edit_consignee"}"><img src="{$TMPL}/old/images/icon_edit.png"></span></a>
             </div>
             <div class="modal-body change_modal_body">
                 <div class="change_modal_body_top no_bottom">
@@ -16,7 +16,7 @@
             </div>
             <div class="modal-footer change_modal_footer">
                 <button type="button" class="btn change_btn btn-default change_certain"
-                        data-dismiss="modal">确认
+                        data-dismiss="modal" id="consigneeModalBtn">确认
                 </button>
                 <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
                     取消
@@ -59,13 +59,19 @@
             <div class="modal-body change_modal_body">
                 <form id="exMethodForm">
                     <div class="change_modal_body_top">
-                        <input type="radio" name="change_type" hidden="hidden" id="change_type_offline" value="1" checked><label for="change_type_offline">线下交换</label>
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_offline" value="1" checked><label for="change_type_offline">私下交换</label>
+                        <div class="question_tips">
+                            <p>私下交换为用户双方自行沟通并交线下换物品，不需要提供担保服务，出现问题本公司概不负责。</p>
+                        </div>
                     </div>
                     <div class="change_modal_body_bottom">
-                        <input type="radio" name="change_type" hidden="hidden" id="change_type_online" value="2" ><label for="change_type_online">线上交换</label>
+                        <input type="radio" name="change_type" hidden="hidden" id="change_type_online" value="2" ><label for="change_type_online">担保交换</label>
+                        <div class="question_tips">
+                            <p>若您的物品比较贵重，建议您采用担保交易，并缴纳一定的保证金。<i class="question_mark" data-container="body" data-toggle="popover"  data-placement="bottom" data-content="此金额为双方商议支付，保证交易正常进行，完成后会退还，出现问题后保证金会赔付给受害方。"><!--<p class="question_mark_tips">此金额为双方商议支付，保证交易正常进行，完成后会退还，出现问题后保证金会赔付给受害方。</p>--></i>
+                        </div>
                         <div class="change_type_offline_bottom">
                             <!--点击线上交换时显示-->
-                            <span class="change_modal_body_bottom_span no_top">对方选择了更改交换方式为线上交易+保证金(<em></em>￥)</span>
+                            <span class="change_modal_body_bottom_span no_top">对方选择了更改交换方式为线上交易+保证金(¥<em></em>)</span>
                             <span class="change_modal_body_bottom_span">您输入的保证金金额不能少于此金额</span>
                             <!--<span class="change_modal_body_bottom_span">请输入保证金：</span>-->
                             <input type="text" id="deposit" name="deposit" placeholder="请输入保证金" ><i>￥</i>
@@ -87,13 +93,22 @@
     <div class="modal-dialog change_modal_dialog">
         <div class="modal-content change-content">
             <div class="modal-header change_modal_header">
-                <h5 class="modal-title change_modal_title">请填写您邮递物品的物流信息</h5>
+                <h5 class="modal-title change_modal_title">填写物流详情</h5>
             </div>
             <div class="modal-body change_modal_body">
-                <div class="change_modal_body_top no_bottom">
+                <div>
+                    <h4 class="consignee_name">kashu</h4>
+                    <p class="consignee_address">北京市广渠门啦啦啦啦啦65好哈哈哈</p>
+                </div>
+                <div>
+                    <h5>物流信息</h5>
+                    <p><input type="text" class="form-control" name="express" placeholder="请输入单号"></p>
+                    <p><input type="text" class="form-control" name="company" placeholder="请输入物流公司"></p>
+                </div>
+                <!--<div class="change_modal_body_top no_bottom">
                     <input type="text" class="form-control" name="express"
                            placeholder="顺丰900120345543">
-                </div>
+                </div>-->
             </div>
             <div class="modal-footer change_modal_footer">
                 <button type="button" class="btn change_btn btn-default change_certain"
@@ -144,8 +159,8 @@
 </div>
 <div class="share" id="shareLayer">
     <div class="is_weixin">
-        <div class="share_img"><img src="{$TMPL}/images/share1.png"/></div>
-        <div class="share_con">请点击右上角将它发送给指定朋友或分享到朋友圈</div>
+        <div class="share_img"><img src="{$TMPL}/old/images/share_bg.png"/></div>
+        <!--<div class="share_con">请点击右上角将它发送给指定朋友或分享到朋友圈</div>-->
     </div>
 </div>
 <!-----------------------------------Settings-Modal-->

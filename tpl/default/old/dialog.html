@@ -31,12 +31,13 @@
     <button data-remodal-action="confirm" class="remodal-confirm">确定</button>
 </div>
 <!--没有按钮-->
-<div data-remodal-id="lightModal" role="dialog">
+<!--<div data-remodal-id="lightModal" role="dialog">
     <div>
         <p id="lightModal"></p>
         <br>
     </div>
-</div>
+</div>-->
+<div class="light-Modal share"><p id="lightModal"></p></div>
 <script>
     function dialog(msg,type,okFun,cancelFun,options){
         this.type = type;
@@ -47,10 +48,10 @@
         if(msg==""){return false};
         var modal1Desc = document.getElementById(this.modal);
         modal1Desc.innerHTML = msg;
-        console.log(modal1Desc.innerHTML)
-        this.open();
+//        console.log(modal1Desc.innerHTML)
+        this.openModal();
     }
-    dialog.prototype.open = function(){
+    dialog.prototype.openModal = function(){
         switch (this.type){
             case 'confirm':
                 this.confirm();//两个按钮
@@ -86,11 +87,27 @@
         });
     }
     dialog.prototype.light = function(){
-        var inst = $('[data-remodal-id='+this.modal+']').remodal();
-        inst.open();
+        var inst = $('.light-Modal');
+        okFun = this.okFun;
+        console.log(okFun);
+        inst.fadeIn().on(EVENT_TYPE,function(){
+            $(this).fadeOut(function(){
+                okFun && okFun();
+            });
+        })
         setTimeout(function(){
-            inst.close()
+            inst.fadeOut(function(){
+                    okFun && okFun();
+                }
+            );
         },5000);
+        this.okFun==null;
+        /*var inst = $('[data-remodal-id='+this.modal+']').remodal();
+        inst.open();
+        console.log(inst.state)
+        setTimeout(function(){
+            inst.close() ;
+        },1000);*/
     }
     dialog.prototype.default = function(options){
         var inst = $('[data-remodal-id='+this.modal+']').remodal();

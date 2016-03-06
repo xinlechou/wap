@@ -1,6 +1,6 @@
 .home{
 	width:100%;
-	margin:0 auto;
+	margin:60px auto;
 	padding:0 auto;
 	text-align:center;
 	/*margin-top:50px;*/
@@ -11,11 +11,11 @@
 	padding:0 auto;
 	text-align:center;
 	position:relative;
-	margin-top:60px;
+	margin-top:1em;
 }
 .home2{
-	margin-top:1em;
-	margin-bottom:4em;
+	/*margin-top:1em;*/
+	/*margin-bottom:70px;*/
 }
 .home_absolute{
 	position:absolute;
@@ -29,8 +29,22 @@
 }
 .home_absolute span,.home_absolute p{
 	color:#fff;
-	font-size:2em;
+	font-size:1.6em;
 }
+/*.home_absolute span>i{
+    position: relative;
+    top:-10px;
+    right: -2px;
+    background: #ff5a5f;
+    color: #fff;
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 100%;
+    display: inline-block;
+    line-height: 20px;
+    *//*padding: 2px;*//*
+    text-decoration: none;font-size: 12px;
+}*/
 /*@media screen and ( min-width: 480px ) {
     .home1 {
         width: 45%;
@@ -40,7 +54,7 @@
 /*横屏时横向排列*/
 @media all and (orientation : landscape) {
     .home1 {
-        width: 45%;
+        width: 33%;
         display: inline-block;
     }
 }

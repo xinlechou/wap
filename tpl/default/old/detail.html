@@ -1,5 +1,5 @@
 {include file="old/old_header.html"}
-<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/detail.css?1"/>
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/select.css"/>
 
 <div id="nav">
@@ -20,9 +20,18 @@
                 <img src="{$detail.avatar}" class="img-circle circle img_width" >
                 <span {if $detail.card_state eq 1}class="cer"{/if}>{$detail.username}</span>
             </div>
-            <div class="detail_head_right">{$detail.exchange_num}次</div>
+            <div class="detail_head_right">{$detail.exchange_num}</div>
+            <div class="detail_head_right_zan"  onclick="old.add_focus(this.childNodes[1],'{$user.id}','{$detail.id}')">
+                {if $detail.is_focus}
+                <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png">
+                {else}
+                <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png">
+                {/if}
+                <span class="focus_num">{$detail.focus_num}</span>
+            </div>
         </div>
         <div class="detail_body clearfix">
+            <h4>{$detail.name}</h4>
             <p>{$detail.info}</p>
             <!--物品图片-->
             <div>
@@ -61,13 +70,8 @@
 
     </div>
     <div class="detail_foot">
-        <div class="detail_foot_one"  onclick="old.add_focus(this.childNodes[1],'{$user.id}','{$detail.id}')">
-            {if $detail.is_focus}
-            <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png">
-            {else}
-            <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png">
-            {/if}
-            <span class="focus_num">{$detail.focus_num}</span>
+        <div class="detail_foot_one">
+            <a href="{url_wap r="old"}" class='home'>首页</a>
         </div>
         <div class="detail_foot_two detail_foot_two_right">
             <a href="{url_wap r="old#chat" p="id=$detail.user_id"}"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
@@ -81,7 +85,7 @@
     </div>-->
 
 </div>
-{include file="old/old_footer.html"}
+{include file="old/old_inc_footer.html"}
 {include file="old/modals.html"}
  <!--<script type="text/javascript">
      /*回到顶部*/

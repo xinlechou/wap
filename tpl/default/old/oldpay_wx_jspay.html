@@ -14,9 +14,9 @@
     {if $data.pay_status eq 0}
     <div class="pay_sucsss" id="pay_info">
         <p>付款金额</p>
-        <p style="border-bottom:1px solid #dddddd;padding-bottom:5%;">{$data.money}</p>
+        <p style="border-bottom:1px solid #dddddd;padding-bottom:5%;">¥{$data.money}</p>
         {if $data.notice_sn}<div class="pay_info">订单编号<span>{$data.notice_sn}</span></div>{/if}
-        <div class="pay_info">自动进入支付<span>{$data.money}</span></div>
+        <div class="pay_info">自动进入支付<span>¥{$data.money}</span></div>
         <ul id="buttom_div">
             <li><a href="{url_wap r="index"}">返回首页</a></li>
         </ul>

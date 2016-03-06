@@ -11,7 +11,8 @@ $(function() {
         saveConsignee('editConForm',function(json){
             if(json.status==1){
                 $.showSuccess('保存地址成功!',function(){
-                    window.location.href = APP_ROOT+"/index.php?ctl=old&act=consignee";
+                    //window.location.href = APP_ROOT+"/index.php?ctl=old&act=consignee";
+                    window.history.go(-1);
                 });
             }else{
                 $.showSuccess(json.info,null,1)

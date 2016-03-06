@@ -36,7 +36,6 @@ var user = {
                 break;
             case "doLogin":
                 user.formData.form = $("#user_login_form");
-                console
                 sb.bind(EVENT_TYPE,function(){user.doLogin()});
                 break;
             case "doRegister":
@@ -109,6 +108,8 @@ var user = {
                     location.href = json.jump;
                 } else {
                     $.showErr(json.info);
+                    //var a = new dialog(json.info,'light',function(){});
+                    //alert(json.info)
                 }
             }, function () {
                 $.showErr("系统繁忙，稍后请重试!");

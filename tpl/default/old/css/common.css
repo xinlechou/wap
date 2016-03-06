@@ -31,6 +31,7 @@ a:hover{text-decoration:none;}
 }
 .pink{color: #ff5a5f;}
 .gray{color: #565a5c;}
+.light_gray{color: #b3b3b3;}
 .btn-default{border-color: #ff5a5f;color: #ff5a5f;}
 @media screen and ( min-width: 768px ) {
     html {
@@ -63,6 +64,7 @@ a:hover{text-decoration:none;}
 	-moz-opacity:0.9;
 	opacity:0.9;
 	filter:alpha(opacity:0.9);
+    overflow: hidden;
 }
 .top_left,.top_center,.top_right{
     width: 20%;-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;box-flex:1;/*老版本的flex方法，兼容低版本安卓系统*/
@@ -118,7 +120,7 @@ a:hover{text-decoration:none;}
 .foot{
 	width:40px;
 	position:fixed;
-	right:40px ;
+	right:35px ;
 	bottom:30px;
 	text-align:right;
 }
@@ -205,19 +207,19 @@ a:hover{text-decoration:none;}
     /**  格式，filer: saturate(效果范围)
      *  效果范围，取值范围>=0的数字或百分数，1为无效果，0为灰度图
      */
-    -webkit-filter: saturate(1.2);
-    -moz-filter: saturate(1.2);
-    -o-filter: saturate(1.2);
-    -ms-filter: saturate(1.2);
-    filter: saturate(1.2);
+    -webkit-filter: saturate(1.3);
+    -moz-filter: saturate(1.3);
+    -o-filter: saturate(1.3);
+    -ms-filter: saturate(1.3);
+    filter: saturate(1.3);
     /**  格式，filer: contrast(效果范围)
      *  效果范围，取值范围>=0的数字或百分数，1为无效果
      */
-    -webkit-filter: contrast(1.2);
-    -moz-filter: contrast(1.2);
-    -o-filter: contrast(1.2);
-    -ms-filter: contrast(1.2);
-    filter: contrast(1.2);
+    -webkit-filter: contrast(1.3);
+    -moz-filter: contrast(1.3);
+    -o-filter: contrast(1.3);
+    -ms-filter: contrast(1.3);
+    filter: contrast(1.3);
 }
 /*主容器*/
 .box{
@@ -324,8 +326,9 @@ a:hover{text-decoration:none;}
 }
 .share_img img{
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 18px;
+    width: 90%;
 }
 .is_weixin{
     width: 67%;
@@ -347,3 +350,30 @@ a:hover{text-decoration:none;}
     font-size: 13px;
 }
 .one_btn_footer a{display: inline-block;text-align: center;}
+.question_mark{
+    background: url("../images/icon_question.png") no-repeat center;
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    position: relative;
+    top: 2px
+}
+.question_tips{
+    display: none;
+    text-align: left;
+    color: #dddada;
+}
+.popover{
+    z-index:  1200;;
+}
+/*light弹框*/
+p#lightModal{
+    width: 80%;
+    margin: 40% auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 5px;
+    color: #565a5c;
+    font-size: 13px;
+}

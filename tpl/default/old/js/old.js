@@ -1,53 +1,17 @@
 /**
  * Created by admin on 16/2/17.
  */
-String.prototype.query=function(name){
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
-    var r = window.location.search.substr(1).match(reg);
-    if (r!=null) return unescape(r[2]); return null;
-};//擦，少个分号会报错
-
-(function($) {
-    $.fn.lazyload = function() {
-        this.each(function() {
-            var self = $(this), srcImg = self.attr("src");
-            self.get(0).onerror = function() {
-                self.attr("src", srcImg);
-            }
-            self.attr("src", self.attr("original"));
-        }) ;
-    }
-    $(document).find('img.lazy').lazyload();
-})(jQuery);
-var tools = {
-    /*判断是否微信浏览器*/
-    isWeiXin:function(){
-        var ua = window.navigator.userAgent.toLowerCase();
-        return (ua.match(/MicroMessenger/i) == 'micromessenger');
-    },
-    share:function(){
-        if(tools.isWeiXin()){
-            $('#shareLayer').fadeIn().on(EVENT_TYPE,function(){
-                $(this).fadeOut()
-            })
-        }else{
-            $('#shareModal').modal('show')
-        }
-    },
-    goback:function(){
-        var ignore = ['success','faild','user_bind_mobile','wx_jspay','']
-    }
-}
 var EXSTATES = {
     Bnotavailable: '您的物品不可交换',
     Anotavailable: '对方的物品不可交换',
-    BOFF: '您的物品下架啦',
-    AOFF: '对方物品下架啦',
+    BOFF: '物品已下架',
+    AOFF: '物品已下架',
     Bnotexist:'对方物品不存在',
     Anotexist:'您的物品不存在',
     EXcannotedit:'交换信息不可修改',
     EXEMPTY:'交换信息为空',
-    EXIDEMPTY:'交换ID为空'
+    EXIDEMPTY:'交换ID为空',
+    HAVEIGNORED:'两物品已申请过交换'
 };
 var CARDSTATE = {
     1:'您已提交实名认证，请耐心等待审核通过',
@@ -85,7 +49,7 @@ old.interface = APP_ROOT_ORA+'/olddata.php';
 old.add_focus = function(obj,user_id,goods_id){
     if(user_id==""){
         var d = new dialog('要先登录呦','alert',function(){
-            window.location.href = APP_ROOT+"/index.php?ctl=user&act=login";
+            window.location.href = APP_ROOT+"/index.php?ctl=olduser&act=login";
         })
         /*if(confirm('要先登录呦')){
             window.location.href = APP_ROOT+"/index.php?ctl=user&act=login";
@@ -156,14 +120,14 @@ old.put_on = function(obj,goods_id){
 //物品下架
 old.pull_off = function(obj,goods_id){
     var url = old.interface+'?act=offline_goods&goods_id='+goods_id;
-    $.showErr('物品下架后，所有和此物品相关的申请都会消失，确认下架？',function(){
+    $.showConfirm('物品下架后，所有和此物品相关的申请都会消失，确认下架？',function(){
         old.sendAjax(url,"",function(json){
             if(json.error == 0){
                 //下架成功
                 $(obj).off('click');
                 var good = $(obj).parents('li');
                 var btnStr = '<a href="#" onclick="javascript:old.put_on(this,'+goods_id+')">上架</a>';
-                btnStr += '<span class="cans_right_btns"><a href="'+APP_ROOT+'/?ctl=old&act=edit&id='+goods_id+'" class="edit_btn"></a><button type="button" class="del_btn"></button></span>';
+                btnStr += '<span class="cans_right_btns"><a href="'+APP_ROOT+'/?ctl=old&act=edit&is_new=1&id='+goods_id+'" class="edit_btn"></a><button type="button" class="del_btn" onclick="old.del_goods(this,'+goods_id+')"></button></span>';
                 good.find('.cans_right').addClass('thin').html(btnStr);
                 var delStr = '<div class="cans_checkbox"><input type="checkbox" value="'+goods_id+'" id="'+goods_id+'" name="del" hidden="hidden"><label for='+goods_id+'></label></div>';
                 good.prepend(delStr);
@@ -180,17 +144,18 @@ old.pull_off = function(obj,goods_id){
 
 //添加物品
 //参数：user_id,name,info,images(图片地址数组)，top_img_num(第几个图片为首图)
-old.add_goods = function(p,card_state,user_id,images){
-    var url = old.interface+'?act=add_goods&user_id='+user_id+"&images="+images;
+old.add_goods = function(p,card_state,user_id){
+    var url = old.interface+'?act=add_goods&user_id='+user_id;
 
     old.sendAjax(url,p,function(json){
         if(json.error == 0){
-            //提交成功
+            //提交成功,先进入预览页面
             if(card_state==0){
                 //需实名认证
                 window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind&goods_id="+json.data.id;
             }else{
-                var goods_id = json.data.id;
+                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=preview&id="+json.data.id;
+                /*var goods_id = json.data.id;
                 //console.log(goods_id)
                 old.put_on_first(goods_id,function(json){
                     if(json.error==0){
@@ -198,7 +163,7 @@ old.add_goods = function(p,card_state,user_id,images){
                     }else{
                         old.failed();
                     }
-                })
+                })*/
                 //window.location.href =  APP_ROOT+"/index.php?ctl=old&act=success";
             }
         }else{
@@ -208,27 +173,43 @@ old.add_goods = function(p,card_state,user_id,images){
     })
 }
 //编辑物品
-old.edit_goods = function(p,card_state,user_id,images){
-    var url = old.interface+'?act=edit_goods&user_id='+user_id+"&images="+images;
-
+//编辑并上架是edit_online_goods。发布预览的编辑用edit_goods
+//编辑并上架以后跳转到物品管理，只是编辑的就跳转到预览页
+old.edit_goods = function(p,card_state,user_id){
+    var url = old.interface+'?act=edit_goods&user_id='+user_id;
     old.sendAjax(url,p,function(json){
-
         if(json.error == 0){
             //提交成功
             var goods_id = json.data.id;
+            window.location.href =  APP_ROOT+"/index.php?ctl=old&act=preview&id="+goods_id;
             console.log(goods_id)
-            old.put_on_first(goods_id,function(json){
+            /*old.put_on_first(goods_id,function(json){
                 if(json.error==0){
                     old.success();
                 }else{
                     old.failed();
                 }
-            })
+            })*/
             //window.location.href =  APP_ROOT+"/index.php?ctl=old&act=success";
         }else{
             var d = new dialog(json.data.msg,'light',function(){})
         }
         console.log(json.data)
+    })
+}
+old.edit_online_goods = function(p,card_state,user_id){
+    var url = old.interface+'?act=edit_online_goods&user_id='+user_id;
+    old.sendAjax(url,p,function(json){
+        console.log(json);
+        if(json.error == 0){
+            //提交成功
+            window.location.href =  APP_ROOT+"/index.php?ctl=old&act=home_goods";
+            return;
+            //window.location.href =  APP_ROOT+"/index.php?ctl=old&act=success";
+        }else{
+            var d = new dialog(json.data.msg,'light',function(){})
+        }
+
     })
 }
 //删除物品
@@ -238,7 +219,7 @@ old.del_goods = function(obj,goods_id){
     var url = old.interface+'?act=del_goods&goods_ids='+goods_ids;
     old.sendAjax(url,"",function(json){
         if(json.error == 0){
-            var d = new dialog('｀删除成功｀','light',function(){})
+            var d = new dialog('删除成功！','light',function(){})
             $(obj).parents('li').remove();
         }else{
             var d = new dialog(json.data.msg,'light',function(){})
@@ -277,7 +258,7 @@ old.uploadFile = function(url,file_id,successFun,errorFun){
     });
 }
 old.success = function(goods_id){
-    alert(goods_id)
+    //alert(goods_id)
     window.location.href = APP_ROOT+"/index.php?ctl=old&act=success&goods_id="+goods_id;
     return;
 }
@@ -302,20 +283,22 @@ old.add_exchange = function(p){
             },[{name:"看看我的申请",action:'confirm'},{name:"看看别的",action:'cancel'}]);
         }else{
             var msg = json.data.msg;
-            switch (json.data.error){
+            //console.log(json);
+            switch (json.error){
                 case "-4":
-                    msg = "｀咦，这个物品已经下线了｀";
-
+                    msg = EXSTATES.BOFF;break;
+                case "-7":
+                    msg = EXSTATES.HAVEIGNORED;break;
             }
             var d = new dialog(msg,'light',function(){})
         }
-        console.log(json)
     })
 }
-old.ignore_exchange = function(exchange_id){
+old.ignore_exchange = function(obj,exchange_id){
     var url = old.interface+'?act=ignore_exchange&id='+exchange_id;
     old.sendAjax(url,'',function(json){
         if(json.error == 0){
+            $(obj).parents('.change_Panels').remove();
             setTimeout(function(){
                 window.location.reload()
             },50);
@@ -429,7 +412,7 @@ old.finish_exchange = function(obj,exchange_id,user_type){
     old.sendAjax(url,"",function(json) {
         if (json.error == 0) {
             //$(obj).parents('.change_Panels').remove();
-            var d = new dialog('````恭喜！撒花！````', 'light', function () {})
+            var d = new dialog('恭喜您完成交换！', 'light', function () {})
             window.location.reload()
         } else {
             var d = new dialog(json.data.msg, 'light', function () {})
@@ -441,8 +424,7 @@ old.set_exchange_consignee = function(exchange_id,consginee_id,user_type){
     var url = old.interface+'?act=set_exchange_consignee&exchange_id='+exchange_id+'&user_type='+user_type+'&consignee_id='+consginee_id;
     old.sendAjax(url,"",function(json) {
         if (json.error == 0) {
-            window.location.reload();
-            var d = new dialog('````设置成功````', 'light', function () {})
+            var d = new dialog('设置成功!', 'light', function () {window.location.reload();})
 
         } else {
             var d = new dialog(json.data.msg, 'light', function () {})
@@ -477,7 +459,7 @@ old.del_exchange = function(obj,exchange_id,user_type){
     var url = old.interface+'?act=del_exchange&exchange_id='+exchange_id+'&user_type='+user_type;
     old.sendAjax(url,'',function(json) {
         if (json.error == 0) {
-            var d = new dialog('｀删除成功｀', 'light', function () {});
+            var d = new dialog('删除成功！', 'light', function () {});
             $(obj).parents('.change_Panels').remove();
         } else {
             var d = new dialog(json.data.msg, 'light', function () {})
@@ -513,10 +495,10 @@ old.add_order = function(p){
 old.show_notify = function(){
     var $div = $('.light-tips');
     old.get_unsent_notify(user_id,function(json){
-        if(json.error == 0&&json.data.num.num>0){
+        if(json.error == 0&&json.data.num>0){
             var str = '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
             var tourl = APP_ROOT+'?ctl=old&act=notify';
-            str += '<a href="'+tourl+'" id="notify">您有'+json.data.num.num+'条新消息！</a>';
+            str += '<a href="'+tourl+'" id="notify">您有'+json.data.num+'条新消息！</a>';
             $div.html(str).addClass('show');
             $div.on(EVENT_TYPE,'[aria-label="Close"]',function(){
                 $div.removeClass('show');
@@ -529,7 +511,7 @@ old.show_notify = function(){
 }
 //获取未读消息通知
 old.get_notify = function(user_id,is_read,fun,page){
-    var url = old.interface+'?act=get_notify',p={user_id:user_id,is_read:is_read,p:page,pagesize:20};
+    var url = old.interface+'?act=get_notify',p={user_id:user_id,is_read:is_read?is_read:0,p:page?page:1,pagesize:20};
     old.sendAjax(url,p,function(json) {
         if (json.error == 0) {
             //var d = new dialog('｀填写成功｀', 'light', function () {})
@@ -606,18 +588,23 @@ old.set_message_isread = function(user_id,dest_id){
 //获取实名认证状态
 old.get_card_state = function(user_id){
     var url = APP_ROOT+'?ctl=old&act=get_user_state&id='+user_id;
+
     old.sendAjax(url,"",function(json) {
         switch (json.data){
             case '1':
+                 //正在审核
                 var d = new dialog(CARDSTATE[1], 'light', function () {})
                 break;
             case '2':
+                //审核失败
                 var d = new dialog(CARDSTATE[2], 'alert', function () {
                     window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind";
                 })
                 break;
             case '0':
+                //没有提交过审核，有一次发布机会
             case '3':
+                //已通过实名认证
                 window.location.href =  APP_ROOT+"/index.php?ctl=old&act=release";
                 break;
             default :
@@ -639,4 +626,9 @@ old.set_user_card_state = function(user_id,fun){
 }
 //页面弹出消息
 var url = window.location.href;
-if(user_id && url.query('act')==null){old.show_notify();}
+//if(user_id && url.query('act')==null){old.show_notify();}
+if(user_id){
+    //var notifyTimeout = setInterval(function(){
+        old.show_notify();
+    //},10000);
+}

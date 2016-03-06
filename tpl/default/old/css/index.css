@@ -22,7 +22,7 @@
 
 .content_list>.content_list_link>img {
     display: block;
-    max-width: 100%;
+    width: 100%;
 }
 @media screen and ( min-width: 768px ) {
     html {
