@@ -15,7 +15,7 @@
            <img src="{$TMPL}/old/images/home_can.png" border=0 width=96%>
            <div class="home_absolute">
               <span>我的物品</span>
-              <p>({$good_num})</p>
+              <p>({if $good_num}{$good_num}{else}0{/if})</p>
            </div>
         </a>
 	</div>
@@ -24,7 +24,7 @@
             <img src="{$TMPL}/old/images/home_change.png" border=0 width=96%>
              <div class="home_absolute">
               <span>交换申请</span>
-              <p>({$order_num})</p>
+              <p>({if $order_num}{$order_num}{else}0{/if})</p>
            </div>
         </a>
 	</div>

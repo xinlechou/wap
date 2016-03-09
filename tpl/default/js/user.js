@@ -24,7 +24,8 @@ var user = {
         this.submitUrl = typeof urlList.submitUrl!=="undefined"?urlList.submitUrl:"";
         //按钮绑定事件，暂时使用click，更新jQuery版本后更换事件
         user.formData.sendMsgBtn.click(function(){
-            user.sendMobileVerifyMsg();//获取验证码按钮
+            //user.sendMobileVerifyMsg();//获取验证码按钮
+            user.getPicVerify();
         });
         var sb = user.formData.submitBtn;//提交表单按钮
         switch (sb.attr("data-submit-type")){
@@ -188,12 +189,43 @@ var user = {
     sendSMSUrl:"",//发送验证码的请求url
     checkVerifyCodeUrl:"",//检查验证码的请求url
     submitUrl:"",//提交表单时请求url
+    picCode:'',
     //发送手机验证码
     sendMobileVerifyMsg: function () {
         if(user.checkPhone()){
-            var url = user.sendSMSUrl, param = {mobile: $.trim(user.formData.phone.val())};
+            var url = user.sendSMSUrl, param = {mobile: $.trim(user.formData.phone.val()),code:user.picCode};
+            //发送短信前增加图片验证码的校验
+            console.log('sendMobileVerifyMsg');
             user.sendAjax(url, param, this.sendingMsgFun);
         };
+    },
+    //获取图片验证码----新增
+    getPicVerify:function(){
+        if(user.checkPhone()){
+            $('#reloadPicCode').live(EVENT_TYPE,reget_verify);
+            $.weeboxs.open("#picCode",{type:'box',width:300,showTitle: false,showCancel: false,clickClose:true,focus: "#picCodeValue",onok:function(){
+                var $picCodeValue = $('#picCodeValue');
+                user.checkPicVerify($picCodeValue.val());
+                console.log('ddd3')
+                //$.weeboxs.close();
+            }});
+        }
+        return;
+
+    },
+    checkPicVerify:function(code){
+        var url = APP_ROOT+'?ctl=user&act=check_pic_verify_code&code='+code;
+        console.log('222')
+        user.sendAjax(url,'',function(json){
+            if(json.status){
+                user.picCode = code;
+                user.sendMobileVerifyMsg();
+                console.log('444');
+            }else{
+                $.showErr(json.info);
+                console.log('555');
+            }
+        })
     },
     //发送验证码后回调
     sendingMsgFun: function (json) {
@@ -233,7 +265,7 @@ var user = {
                 var q = {mobile:mobile,code:code};
                 user.sendAjax(url, q,
                     function(json){
-                        if(json.status == 0){/*$.showSuccess("对不起，验证码错误");*/user.formData.verifyCode.removeClass("correct").addClass('incorrect');return false;}
+                        if(json.status == 0){/*$.showSuccess(json.info);*/user.formData.verifyCode.removeClass("correct").addClass('incorrect');return false;}
                         if(json.status == 1){/*$.showSuccess("验证码正确！");*/user.formData.verifyCode.addClass("correct");}
                     }
                 );
@@ -258,3 +290,9 @@ var user = {
         });
     }
 }
+function reget_verify(){
+    console.log('ddd')
+    var timenow = new Date().getTime();
+    var $picCodeImage = $("#picCodeImage");
+    $picCodeImage.attr("src","/verify.php?rand="+timenow);
+};

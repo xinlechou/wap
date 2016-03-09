@@ -454,6 +454,21 @@ class olduserModule{
 			ajax_return($data);
 		}
 	}
+    //检查图片验证码是否正确
+    function check_pic_verify_code()
+    {
+        $settings_mobile_code=strim($_REQUEST['code']);
+        //判断验证码是否正确=============================
+        if(es_session::get("verify") != md5($settings_mobile_code)){
+            $data['status'] = 0;
+            $data['info'] = "图片验证码不正确！";
+            ajax_return($data);
+        }else{
+            $data['status'] = 1;
+            $data['info'] = "验证码正确";
+            ajax_return($data);
+        }
+    }
 
 	public function getpassword()
 	{

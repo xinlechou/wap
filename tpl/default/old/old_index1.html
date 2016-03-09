@@ -1,0 +1,153 @@
+{include file="old/old_header.html"}
+ <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/index.css"/>
+ <div id="nav">
+     <div class="top">
+         <div class="top_left">
+             <a href="{$pre}"><img src="{$TMPL}/old/images/exit.png"></a>
+         </div>
+         <div class="top_center"><img src="{$TMPL}/old/images/huan.png" width="55%" style="max-width: 100px;"></div>
+         <div class="top_right"></div>
+     </div>
+ </div>
+ <div class="box"  style="position: absolute;top: 0px;margin-left:0;">
+     <!--<div><button type="button" style="width: 80px" onclick="up()">up</button><button type="button" style="width: 80px" onclick="down()">down</button></div>-->
+     <div id="content">
+         <!--<div class="grid-sizer"></div>&lt;!&ndash;控制初始宽度&ndash;&gt;-->
+         {if $error}<div class="empty">{$error}</div>{/if}
+         {foreach from=$goods item=good_list key=keyd}
+         {if $good_list.online_state eq 1}
+         <div class="content_list add">
+             <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="content_list_link"><img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive {if $good_list.is_filter eq 1}backdrop{/if}"></a>
+             <div class="content_list_bottom">
+                 <img src="{$good_list.avatar}" class="img-circle circle">
+                 <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="font_title">{$good_list.name}</a>
+             </div>
+             <div class="content_list_bottoma">
+                 {if $good_list.is_focus}
+                 <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+                {else}
+                 <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+                 {/if}
+                 <span>{$good_list.focus_num}</span>
+             </div>
+         </div>
+         {/if}
+         {/foreach}
+         </div>
+
+     </div>
+ </div>
+
+ {include file="old/old_footer.html"}
+ <script type="text/javascript" src="{$TMPL}/old/js/jquery.wookmark.js"></script>
+ <!--<script type="text/javascript" src="{$TMPL}/old/js/masonry.pkgd.min.js"></script>-->
+ <script type="text/javascript" src="{$TMPL}/old/js/imagesloaded.pkgd.js"></script>
+ <!--<script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>-->
+<!--<script type="text/javascript" src="{$TMPL}/old/js/old_index.js"></script>-->
+<script>
+    var ajax_flag=null,
+        page = '{$page}',
+        url = APP_ROOT + '?ctl=old',
+        timer=null;
+    var $grid = $('#content');
+    var $loading = $('#loading');
+//alert('dd')
+    (function ($){
+        var $tiles = $('#content'),
+                $handler = $('.content_list', $tiles),
+                $main = $('.box'),
+                $window = $(window),
+                $document = $(document),
+                options = {
+                    autoResize: true, // This will auto-update the layout when the browser window is resized.
+                    container: $main, // Optional, used for some extra CSS styling
+                    offset: 5, // Optional, the distance between grid items
+                    itemWidth: 150,
+                    flexibleWidth: '47%'// Optional, the width of a grid item
+
+                };
+
+        /**
+         * Reinitializes the wookmark handler after all images have loaded
+         */
+        function applyLayout() {
+            $tiles.imagesLoaded(function() {
+                // Destroy the old handler
+                if ($handler.wookmarkInstance) {
+                    $handler.wookmarkInstance.clear();
+                }
+
+                // Create a new layout handler.
+                $handler = $('.content_list', $tiles);
+                $handler.wookmark(options);
+            });
+        }
+
+        /**
+         * When scrolled all the way to the bottom, add more tiles
+         */
+        function onScroll() {
+            // Check if we're within 100 pixels of the bottom edge of the broser window.
+            var winHeight = window.innerHeight ? window.innerHeight : $window.height(), // iphone fix
+                    closeToBottom = ($window.scrollTop() + winHeight > $document.height() - 100);
+
+            if (closeToBottom) {
+                // Get the first then items from the grid, clone them, and add them to the bottom of the grid
+                var $items = $('.content_list', $tiles),
+                        $firstTen = $items.slice(0, 10);
+//                $tiles.append($firstTen.clone());
+                var nowpage = page;
+                nowpage++;
+                var p = {p: nowpage, ajax: 1, pagesize: 5};
+//                if (ajax_flag) return;
+                $loading.show();
+                ajax_flag = $.ajax({
+                    url: url, dataType: "json", type: "get", data: p,
+                    success: function (json) {
+                        $loading.hide();
+//                        alert(json);
+                        if (json.goods.error == 0) {
+                            page = json.now_page;
+                            (function(){
+                                var i = 0,goods=json.goods.data;
+                                // 这里设置每0.5秒添加一个小块。如果不用计时器而用for，我测试结果是会造成重叠。
+                                for(i;i<goods.length;i++){
+                                    //$elem是每个小块的模版
+                                    var htmlStr = '<div class="content_list"><a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img original="'+goods[i].head_image+'" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive backdrop"></a><div class="content_list_bottom">';
+                                    htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
+                                    htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
+                                    if(goods[i].is_focus){
+                                        htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                                    }else{
+                                        htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                                    }
+                                    htmlStr += '<span>'+goods[i].focus_num+'</span></div></div>';
+
+
+
+                                    $(htmlStr).imagesLoaded( function() {
+                                        $tiles.append($(htmlStr));
+                                        $tiles.find('.lazy').lazyload();
+                                    }).fadeIn();
+                                };
+                            })();
+                            applyLayout();
+                            ajax_flag=null;
+                        }
+                    }, error:function(e){
+                        alert(e.responseText);
+                    }
+                });
+                applyLayout();
+            }
+        };
+
+        // Call the layout function for the first time
+        applyLayout();
+
+        // Capture scroll event.
+        $window.bind('scroll.wookmark', onScroll);
+    })(jQuery);
+</script>
+ </body>
+ </html>

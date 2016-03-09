@@ -66,6 +66,7 @@
                         success: function (data){
                             $('#loading').hide();
                             if(data.error==0){
+//                                alert(data.data.data);
                                 successFun && successFun(data);
                                 //否则会出现重复绑定上传的情况
                                 $('form[name="jUploadForm'+file_id+'"]').remove();

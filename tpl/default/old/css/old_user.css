@@ -70,7 +70,10 @@ body{
 }
 .input_td.incorrect{
     border:1px solid #ff5a5f;
- }
+    -webkit-box-shadow:0 0 10px rgba(255, 90, 95, .5);
+    -moz-box-shadow:0 0 10px rgba(255, 90, 95, .5);
+    box-shadow:0 0 10px rgba(255, 90, 95, .5);
+}
 .input_td.correct{
     background-image: url(../images/filter_hover.png);
     background-repeat: no-repeat;
@@ -144,4 +147,68 @@ a.pwd{float: right}
 .pay_bind_bottom ul li button.pay_bind_act, .pay_bind_bottom ul li button:hover{
     background: #ff5a5f;
     border: 1px solid #ff5a5f;
+}
+/*验证码*/
+.r_position{
+    position: relative;
+}
+.r_position button{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+#picCodeValue{
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    line-height: 25px;
+    padding: 5px;
+    font-size: 13px;
+}
+#picCodeModal p{
+    text-align: center;
+    padding-top: 10px;
+}
+.pic_code_body{
+    padding-bottom: 0;
+}
+#reloadPicCode{
+    width: 20px;
+    margin-left: 10px;
+}
+#verify_coder{
+    width: 50%;
+    float: left;
+}
+#picCodeImage{
+    height: 20px;
+}
+/*注册完成后的提示绑定*/
+.register_complete{
+    padding: 20% 5%;
+    text-align: center;
+    font-size: 13px;
+}
+.register_complete #wechatLoginBtn{
+    width: 40%;
+    background-color: #ff5a5f;
+    color: #fff;
+    line-height: 40px;
+    border: none;
+    border-radius: 3px;
+    margin-top: 20%;
+    display: inline-block;
+}
+.register_complete #later{
+    display: block;
+    width: auto;
+    margin: 0 auto;
+    border: none;
+    background: transparent;
+    position: absolute;
+    left: 10%;
+    bottom: 21%;
+    color: #b3b3b3;
 }

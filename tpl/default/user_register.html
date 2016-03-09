@@ -3,10 +3,12 @@
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/dialog.css"/>
      <link href="{$TMPL}/css/bootstrap.min.css" rel="stylesheet">
      <link rel="stylesheet" type="text/css" href="{$TMPL}/css/register.css"/>
- </head>
+     <link rel="stylesheet" type="text/css" href="{$TMPL}/css/settings_weebox.css"/>
+
+     </head>
  <body>
      <div class="top">
-	       <span>{$page_title}</span>
+	       <span>注册</span>
 		   <span class="top_exit"><a href="javascript:window.history.go(-1);"><img src="{$TMPL}/images/exit.png" width=30 height=30></a></span>
 		 
 	 </div>
@@ -27,10 +29,10 @@
                          </tr>
                          <tr>
                              <td class="r_position">
-                                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入验证码">
+                                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入验证码"><div class="code_numbera"><button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code">发送验证码</button></div>
                                  <!--<a href="javascript:void(0);" id="J_send_sms_verify" class="code disabled">获取短信验证码</a>&lt;!&ndash;方法尚有疑问&ndash;&gt;-->
                                  <!--<div class="code_numbera">-->
-                                 <img src="/verify.php" id="verify" onclick="reget_verify();"/>
+                                <!-- <img src="/verify.php" id="verify" onclick="reget_verify();"/>-->
                                  <!--</div>-->
 
                              </td>
@@ -69,6 +71,16 @@
              </ul>
          </div>
      </div>
+     <!--图片验证码弹框-->
+     <div id="picCode" style="display: none;">
+         <div class="picCodeLayer" style="background: #fff;border-radius: 3px;padding: 5%;">
+             <h5>为了确认你不是机器人，请输入以下图片内容</h5>
+             <p><input type="text" value="" class="input_mail" placeholder="请输入图片验证码" id="picCodeValue"></p>
+             <p style="text-align: center;">
+                 <img src="/verify.php" id="picCodeImage">
+                 <button id="reloadPicCode" style="margin-left: 20px;background: transparent;color: #977f70;">刷新验证码</button></p>
+         </div>
+     </div>
      <!--</li></ul></div>-->
     	 <!--底部-->
      {include file="inc/footer.html"}
@@ -88,11 +100,5 @@
              urls.sendSMSUrl = '{url_wap r="ajax#send_mobile_verify_code"}';
              urls.checkVerifyCodeUrl = '{url_wap r="user#check_verify_code"}';
      </script>
-     <script type="text/javascript">
-				function reget_verify(){
-					var timenow = new Date().getTime();
-					$("#verify").attr("src",$("#verify").attr("src")+"?rand="+timenow);
-				}
-		</script>
  </body>
 </html>

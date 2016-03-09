@@ -18,7 +18,19 @@
 
 .content_list {
     float: left;
+    -moz-transition:  all .8s; /* Firefox 4 */
+    -webkit-transition:  all .8s; /* Safari 和 Chrome */
+    -o-transition:  all .8s; /* Opera */
+    transition:  all .8s;
 }
+.content_add_item {
+    -moz-transition:  all .8s; /* Firefox 4 */
+    -webkit-transition:  all .8s; /* Safari 和 Chrome */
+    -o-transition:  all .8s; /* Opera */
+    transition:  all .8s;
+    opacity: 0;
+}
+
 
 .content_list>.content_list_link>img {
     display: block;

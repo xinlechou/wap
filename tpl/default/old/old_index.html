@@ -1,151 +1,145 @@
 {include file="old/old_header.html"}
- <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/index.css"/>
- <div id="nav">
-     <div class="top">
-         <div class="top_left">
-             <a href="{$pre}"><img src="{$TMPL}/old/images/exit.png"></a>
-         </div>
-         <div class="top_center"><img src="{$TMPL}/old/images/huan.png" width="55%" style="max-width: 100px;"></div>
-         <div class="top_right"></div>
-     </div>
- </div>
- <div class="box">
-     <!--<div><button type="button" style="width: 80px" onclick="up()">up</button><button type="button" style="width: 80px" onclick="down()">down</button></div>-->
-     <div id="content">
-         <!--<div class="grid-sizer"></div>&lt;!&ndash;控制初始宽度&ndash;&gt;-->
-         {if $error}<div class="empty">{$error}</div>{/if}
-         {foreach from=$goods item=good_list key=keyd}
-         {if $good_list.online_state eq 1}
-         <div class="content_list">
-             <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="content_list_link"><img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive {if $good_list.is_filter eq 1}backdrop{/if}"></a>
-             <div class="content_list_bottom">
-                 <img src="{$good_list.avatar}" class="img-circle circle">
-                 <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="font_title">{$good_list.name}</a>
-             </div>
-             <div class="content_list_bottoma">
-                 {if $good_list.is_focus}
-                 <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/index.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            <a href="{$pre}"></a>
+        </div>
+        <div class="top_center"><img src="{$TMPL}/old/images/huan.png" width="55%" style="max-width: 100px;"></div>
+        <div class="top_right"></div>
+    </div>
+</div>
+<div class="box">
+    <!--<div><button type="button" style="width: 80px" onclick="up()">up</button><button type="button" style="width: 80px" onclick="down()">down</button></div>-->
+    <div id="content">
+        <!--<div class="grid-sizer"></div>&lt;!&ndash;控制初始宽度&ndash;&gt;-->
+        {if $error}<div class="empty">{$error}</div>{/if}
+        {foreach from=$goods item=good_list key=keyd}
+        {if $good_list.online_state eq 1}
+        <div class="content_list pulse" id="{$keyd}">
+            <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="content_list_link">
+                <img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive {if $good_list.is_filter eq 1}backdrop{/if}">
+            </a>
+            <div class="content_list_bottom">
+                <img src="{$good_list.avatar}" class="img-circle circle">
+                <a href="{url_wap r="old#detail" p="id=$good_list.id"}" class="font_title">{$good_list.name}</a>
+            </div>
+            <div class="content_list_bottoma">
+                {if $good_list.is_focus}
+                <img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
                 {else}
-                 <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
-                 {/if}
-                 <span>{$good_list.focus_num}</span>
-             </div>
-         </div>
-         {/if}
-         {/foreach}
-         </div>
+                <img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,'{$user.id}','{$good_list.id}')">
+                {/if}
+                <span>{$good_list.focus_num}</span>
+            </div>
+        </div>
+        {/if}
+        {/foreach}
+    </div>
 
-     </div>
- </div>
+</div>
+</div>
 
- {include file="old/old_footer.html"}
- <script type="text/javascript" src="{$TMPL}/old/js/masonry.pkgd.min.js"></script>
- <script type="text/javascript" src="{$TMPL}/old/js/imagesloaded.pkgd.js"></script>
- <script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
+{include file="old/old_footer.html"}
+<!--<script type="text/javascript" src="{$TMPL}/old/js/masonry.pkgd.min.js"></script>-->
+<script type="text/javascript" src="{$TMPL}/old/js/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/dropload.js"></script>
 <!--<script type="text/javascript" src="{$TMPL}/old/js/old_index.js"></script>-->
 <script>
     var ajax_flag=null,
-        page = '{$page}',
-        url = APP_ROOT + '?ctl=old';
-    var $grid = $('#content');
+            page = '{$page}',
+            url = APP_ROOT + '?ctl=old';
+    var boxArr = $('.content_list');
     var $loading = $('#loading');
-    $(function(){
-        init_masonry();
-        $(window).scroll(function(){
-            if ($(document).height() - $(this).scrollTop() - $(this).height() < 100) {
-                //判断滚到底部时,请求数据
-                var nowpage = page;
-                nowpage++;
-                var p = {p: nowpage, ajax: 1, pagesize: 5};
-                if (ajax_flag) return;
-                $loading.show();
-                ajax_flag = $.ajax({
-                    url: url, dataType: "json", type: "get", data: p,
-                    success: function (json) {
-                        $loading.hide();
-                        if (json.goods.error == 0) {
-                            page = json.now_page;
-                            /*var a = writeIndex(json.goods.data);
-                            console.log($(a));
-                            $grid.append($(a)).masonry('appended', $(a));
-                            $(a).imagesLoaded(function () {
-                                init_masonry();
-                            });*/
-                            (function(){
-                                var i = 0,goods=json.goods.data;
-                                // 这里设置每0.9秒添加一个小块。如果不用计时器而用for，我测试结果是会造成重叠。
-                                setInterval(function(){
-                                    if(i >= $(goods).size()){
-                                        return false;
-                                    }
+    var $grid = $('#content');
+    window.onload = window.onresize = function(){
+        initFall();
+        $grid.dropload({
+            scrollArea : window,
+            loadUpFn:function(me){
+                window.location.reload();
+                me.resetload();
+            }/*,
+            loadDownFn : function(me){
+                onScroll();
+                me.resetload();
+            }*/
+        });
+    }
+    window.onscroll = function(){
+        onScroll();
+    }
+    function initFall(){
+        var boxArr = $('.content_list'),
+                num = Math.floor(document.body.clientWidth / boxArr.eq(0).outerWidth(true)),
+                columnHeightArr = [];
+        columnHeightArr.length = num;
 
-                                    //$elem是每个小块的模版
-                                    var htmlStr = '<div class="content_list"><a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img original="'+goods[i].head_image+'" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive backdrop"></a><div class="content_list_bottom">';
-                                    htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
-                                    htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
-                                    if(goods[i].is_focus){
-                                        htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                                    }else{
-                                        htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                                    }
-                                    htmlStr += '<span>{$good_list.focus_num}</span></div></div>';
+        boxArr.each(function(index, item) {
 
+            if (index < num) {
+                columnHeightArr[index] = $(item).outerHeight(true)+50;//增加box的margin－top高度
+//                console.log(columnHeightArr);
+            } else {
+//                console.log(item.id)
+                var minHeight = Math.min.apply(null, columnHeightArr),
+                        minHeightIndex = $.inArray(minHeight, columnHeightArr);
+//                console.log(minHeight);
+                $(item).css({
+                    position: 'absolute',
+                    top: minHeight,
+                    left: boxArr.eq(minHeightIndex).position().left});
 
-                                    $grid.append($(htmlStr));
-
-                                    //等图片加载完后才渲染新添加的小块
-                                    $(htmlStr).imagesLoaded( function() {
-                                        $grid.masonry('appended',  $(htmlStr));
-                                        $grid.masonry( 'reloadItems' );
-                                        $grid.masonry( 'layout' );/*重点在这里！！！！！*/
-                                        $grid.find('.lazy').lazyload();
-                                    });
-                                    i++;
-                                },10);
-                            })();
-
-                            ajax_flag=null;
-                        }
-                    }, error:function(e){
-                        alert(e.responseText);
-                    }
-                });
+                columnHeightArr[minHeightIndex] += $(item).outerHeight(true);
             }
         });
+    }
+    function onScroll() {
+        var $window = $(window);
+        var $document = $(document)
+        var winHeight = window.innerHeight ? window.innerHeight : $window.height();
 
-        function init_masonry() {
-            var $grid = $('#content');
-            $grid.imagesLoaded( function() {
-                $grid.masonry({
-                    itemSelector: '.content_list',
-                    percentPosition: true,
-                    columnWidth: 5,//两item的间隔
-                    isAnimated: false,transitionDuration: '0.4s'
-                });
+        var closeToBottom = ($window.scrollTop() + winHeight > $document.height() - 100);
+
+        if (closeToBottom) {
+            var nowpage = page,prepage = page;
+            nowpage++;
+            var p = {p: nowpage, ajax: 1, pagesize: 10};
+            $loading.show();
+            ajax_flag = $.ajax({
+                url: url, dataType: "json", type: "get", data: p,
+                success: function (json) {
+                    $loading.hide();
+                    if(json.now_page==page)return;
+                    if (json.goods.error == 0) {
+                        page = json.now_page;
+                        var goods=json.goods.data;
+                        for(var i=0;i<goods.length;i++){
+                            var htmlStr = '<div class="content_list content_add_item"><a href="'+APP_ROOT+'?ctl=old&act=detail&id='+goods[i].id+'"  class="content_list_link"><img original="'+goods[i].head_image+'" src="{$TMPL}/old/images/holder.png" class="lazy img-responsive backdrop"></a><div class="content_list_bottom">';
+                            htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
+                            htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
+                            if(goods[i].is_focus){
+                                htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                            }else{
+                                htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
+                            }
+                            htmlStr += '<span>'+goods[i].focus_num+'</span></div></div>';
+
+                            $grid.append($(htmlStr));
+                            $(htmlStr).imagesLoaded( function() {
+                                $grid.find('.content_add_item').animate({opacity:1},100);
+                            });
+                        }
+                        ajax_flag=null;
+                    }
+                }, error:function(e){
+                    console.log(e.responseText);
+                }
             });
         }
-        function writeIndex(goods){
-            var len = $(goods).size();
-            var htmlStr = '';
-            if(len){
-                for(var i = 0;i < len;i ++){
-                    htmlStr += '<div class="content_list add">';
-                    htmlStr += '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="content_list_link"><img src="'+goods[i].head_image+'" class="img-responsive"></a>';
-                    htmlStr += '<div class="content_list_bottom">';
-                    htmlStr += '<img src="'+goods[i].avatar+'" class="img-circle circle">';
-                    htmlStr +=  '<a href="{url_wap r="old#detail" p="id='+goods[i].id+'"}" class="font_title">'+goods[i].name+'</a></div><div class="content_list_bottoma">';
-                    if(goods[i].is_focus){
-                        htmlStr += '<img src="{$TMPL}/old/images/zan_hover.png" data-src="{$TMPL}/old/images/zan.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                    }else{
-                        htmlStr += '<img src="{$TMPL}/old/images/zan.png" data-src="{$TMPL}/old/images/zan_hover.png" border="0" onclick="old.add_focus(this,"{$user.id}",'+goods[i].id+')">';
-                    }
-                    htmlStr += '<span>{$good_list.focus_num}</span></div></div>';
-
-                }
-                return htmlStr;
-            }
-        }
-    })
+        $grid.find('.lazy').lazyload();
+        initFall();
+    };
 </script>
- </body>
- </html>
+</body>
+</html>

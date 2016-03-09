@@ -18,7 +18,7 @@
         <div class="detail_head">
             <div class="detail_head_left">
                 <img src="{$detail.avatar}" class="img-circle circle img_width" >
-                <span {if $detail.card_state eq 1}class="cer"{/if}>{$detail.username}</span>
+                <span {if $detail.card_state eq 3}class="cer"{/if}>{$detail.username}</span>
             </div>
             <div class="detail_head_right">{$detail.exchange_num}</div>
             <div class="detail_head_right_zan"  onclick="old.add_focus(this.childNodes[1],'{$user.id}','{$detail.id}')">

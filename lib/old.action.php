@@ -4,7 +4,7 @@ class oldModule{
 	function index(){
         $p = $_REQUEST['p']?$_REQUEST['p']:"1";
         $is_ajax = $_REQUEST['ajax'];
-        $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'5';
+        $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'10';
         //获取物品列表
         $url = $this->getUrl().'act=get_goods_list&p='.$p.'&pagesize='.$pagesize;
         $goods = json_decode($this->getCurl($url),true);
@@ -54,7 +54,7 @@ class oldModule{
         if(!$GLOBALS['user_info'])
             app_redirect(url_wap("olduser#login"));
         $id = $GLOBALS['user_info']['id'];
-        $good_num = $GLOBALS['db']->getOne("select count(*) from old_goods where user_id=".$id);
+        $good_num = $GLOBALS['db']->getOne("select count(*) from old_goods where is_del=0 and user_id=".$id);
         $order_num = $GLOBALS['db']->getOne("select count(*) from old_exchange where from_user_id=".$id.' and exchange_state !=2');
 
 //        print_r($order_num);

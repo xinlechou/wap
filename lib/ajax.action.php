@@ -815,8 +815,15 @@ class ajaxModule
 		}
 	}
 
-public function send_mobile_verify_code()
-	{
+public function send_mobile_verify_code(){
+        $settings_mobile_code=strim($_REQUEST['code']);
+        //判断图片验证码是否正确=============================
+        if(es_session::get("verify") != md5($settings_mobile_code)){
+            $data['status'] = 0;
+            $data['info'] = "图片验证码不正确！";
+            ajax_return($data);
+        }
+
 		if(app_conf("SMS_ON")==0)
 		{
 			$data['status'] = 0;

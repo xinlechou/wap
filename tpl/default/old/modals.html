@@ -267,4 +267,25 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<!-----------------------------------User-Modal-->
+<!--图片验证码-modal-->
+<div class="modal fade" id="picCodeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body pic_code_body">
+                <h5>为了确认你不是机器人，请输入以下图片内容</h5>
+                <p><input type="text" value="" class="input_mail" placeholder="请输入图片验证码" id="picCodeValue"></p>
+                <p><img src="/verify.php" id="picCodeImage" id="verify"><img src="{$TMPL}/old/images/refreshIcon.png" id="reloadPicCode"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn change_btn btn-default change_certain"
+                        data-dismiss="modal" id="picCodeSubmit">确认
+                </button>
+                <button type="button" class="btn change_btn btn-primary change_cancle" data-dismiss="modal">
+                    取消
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 

@@ -24,7 +24,8 @@ var user = {
         this.submitUrl = typeof urlList.submitUrl!=="undefined"?urlList.submitUrl:"";
         //按钮绑定事件，暂时使用click，更新jQuery版本后更换事件
         user.formData.sendMsgBtn.click(function(){
-            user.sendMobileVerifyMsg();//获取验证码按钮
+            //user.sendMobileVerifyMsg();//获取验证码按钮
+            user.getPicVerify();
         });
         var sb = user.formData.submitBtn;//提交表单按钮
         switch (sb.attr("data-submit-type")){
@@ -190,12 +191,45 @@ var user = {
     sendSMSUrl:"",//发送验证码的请求url
     checkVerifyCodeUrl:"",//检查验证码的请求url
     submitUrl:"",//提交表单时请求url
+    picCode:'',
     //发送手机验证码
     sendMobileVerifyMsg: function () {
         if(user.checkPhone()){
-            var url = user.sendSMSUrl, param = {mobile: $.trim(user.formData.phone.val())};
+            var url = user.sendSMSUrl, param = {mobile: $.trim(user.formData.phone.val()),code:user.picCode};
+            //发送短信前增加图片验证码的校验
+            console.log('sendMobileVerifyMsg');
             user.sendAjax(url, param, this.sendingMsgFun);
         };
+    },
+    //获取图片验证码----新增
+    getPicVerify:function(){
+        if(user.checkPhone()) {
+            $('#picCodeModal').modal('show');
+
+            var $picCode = $('#picCodeValue');
+            var $picCodeImage = $('#picCodeImage');
+            var timenow = new Date().getTime();
+            //console.log($picCode.val())
+            $picCodeImage.attr('src',"/verify.php?rand="+timenow);
+            $('#picCodeSubmit').one(EVENT_TYPE, function (event) {
+                //console.log('click')
+                user.checkPicVerify($picCode.val());
+            });
+            $('#reloadPicCode').on(EVENT_TYPE, function () {
+                $picCodeImage.attr('src', "/verify.php?rand="+timenow);
+            })
+        }
+    },
+    checkPicVerify:function(code){
+        var url = APP_ROOT+'?ctl=olduser&act=check_pic_verify_code&code='+code;
+        user.sendAjax(url,'',function(json){
+            if(json.status){
+                user.picCode = code;
+                user.sendMobileVerifyMsg();
+            }else{
+                $.showErr(json.info);
+            }
+        })
     },
     //发送验证码后回调
     sendingMsgFun: function (json) {
@@ -224,6 +258,7 @@ var user = {
     },resultTmp:{},
     //检查验证码
     checkRegisterVerifyCoder: function () {
+        console.log('checkRegisterVerifyCoder');
         var code = user.formData.verifyCode;
         if($.trim(code.val())==""){
             $.showSuccess("请输入验证码");
@@ -236,7 +271,7 @@ var user = {
                 user.sendAjax(url, q,
                     function(json){
                         if(json.status == 0){/*$.showSuccess("对不起，验证码错误");*/user.formData.verifyCode.removeClass("correct").addClass('incorrect');return false;}
-                        if(json.status == 1){/*$.showSuccess("验证码正确！");*/user.formData.verifyCode.addClass("correct");}
+                        if(json.status == 1){/*$.showSuccess("验证码正确！");*/user.formData.verifyCode.addClass("correct").removeClass('incorrect');}
                     }
                 );
             }else{
@@ -256,6 +291,12 @@ var user = {
             },
             error: function (e) {
                 errorFun && errorFun(e);
+            },
+            beforeSend:function(){
+                $('#loading').show();
+            },
+            complete:function(){
+                $('#loading').hide();
             }
         });
     }

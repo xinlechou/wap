@@ -50,19 +50,13 @@
     <!--注册结束-->
     <!--注册完成时显示-->
     <div class="register_complete" style="display: none;">
-        <div class="wechat">
-            <p><!--<span id="s"></span>--></p>
-            <p>欢迎您使用新乐筹，是否立即绑定微信号？</p>
-        </div>
-        <div class="pay_bind_bottom">
-            <ul>
-                <li><button id="wechatLoginBtn" class="pay_bind_act">绑定并登录</a></button>
-                <li><button id="later">以后再说</a></button>
-            </ul>
-        </div>
+        <h5>欢迎您使用新乐筹，是否立即绑定微信号？</h5>
+        <button id="wechatLoginBtn">绑定并登录</button>
+        <button id="later">以后再说</button>
     </div>
 </div>
 <!--底部-->
+{include file="old/modals.html"}
 {include file="old/old_inc_footer.html"}
 <script type="text/javascript" src="{$TMPL}/old/js/old_user.js"></script>
  <!--内嵌二维码微信登录JS-->
