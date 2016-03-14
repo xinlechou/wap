@@ -45,21 +45,22 @@ class oldModule{
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("goods",$goods['data']);
         $GLOBALS['tmpl']->assign("page",$p);
-        $GLOBALS['tmpl']->assign("pre",get_gopreview_wap());
+        $GLOBALS['tmpl']->assign("pre",get_gopreview_old());
         $GLOBALS['tmpl']->assign("page_title",'HUAN');
         $GLOBALS['tmpl']->display("old/old_index.html");
 	}
     function home(){
         //个人管理
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
         $id = $GLOBALS['user_info']['id'];
         $good_num = $GLOBALS['db']->getOne("select count(*) from old_goods where is_del=0 and user_id=".$id);
-        $order_num = $GLOBALS['db']->getOne("select count(*) from old_exchange where from_user_id=".$id.' and exchange_state !=2');
+        $order_num = $GLOBALS['db']->getOne("select count(*) from old_exchange where ((from_user_id=".$id." and from_is_del !=1) or (to_user_id=".$id." and to_is_del !=1) ) and exchange_state !=2 and is_giveup != 1 and is_show =1");
 
 //        print_r($order_num);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
-        $GLOBALS['tmpl']->assign("pre",get_gopreview_wap());
+        $GLOBALS['tmpl']->assign("pre",get_gopreview_old());
         $GLOBALS['tmpl']->assign("page_title",'管理');
         $GLOBALS['tmpl']->assign("good_num",$good_num);
         $GLOBALS['tmpl']->assign("order_num",$order_num);
@@ -67,8 +68,9 @@ class oldModule{
     }
     function home_goods(){
         //个人管理
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
         $p = $_REQUEST['p']?$_REQUEST['p']:1;
         $url = $this->getUrl().'act=get_user_goods_list&p='.$p.'&user_id='.$GLOBALS['user_info']['id'];
 //        echo $url;
@@ -113,8 +115,9 @@ class oldModule{
     }
     function home_exchange(){
         //个人管理
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
 //        get_from_exchange_list
 //        print_r($GLOBALS['user_info']);
         $p = $_REQUEST['p']?$_REQUEST['p']:1;
@@ -126,8 +129,8 @@ class oldModule{
             $GLOBALS['tmpl']->assign("from_error",$from_user_goods['data']['msg']);
         }else{
             foreach($from_user_goods['data']['list'] as $k=>$v){
-                $from_user_goods['data']['list'][$k]['to_rest_time'] = $this->get_last_time($v['exchange_log']['to_last_set_time'],time());
-                $from_user_goods['data']['list'][$k]['from_rest_time']= $this->get_last_time($v['exchange_log']['from_last_set_time'],time());
+                $from_user_goods['data']['list'][$k]['rest_time'] = $this->get_last_time($v['exchange_log']['last_set_time'],time());
+//                $from_user_goods['data']['list'][$k]['from_rest_time']= $this->get_last_time($v['exchange_log']['from_last_set_time'],time());
             }
             $GLOBALS['tmpl']->assign("from_user_goods",$from_user_goods['data']['list']);
 
@@ -140,8 +143,8 @@ class oldModule{
             $GLOBALS['tmpl']->assign("to_error",$to_user_goods['data']['msg']);
         }else{
             foreach($to_user_goods['data']['list'] as $k=>$v){
-                $to_user_goods['data']['list'][$k]['to_rest_time'] = $this->get_last_time($v['exchange_log']['to_last_set_time'],time());
-                $to_user_goods['data']['list'][$k]['from_rest_time']= $this->get_last_time($v['exchange_log']['from_last_set_time'],time());
+                $to_user_goods['data']['list'][$k]['rest_time'] = $this->get_last_time($v['exchange_log']['last_set_time'],time());
+//                $to_user_goods['data']['list'][$k]['from_rest_time']= $this->get_last_time($v['exchange_log']['from_last_set_time'],time());
             }
             $GLOBALS['tmpl']->assign("to_user_goods",$to_user_goods['data']['list']);
         }
@@ -160,8 +163,13 @@ class oldModule{
     }
     function release(){
         //发布物品
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
+        $is_from_select = $_GET['is_from_select'];
+        if(!(isset($_GET['is_from_select'])&& $_GET['is_from_select']==1)){
+            es_session::delete('from_goods_id');
+        }
         //判断实名认证状态
         $card_state = $this->get_user_state($GLOBALS['user_info']['id']);
 //        $card_state = json_decode($card_state,true);
@@ -192,8 +200,9 @@ class oldModule{
     }
     function edit(){
         //发布物品
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
         $id = $_REQUEST['id'];
         $is_new = $_REQUEST['is_new'];//用来判断是编辑旧id的物品（edit_goods）还是生成新id的物品（edit_online_goods）
         $url = $this->getUrl().'act=get_goods_info&id='.$id;
@@ -203,7 +212,8 @@ class oldModule{
             $goods_info['data']['images_data']['list'][$k]['index'] = $k+1;
         }
         //get_goods_info
-//        print_r($goods_info);
+        $goods_info['data']['info'] = str_replace('<br>',"\n",$goods_info['data']['info'] );
+//        print_r($goods_info['data']['info']);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("goods",$goods_info['data']);
         $GLOBALS['tmpl']->assign("is_new",$is_new);
@@ -214,9 +224,10 @@ class oldModule{
     function notify(){
         $p = $_REQUEST['p'];
         $pagesize = $_REQUEST['pagesize'];
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
-        $notifyUrl = $this->getUrl().'act=get_notify&user_id='.$GLOBALS['user_info']['id'].'&is_read=0&p='.$p.'&pagesize='.$pagesize;
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
+        $notifyUrl = $this->getUrl().'act=get_notify&user_id='.$GLOBALS['user_info']['id'].'&is_read=0&p=&pagesize=';//先不传p&pagesize，没做分页呢
         $notify_info = json_decode($this->getCurl($notifyUrl),true);
         foreach($notify_info['data']['list'] as $k => $v){
             $notify_info['data']['list'][$k]['log_time'] = date("Y-m-d ", $v['log_time']);
@@ -251,8 +262,9 @@ class oldModule{
     }
     function select(){
         //提出交换&选择用来交换的物品
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
         //获取物品列表
         $p = $_REQUEST['p']?$_REQUEST['p']:1;
         $from_user_id = $_REQUEST['from_user_id'];
@@ -282,8 +294,10 @@ class oldModule{
             $GLOBALS['tmpl']->assign('share_info',$share_info);
         }
         $details = json_decode($this->getCurl($url),true);
-        if(strval($details['error'])!=='0') {
-            $GLOBALS['tmpl']->assign("error", $details['msg']);
+//        print_r($details['msg']);
+        if($details['error']!=='0') {
+            $this->showResult('物品已失效！',0,url_wap("old"));
+            exit;
         }else{
             $detail = $details['data'];
             //获取用户头像
@@ -355,7 +369,7 @@ class oldModule{
 //            print_r($share_info);
             $GLOBALS['tmpl']->assign('share_info',$share_info);
         }
-        echo $from;
+//        echo $from;
         if($from){
             $gopreview = url_wap('old#select',array('from_goods_id'=>$from,'from_user_id'=>es_session::get('from_user_id')));
             es_session::delete('from_goods_id');
@@ -411,8 +425,9 @@ class oldModule{
 
     /*私信*/
     function chat(){
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
         $dest_user_id = $_REQUEST['id'];
         $url = $this->getUrl().'act=get_message&user_id='.$GLOBALS['user_info']['id'].'&dest_user_id='.$dest_user_id;
         $list = json_decode($this->getCurl($url),true);
@@ -440,8 +455,9 @@ class oldModule{
     /*增加地址管理*/
     function consignee(){
         $GLOBALS['tmpl']->assign("page_title","最新动态");
-        if(!$GLOBALS['user_info'])
-            app_redirect(url_wap("olduser#login"));
+        if(!$GLOBALS['user_info']){
+            app_redirect_huan(url_wap("olduser#login"));
+        }
 
         $consignee_list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."user_consignee where user_id = ".intval($GLOBALS['user_info']['id']));
         $region_pid = 0;
@@ -578,11 +594,20 @@ class oldModule{
         $goods = json_decode($this->getCurl($url),true);
         return $goods;
     }
+
     function get_last_time($time_s,$time_n){
-        $strtime = '';
         $a = $time =$time_s+3600*24 -  $time_n;//先设置24小时过期
-        if($time >= 86400){
-            return $strtime = date('Y-m-d H:i:s',$time_s);
+        $b = $daytime =$time_s+3600*24*7 -  $time_n;//先设置24小时过期
+        $strtime= $this->format_time($time,$time_s);
+        $daystrtime= $this->format_time($daytime,$time_s);
+//        print_r(intval($a)/(36*24).'--------');
+        return array('time'=>$strtime,'percent'=>100-intval(intval($a)/(36*24)),'daytime'=>$daystrtime,'daypercent'=>100-intval(intval($b)/(36*24*7)));
+    }
+    function format_time($time,$time_s){
+        $strtime = '';
+        if($time > 86400){
+            return intval($time/(3600*24)).'天';
+//            return $strtime = date('Y-m-d H:i:s',$time_s);
         }
         if($time >= 3600){
             $strtime .= intval($time/3600).'小时';
@@ -601,8 +626,7 @@ class oldModule{
         }else{
             $strtime = "时间错误";
         }
-//        print_r(intval($a)/(36*24).'--------');
-        return array('time'=>$strtime,'percent'=>100-intval(intval($a)/(36*24)));
+        return $strtime;
     }
     function get_user_consignee($user_id){
         $url = $this->getUrl().'act=get_user_consignee&user_id='.$user_id;
@@ -625,5 +649,28 @@ class oldModule{
         );
         return $arr;
     }
+    /*增加old的成功失败页面*/
+    function showResult($msg,$ajax=0,$jump='',$stay=0,$title="错误"){
+        if($ajax==1){
+            $result['status'] = 0;
+            $result['info'] = $msg;
+            $result['jump'] = $jump;
+            header("Content-Type:text/html; charset=utf-8");
+            echo(json_encode($result));exit;
+        }else{
+            $GLOBALS['tmpl']->assign('page_title',$title);
+            $GLOBALS['tmpl']->assign('msg',$msg);
+            if($jump==''){
+                $jump = get_gopreview_old();
+            }
+            if(!$jump&&$jump=='')
+                $jump = APP_ROOT."/";
+            $GLOBALS['tmpl']->assign('jump',$jump);
+            $GLOBALS['tmpl']->assign("stay",$stay);
+            $GLOBALS['tmpl']->display("old/old_result.html");
+            exit;
+        }
+    }
+
 }
 ?>

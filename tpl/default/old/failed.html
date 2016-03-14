@@ -12,8 +12,10 @@
     <p>很抱歉~~~您的物品发布失败了</p>
     {/if}
     <img src="{$TMPL}/old/images/fail.jpg">
-    <a href="#" class="publish_circle">重新发布</a>
-    <a href="{url_wap r="old"}" class="publish_fail">看看有哪些好玩的东东先</a>
+    <!--<a href="#" class="publish_fail">重新发布</a>-->
+    <!--<a href="{url_wap r="old"}" class="publish_circle">看看有哪些好玩的东东先</a>-->
+    <a href="javascript:void(0)" class="publish_circle" onclick="javascript:window.location.replace('{url_wap r="old"}')">看看有哪些好玩的东东先</a>
+
 </div>
 {include file="old/old_inc_footer.html"}
 </body>

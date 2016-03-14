@@ -8,14 +8,15 @@
     </div>
 </div>
   <div class="publish_sucess">
+      <img src="{$TMPL}/old/images/sucess.jpg">
       {if $msg}<p>{$msg}</p>{else}
-     <p>恭喜您成功发布了交换的物品！</p>
-	 <p>赶快分享到朋友圈，让更多更靠谱的小伙伴</p>
-	 <p>看到它来跟您交换吧!</p>
+     <p>恭喜您成功发布了交换的物品！<br>
+	    赶快分享到朋友圈，让更多更靠谱的小伙伴<br>
+	    看到它来跟您交换吧!</p>
       {/if}
-	 <img src="{$TMPL}/old/images/sucess.jpg">
+
 	 <a href="#" class="publish_circle" id="shareBtn">确认</a>
-      <a href="{$pre}" class="publish_skip">跳过</a>
+      <a href="javascript:void(0)" class="publish_skip" onclick="javascript:window.location.replace('{$pre}')">跳过</a>
   </div>
 
 {include file="old/modals.html"}

@@ -404,6 +404,41 @@ function get_gopreview_old()
     }
     return $gopreview;
 }
+function app_redirect_huan($url,$time=0,$msg='')
+{
+    //多行URL地址支持
+    $url = str_replace(array("\n", "\r"), '', $url);
+    if(empty($msg))
+        $msg    =   "系统将在{$time}秒之后自动跳转到{$url}！";
+//    if (!headers_sent()) {
+        // redirect
+
+        if(0===$time) {
+            if(substr($url,0,1)=="/")
+            {
+//                header("Location:".get_domain().$url);
+                $GLOBALS['tmpl']->assign("url",get_domain().$url);
+                $GLOBALS['tmpl']->display("old/app_redirect.html");
+            }
+            else
+            {
+//                header("Location:".$url);
+                $GLOBALS['tmpl']->assign("url",$url);
+                $GLOBALS['tmpl']->display("old/app_redirect.html");
+            }
+
+        }else {
+            header("refresh:{$time};url={$url}");
+            echo($msg);
+        }
+        exit();
+//    }else {
+        $str    = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
+        if($time!=0)
+            $str   .=   $msg;
+        exit($str);
+//    }
+}
 function get_current_url()
 {
 	$url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?");   

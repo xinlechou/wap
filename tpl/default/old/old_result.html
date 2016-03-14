@@ -1,7 +1,7 @@
 {include file="old/old_header.html"}
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/success.css"/>
 {if $stay eq 0}
-<meta http-equiv="refresh" content="3;URL={$jump}" />
+<!--<meta http-equiv="refresh" content="3;URL={$jump}" />-->
 {/if}
 <div id="nav">
     <div class="top">
@@ -20,11 +20,10 @@
         {if $stay eq 0}
         <li>
             <div class="return_jump">
-                <a href="{$jump}">还有<span id="timer">3</span>秒钟后自动跳转，或点击返回</a>
+                <a href="{$jump}" class="gray"><span id="timer" class="pink">3</span>秒后自动跳转</a>
             </div></li>
         {/if}
-        <li><a href="{url_wap r="old"}">返回首页</a></li>
-        <!--<li><a href="{$pre}">返回</a></li>-->
+        <li><a href="{url_wap r="old"}"  class="publish_circle">返回首页</a></li>
     </ul>
 </div>
 <script>
@@ -41,6 +40,11 @@
         }
     }
     codeLeftTimeFun();
+    {if $stay eq 0}
+        setTimeout(function(){
+            window.location.replace('{$jump}');
+        },3000)
+    {/if}
 </script>
 </body>
 </html>

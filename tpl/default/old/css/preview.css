@@ -1,11 +1,15 @@
 /*发布后的预览*/
 .preview{
     margin: 60px auto;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
     padding: 10px;
     background: #fff;
     font-size: 13px;
-    width: 73%;
+    width: 95%;
+    position: relative;
+}
+.preview>img{
+    width: 100%;
 }
 .preview_top{
     height: 50px;
@@ -31,7 +35,11 @@
 .preview_tips{
     text-align: center;
     font-size: 13px;
-    margin-bottom: 60px;
+    /* margin-bottom: 60px; */
+    position: relative;
+    bottom: 54px;
+    left: 0;
+    right: 0;
 }
 .preview_tips del{
     padding: 0 2%;

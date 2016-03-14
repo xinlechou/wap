@@ -16,10 +16,30 @@ class userModule{
 //		if (!$GLOBALS['tmpl']->is_cached('user_login.html', $cache_id))
 //		{
         $GLOBALS['tmpl']->assign("page_title","会员登录");
-        $GLOBALS['tmpl']->display("user_login.html");
+        $GLOBALS['tmpl']->display("user_welcome.html");
 //		}
 
 //		$GLOBALS['tmpl']->display("user_login.html",$cache_id);
+        /*$a = Array(
+            'openid' => 'o02xeszVAvZG9UkJ9HmrNCt-l8JA',
+            'nickname' => '贝xMan',
+            'sex' => 2,
+            'language' => 'zh_CN',
+            'city' => '通州',
+            'province' => '北京',
+            'country' => '中国',
+            'headimgurl' => "http://wx.qlogo.cn/mmopen/ajNVdqHZLLCicmCoWterhicQ2ia2B9ia6GMOiarGKia8y6diag9gEiaCljsiaAXmVa1sJUwJTQcLeibic5fTxK9EzetxqEwGw/0",
+            'privilege' => Array(),
+            'unionid' => "oCj9huKCm-JDZMIdiliXPyJgXsnU");
+        es_session::set("wx_login_user_info",$a);*/
+    }
+    public function start_login()
+    {
+        if($GLOBALS['user_info']){
+            app_redirect(url_wap("settings#index"));
+        }
+        $GLOBALS['tmpl']->assign("page_title","会员登录");
+        $GLOBALS['tmpl']->display("user_login.html");
     }
 
     public function do_login()
@@ -33,6 +53,7 @@ class userModule{
             $_POST[$k] = strim($v);
         }
         $ajax = intval($_REQUEST['ajax']);
+
         require_once APP_ROOT_PATH."system/libs/user.php";
         if(check_ipop_limit(get_client_ip(),"user_dologin",5))
             $result = do_login_user($_POST['mobile'],$_POST['user_pwd']);
@@ -110,113 +131,81 @@ class userModule{
        {
            $GLOBALS['tmpl']->assign("page_title","会员注册");
        }*/
-        $GLOBALS['tmpl']->assign("page_title");
+        $GLOBALS['tmpl']->assign("page_title","会员注册");
         $GLOBALS['tmpl']->assign("referer",$referer);
         $GLOBALS['tmpl']->display("user_register.html");
     }
     public function do_register()
     {
-        $referer=$_REQUEST['referer'];
-        $email = strim($_REQUEST['email']);
+        $mobile=strim($_POST['mobile']);
+        $username =$_REQUEST['user_name'] = preg_replace('/(\d{3})\d{4}(\d{4})/', '$1****$2', $mobile);
+        $verify_coder=strim($_POST['verify_coder']);
         require_once APP_ROOT_PATH."system/libs/user.php";
-        $_REQUEST['confirm_user_pwd']= strim($_REQUEST['user_pwd']);
+        $user_name_result = check_user("user_name",$username);
+        if($user_name_result['data']['error']==EXIST_ERROR) {
+            $username =  $_REQUEST['user_name'] = $username.rand(10000,99999);
+        }
         $return = $this->register_check_all();
-        $settings_mobile_code=strim($_REQUEST['verify_coder']);
-        $mobile=strim($_REQUEST['mobile']);
-        //判断验证码是否正确=============================
-        if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."mobile_verify_code WHERE mobile=".$mobile." AND verify_code='".$settings_mobile_code."'")==0){
-            $data['status'] = 0;
-            $data['info'] = "手机验证码出错";
-            ajax_return($data);
+        if($return['status']==0){ajax_return($return);}
+        $has_code=$GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."mobile_verify_code where mobile='".$mobile."' and verify_code='".strim($verify_coder)."' ");
+        if(!$has_code){
+            showErr("验证码错误",1,"");
         }
-        if($return['status']==0)
-        {
-            ajax_return($return);
-        }
+
         $user_data = $_POST;
-        foreach($_POST as $k=>$v)
-        {
+        foreach($_POST as $k=>$v){
             $user_data[$k] = strim($v);
         }
-        //开启邮箱验证
-        if(app_conf("USER_VERIFY")==0||app_conf("USER_VERIFY")==2){
-            $user_data['is_effect'] = 1;
-        }else{
-            $user_data['is_effect'] = 0;
-        }
-
+        $user_data['user_name']=$username;
+        $user_data['is_effect']=1;
+//            print_r($user_data);
         $res = save_user($user_data);
         statistics('register');
-
-        if($res['status'] == 1)
-        {
+        if($res['status'] == 1) {
             if(!check_ipop_limit(get_client_ip(),"user_do_register",5))
                 showErr("提交太快",1);
 
             $user_id = intval($res['data']);
-            $user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
-            if($user_info['is_effect']==1)
-            {
+            $userinfo = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
+//                print_r($userinfo);exit;
+            if($userinfo['is_effect']==1){
                 //在此自动登录
-                //send_register_success(0,$user_data);
                 $result = do_login_user($user_data['user_name'],$user_data['user_pwd']);
-                //	ajax_return(array("status"=>1,"jump"=>get_gopreview()));
-                ajax_return(array("status"=>1,"data"=>$result['msg'],"jump"=>$referer));
-            }
-            else
-            {
+                ajax_return(array("status"=>1,"data"=>$userinfo['user_name'],"jump"=>get_gopreview()));
+            }else{
                 if(app_conf("USER_VERIFY")==1){
-                    ajax_return(array("status"=>1,"jump"=>$referer));
+                    ajax_return(array("status"=>1,"jump"=>url("user#mail_check",array('uid'=>$user_id))));
                 }else if(app_conf("USER_VERIFY")==3){
                     ajax_return(array("status"=>0,"info"=>"请等待管理员审核"));
                 }
 
             }
-        }
-        else
-        {
+        }else{
             $error = $res['data'];
-            if($error['field_name']=="user_name")
-            {
-                $data[] = array("type"=>"form_success","field"=>"email","info"=>"");
-                $field_name = "会员帐号";
-            }
-            /*
-            if($error['field_name']=="email")
-            {
-                $data[] = array("type"=>"form_success","field"=>"user_name","info"=>"");
-                $field_name = "电子邮箱";
-            }
-            */
-            if($error['field_name']=="mobile")
-            {
-                $data[] = array("type"=>"form_success","field"=>"mobile","info"=>"");
-                $field_name = "手机号码";
-            }
-            /*
-            if($error['field_name']=="verify_code")
-            {
-                $data[] = array("type"=>"form_success","field"=>"verify_code","info"=>"");
-                $field_name = "验证码";
-            }*/
-            if($error['error']==EMPTY_ERROR)
-            {
-                $error_info = "不能为空";
-                $type = "form_tip";
-            }
-            if($error['error']==FORMAT_ERROR)
-            {
-                $error_info = "错误";
-                $type="form_error";
-            }
-            if($error['error']==EXIST_ERROR)
-            {
-                $error_info = "已存在";
-                $type="form_error";
+            switch($error['field_name']){
+                case 'mobile':
+                    $field_name = "手机号码";
+                    break;
+                case 'verify_code':
+                    $field_name = "验证码";
+                    break;
+                case 'user_name':
+                    $field_name = "帐号";
+                    break;
             }
 
-            //$data[] = array("type"=>$type,"field"=>$error['field_name'],"info"=>$field_name.$error_info);
-            ajax_return(array("status"=>0,"data"=>$field_name.$error_info,"info"=>""));
+            switch ($error['error']){
+                case EMPTY_ERROR:
+                    $error_info = "不能为空";
+                    break;
+                case FORMAT_ERROR:
+                    $error_info = "错误";
+                    break;
+                case EXIST_ERROR:
+                    $error_info = "已存在";
+                    break;
+            }
+            ajax_return(array("status"=>0,"data"=>$field_name.$error_info));
 
         }
 
@@ -390,6 +379,7 @@ class userModule{
             }
 
 
+
             $mobile_result = check_user("mobile",$mobile);
 
             if($mobile_result['status']==0)
@@ -468,7 +458,7 @@ class userModule{
             ajax_return($data);
         }
     }
-    //检查图片验证码是否正确
+//检查图片验证码是否正确
     function check_pic_verify_code()
     {
         $settings_mobile_code=strim($_REQUEST['code']);
@@ -643,11 +633,13 @@ class userModule{
             $data['info'] = "手机号码为空";
             ajax_return($data);
         }
+
         if($settings_mobile_code1==""){
             $data['status'] = 0;
             $data['info'] = "手机验证码为空";
             ajax_return($data);
         }
+
         if($user_pwd==""){
             $data['status'] = 0;
             $data['info'] = "密码为空";
@@ -660,6 +652,7 @@ class userModule{
             ajax_return($data);
         }
 
+
         //判断验证码是否正确=============================
         if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."mobile_verify_code WHERE mobile=".$mobile." AND verify_code='".$settings_mobile_code1."'")==0){
 
@@ -667,6 +660,7 @@ class userModule{
             $data['info'] = "手机验证码错误";
             ajax_return($data);
         }
+
 
 
         if($user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where mobile =".$mobile))
@@ -795,6 +789,7 @@ class userModule{
         }
         $GLOBALS['tmpl']->display("investor_success.html");
     }
+
     //投资认证申请信息入库(个人)
     public function investor_save_data($from='wap'){
         if(!$GLOBALS['user_info']){
@@ -878,12 +873,92 @@ class userModule{
 
         return false;
     }
-
-    //（普通众筹）支持前用户是否绑定了手机号码
+//wechat 绑定手机号码
     public function user_bind_mobile(){
-        $cid=strim($_REQUEST['cid']);
-        $GLOBALS['tmpl']->assign("cid",$cid);
-        $GLOBALS['tmpl']->display("inc/user_bind_mobile.html");
+        $userinfo = $GLOBALS['user_info'];
+        $wx_Login_info = es_session::get('wx_login_user_info');
+        $wx_info = $wx_Login_info?$wx_Login_info:es_session::get('wx_user_info');
+        $wx_type = $wx_Login_info?'login':'auth';
+        $pre = get_gopreview_wap();
+        if(!$wx_info['unionid']){
+            $GLOBALS['tmpl']->assign("error",'无法获取您的微信用户信息');
+        }else{
+            if($userinfo){
+                //用户信息存在，检查用户绑定情况：
+                //  没有绑定信息：使用手机密码登录，并绑定微信；
+                //  有绑定信息：进入绑定页面进行异常提示；
+                $select_openid_sql = "select userid from ".DB_PREFIX."user_idx where wechat_unionid = '".$wx_info['unionid']."'";
+                $unionid_idx = $GLOBALS['db']->getOne($select_openid_sql);
+
+                if($unionid_idx&&$unionid_idx!==$userinfo['id']){
+                    showErr('此微信已与其它手机号绑定，请登录后至个人中心解绑，再绑定此微信号');
+                    exit;
+                }
+                $userid = $userinfo['id'];
+                //查询该用户是否有绑定信息
+                $select_sql = "select wechat_unionid from ".DB_PREFIX."user_idx where userid = ".$userid;
+                $user_unionid = $GLOBALS['db']->getOne($select_sql);
+
+                if($user_unionid){
+                    //有绑定信息：判断是否为该unionid
+                    if($user_unionid == $wx_info['unionid']){
+//                        echo $user_unionid;exit;
+                        if($userinfo['is_effect']==1){
+                            //在此自动登录
+                            require_once APP_ROOT_PATH."system/libs/user.php";
+                            do_login_user($userinfo['user_name'],$userinfo['user_pwd']);
+                        }
+                    }else{
+                        showErr('此账号已与其它微信绑定，请更换手机号，或用手机号登录');
+                        exit;
+                    }
+                }else{
+                    $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$userinfo['id'].",mobile='".$userinfo['mobile']."',nickname='".$wx_info['nickname']."',wechat_".$wx_type."_openid='".$wx_info['openid']."',wechat_unionid='".$wx_info['unionid']."'";
+                    $GLOBALS['db']->query($sql_user_idx_insert);
+                }
+
+                //是否替换用户昵称等信息
+                if($userinfo['has_set_name']==0){
+                    $sql_user_name_info ="select * from xlc_user where user_name='".$wx_info['nickname']."' limit 1";
+                    $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
+                    if($tmp_user_name_info){
+                        //微信用户昵称存在
+                        $wx_info['nickname'] .= rand(10000,99999);
+                    }
+                    //更新用户表
+                    $sql_user_update = "UPDATE `xlc_user` SET user_name='".$wx_info['nickname']."',headimgurl='".$wx_info['headimgurl']."',sex=".$wx_info['sex'].",province='".$wx_info['province']."',city='".$wx_info['city']."' where id=".$userinfo['id'];
+//                        print_r($sql_user_update);
+                    $GLOBALS['db']->query($sql_user_update);
+                }
+
+                //完成绑定跳转回个人中心
+                $url = $pre?$pre:url_wap("settings#thirdparties");
+                showErr('绑定成功！',"",$url,0,"成功");
+            }else{
+                $sql_user_info ="select a.*,b.userid from ".DB_PREFIX."user as a , ".DB_PREFIX."user_idx as b where a.id=b.userid and b.wechat_unionid='".$wx_info['unionid']."' limit 1";
+                $wx_user_info = $GLOBALS['db']->getRow($sql_user_info);
+                if($wx_user_info){
+                    if($wx_user_info['mobile']){
+                        require_once APP_ROOT_PATH . "system/libs/user.php";
+                        //如果会员存在，直接登录
+                        do_login_user($wx_user_info['mobile'], $wx_user_info['user_pwd']);
+                        //完成绑定跳转回个人中心
+                        $url = $pre?$pre:url_wap("settings#thirdparties");
+                        app_redirect($url);
+                        exit;
+                    }
+                }
+            }
+
+            $page_title = '绑定手机';
+
+        }
+
+        $GLOBALS['tmpl']->assign("wx_info",$wx_info);
+        $GLOBALS['tmpl']->assign("page_title",$page_title);
+        $html = "user_bind_mobile.html";
+
+        $GLOBALS['tmpl']->display($html);
     }
 
     //更新用户手机号码
@@ -911,6 +986,152 @@ class userModule{
             ajax_return($data);
         }
         return false;
+    }
+    public function do_bind_mobile(){
+        $type = $_REQUEST['type'];
+        $mobile=strim($_POST['mobile']);
+        $username = strim($_POST['user_name']);
+        $password=strim($_POST['user_pwd']);
+        $verify_coder=strim($_POST['verify_coder']);
+        $wx_login_info = es_session::get('wx_login_user_info');
+        $wx_info = es_session::get('wx_user_info');
+        $user_info = $wx_login_info?$wx_login_info:$wx_info;
+        //没有微信帐号信息
+        if(!$user_info){showErr("请使用微信扫描二维码后完成帐号绑定",1,"");}
+        //判断微信号是否已存在
+        $select_openid_sql = "select id from ".DB_PREFIX."user_idx where wechat_unionid = '".$user_info['unionid']."'";
+        $unionid_idx = $GLOBALS['db']->getOne($select_openid_sql);
+        if($unionid_idx){showErr("此微信已与其它手机号绑定，请登录后至个人中心解绑，再绑定此微信号",1,"");}
+        $user_info['sex'] = $user_info['sex']==2?0:1;
+        $wx_type = $wx_login_info?'login':'auth';
+        if($type=='reg'){
+            //绑定注册新帐号
+            require_once APP_ROOT_PATH."system/libs/user.php";
+            $user_name_result = check_user("user_name",$user_info['nickname']);
+            if($user_name_result['data']['error']==EXIST_ERROR) {
+                $username =  $_REQUEST['user_name'] = $user_info['nickname'].rand(10000,99999);
+            }
+            $return = $this->register_check_all();
+            $has_code=$GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."mobile_verify_code where mobile='".$mobile."' and verify_code='".strim($verify_coder)."' ");
+            if(!$has_code){
+                showErr("验证码错误",1,"");
+            }
+            if($return['status']==0){ajax_return($return);}
+
+            $user_data = array_merge($user_info,array('mobile'=>$mobile,'user_pwd'=>$password,'user_name'=>$username,'is_effect'=>1));
+            $res = save_user($user_data);
+            statistics('register');
+
+            if($res['status'] == 1) {
+                if(!check_ipop_limit(get_client_ip(),"user_do_register",5))
+                    showErr("提交太快",1);
+
+                $user_id = intval($res['data']);
+                $userinfo = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
+                if($userinfo['is_effect']==1){
+                    //在此自动登录
+                    $result = do_login_user($user_data['user_name'],$user_data['user_pwd']);
+//                    ajax_return(array("status"=>1,"info"=>$result['msg'],"jump"=>$referer));
+                }
+            }else{
+                $error = $res['data'];
+                switch($error['field_name']){
+                    case 'mobile':
+                        $field_name = "手机号码";
+                        break;
+                    case 'verify_code':
+                        $field_name = "验证码";
+                        break;
+                    case 'user_name':
+                        $field_name = "帐号";
+                        break;
+                    default:
+                        $field_name = '输入';
+                        break;
+                }
+
+                switch ($error['error']){
+                    case EMPTY_ERROR:
+                        $error_info = "不能为空";
+                        break;
+                    case FORMAT_ERROR:
+                        $error_info = "错误";
+                        break;
+                    case EXIST_ERROR:
+                        $error_info = "已存在";
+                        break;
+                    default:
+                        $error_info = '有误';
+                        break;
+                }
+                ajax_return(array("status"=>0,"data"=>$field_name.$error_info));
+
+            }
+        }else{
+            //帐号已存在，绑定并登录
+            require_once APP_ROOT_PATH."system/libs/user.php";
+            if(check_ipop_limit(get_client_ip(),"user_dologin",5)){
+                $result = do_login_user($mobile,$password);
+            }else{
+                showErr('提交太频繁',1);
+            }
+        }
+        //插入新索引
+        if($result['status']){
+            //不替换用户昵称等信息
+            if($user_info['unionid']){
+                $sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$result['user']['id'].",mobile='".$result['user']['mobile']."',nickname='".$user_info['nickname']."',wechat_".$wx_type."_openid='".$user_info['openid']."',wechat_unionid='".$user_info['unionid']."'";
+                $GLOBALS['db']->query($sql_user_idx_insert);
+                if($result['user']['has_set_name']==0){
+                    $sql_user_name_info ="select * from xlc_user where user_name='".$user_info['nickname']."' limit 1";
+                    $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
+                    if($tmp_user_name_info){
+                        //微信用户昵称存在
+                        $user_info['nickname'] .= rand(10000,99999);
+                    }
+                    //更新用户表
+                    $sql_user_update = "UPDATE `xlc_user` SET user_name='".$user_info['nickname']."',headimgurl='".$user_info['headimgurl']."',sex=".$user_info['sex'].",province='".$user_info['province']."',city='".$user_info['city']."' where id=".$result['user']['id'];
+                    $GLOBALS['db']->query($sql_user_update);
+                }
+            }else{
+                $return['status'] = -1;
+                $return['info'] = array('msg'=>'无法获取您的微信用户信息');
+                ajax_return($return);
+            }
+
+            $return['status'] = 1;
+            $return['info'] = "登录成功";
+            $return['data'] = $result['msg'];
+            $return['jump'] = get_gopreview_wap();//与pc端不同
+            ajax_return($return);
+        }else{
+            switch($result['data']){
+                case ACCOUNT_NO_EXIST_ERROR:
+                    $err = "会员不存在";
+                    break;
+                case ACCOUNT_PASSWORD_ERROR:
+                    $err = "密码错误";
+                    break;
+                case ACCOUNT_NO_VERIFY_ERROR:
+                    $err = "用户未通过验证";
+                    break;
+                default:
+                    $err = "绑定失败，请重试";
+                    break;
+            }
+            showErr($err,1);
+        };
+    }
+    /*增加微信扫描二维码的页面*/
+    public function wx_login(){
+        $userinfo = $GLOBALS['user_info'];
+        if($userinfo){
+            $idx = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_idx where userid = ".$userinfo['id']);
+            if($idx)
+                app_redirect(url_wap("settings#index"));
+        }
+        $GLOBALS['tmpl']->assign("page_title","扫码登录");
+        $GLOBALS['tmpl']->display("user_wx_login.html");
     }
 }
 ?>

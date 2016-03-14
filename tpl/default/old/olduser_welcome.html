@@ -1,9 +1,17 @@
 {include file="old/old_header.html"}
 <link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/old_user.css"/>
+<style>
+    .light_gray{
+        font-size: 1.5em;
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
 <div id="nav">
     <div class="top">
         <div class="top_left">
-            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
+            <a href='{url_wap r="old"}'><img src="{$TMPL}/old/images/exit.png"></a>
         </div>
         <div class="top_center">登录</div>
         <div class="top_right"></div>
@@ -16,15 +24,17 @@
             <li><a href="{url_wap r="olduser#start_login"}">手机号登录</a></li>
             <li class="login_tips"><p class="gray">您也可以用第三方账号直接登录</p></li>
             <li id="wechatLoginBtn"><a href="javascript:void(0)" class="login-btn-wx">微信登录</a></li>
+
         </ul>
     </div>
 </div>
+<p class="light_gray">点击微信登录，绑定由新乐筹开发的&nbsp;HUAN</p>
  {include file="old/old_inc_footer.html"}
  <!--<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>-->
  <!--<script type="text/javascript" src="{$TMPL}/js/user.js"></script>-->
  <!--内嵌二维码微信登录JS-->
  <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
- <script type="text/javascript" src="{$TMPL}/old/js/old_wechat.js"></script>
-
+ <script type="text/javascript" src="{$TMPL}/old/js/old_wechat.js?1"></script>
+<script>console.log(document.referrer)</script>
  </body>
 </html>

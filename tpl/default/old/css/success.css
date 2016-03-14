@@ -5,7 +5,7 @@ body{
 	width:100%;
 	margin:0 auto;
 	padding:0 auto;
-	margin-top:80px;
+	margin-top:100px;
 	text-align:center;
     font-size:12px;
 }
@@ -14,11 +14,13 @@ body{
 	margin-bottom:0.2em;
 	color:#ff5a5f;
 	font-weight:bold;
+    padding: 8%;
     /*font-size:12px;*/
 }
 .publish_sucess img{
-	width:45%;
+	width:30%;
 }
+
 .publish_circle{
 	
 	width:60%;

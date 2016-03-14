@@ -398,7 +398,7 @@ function app_redirect($url,$time=0,$msg='')
         // redirect
         if(0===$time) {
         	if(substr($url,0,1)=="/")
-        	{        		
+        	{
         		header("Location:".get_domain().$url);
         	}
         	else

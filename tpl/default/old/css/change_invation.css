@@ -91,9 +91,10 @@
 	padding:0 auto;
 	text-align:center;
 	margin-top:7px;
-    max-height: 80px;
+    /*padding-top: 20px;*/
+    max-height: 100px;
     overflow-y: hidden;
-	
+	position: relative;
 }
 @media screen and ( min-width: 768px ){
     .change_body{
@@ -134,7 +135,7 @@
 	width:95%;
 	margin:0 auto;
 	padding:0 auto;
-	margin-top:2em;
+	margin-top:7px;
 	
 }
 .change_progess span{
@@ -392,4 +393,7 @@
 /*编辑物流*/
 .change_modal_body h5{
     margin-top: 20px;
+}
+.exchange_id{
+    position: absolute;top: 0px; font-size: 12px;right: 0;color: #ccc;
 }

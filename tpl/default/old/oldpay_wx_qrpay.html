@@ -14,7 +14,7 @@
     {if $data.pay_status eq 0}
     <div style="margin:0 auto;text-align:center;" id="imgdiv">
         <img alt="请使用微信扫码支付" src="http://paysdk.weixin.qq.com/example/qrcode.php?data={$picurl}" style="width: 80%;"/>
-        <p>请使用微信扫码支付</p>
+        <p>请长按识别二维码立即支付，或使用微信扫码支付。</p>
     </div>
     {/if}
     <!--支付错误时显示-->
@@ -22,8 +22,8 @@
         <img src="{$TMPL}/old/images/fail.jpg">
         <p>支付遇到问题</p>
         <ul>
-            <li><a href="{url_wap r="old#home_exchange"}">继续支付</a></li>
-            <li><a href="{url_wap r="old"}">返回首页</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old#home_exchange"}')">继续支付</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old"}')">返回首页</a></li>
         </ul>
     </div>
 
@@ -32,8 +32,8 @@
         <img src="{$TMPL}/old/images/sucess.jpg">
         <p>支付成功，5秒后自动退出</p>
         <ul>
-            <li><a href="{url_wap r="old#home_exchange"}">查看申请</a></li>
-            <li><a href="{url_wap r="old"}">返回首页</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old#home_exchange"}')">查看申请</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old"}')">返回首页</a></li>
         </ul>
     </div>
 
@@ -61,7 +61,7 @@
         });
     }
     function jump(){
-        location.href = APP_ROOT+'/index.php?ctl=old&act=home_exchange';
+        location.replace(APP_ROOT+'/index.php?ctl=old&act=home_exchange') ;
     }
 </script>
 

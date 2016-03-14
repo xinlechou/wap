@@ -26,8 +26,14 @@ class olduserModule{
         echo '<br>';
         echo $gopreview;
 		if(!$gopreview){*/
+
+//        $gopreview = es_session::get("oldgopreview");
+//        echo $gopreview;
+//        if(!$gopreview){
 			$url = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:url("old");
 			es_session::set("oldgopreview",$url);
+//        $gopreview = es_session::get("oldgopreview");
+//        echo $gopreview;
 //		}
 		$GLOBALS['tmpl']->assign("page_title","会员登录");
         $GLOBALS['tmpl']->display("old/olduser_welcome.html");
@@ -40,6 +46,8 @@ class olduserModule{
         if($GLOBALS['user_info']){
             app_redirect(url_wap("oldsettings#index"));
         }
+        $pre = get_gopreview_old();
+        $GLOBALS['tmpl']->assign("pre",$pre);
         $GLOBALS['tmpl']->assign("page_title","会员登录");
         $GLOBALS['tmpl']->display("old/olduser_login.html");
     }

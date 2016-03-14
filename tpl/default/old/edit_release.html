@@ -96,7 +96,7 @@
     release.checkForm = function(p){
         if(p.name==""){$.showErr('请输入标题',function(){});return false;}
         if(p.info==""){$.showErr('请输入物品描述',function(){});return false;}
-        if(p.name.length>14){$.showErr('标题太长',function(){});return false;}
+        if(p.name.length>50){$.showErr('标题太长',function(){});return false;}
         if(p.info.length>1000){$.showErr('物品描述太啰嗦，请精简物品描述',function(){});return false;}
         if(p.info.length<10){$.showErr('物品描述太简短，请再详细描述您的物品',function(){});return false;}
         if(p.images.length==0){$.showErr('请添加图片',function(){});return false;}
@@ -128,8 +128,9 @@
                     images.push(catchList[i].src);
                 }
             }
+            info = ((info.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"<br>");
             var p = {name:name,info:info,top_img_num:top_img_num,images:images.toString(),is_filter:is_filter,id:"{$goods.id}"};
-            console.log(p);
+//console.log(release.checkForm(p));
             if(release.checkForm(p)){
                 {if $is_new}
                     old.edit_online_goods(p,parseInt(card_state),user_id);

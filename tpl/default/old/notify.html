@@ -3,7 +3,7 @@
 <div id="nav">
     <div class="top">
         <div class="top_left">
-            <a href="{url_wap r="old#home"}"><img src="{$TMPL}/old/images/exit.png"></a>
+            <a href="javascript:window.history.go(-1);"><img src="{$TMPL}/old/images/exit.png"></a>
         </div>
         <div class="top_center">{$page_title}</div>
         <div class="top_right"><a href="javascript:void(0)" onclick="old.del_all_isread_notify()">清除已读</a></div>
@@ -76,6 +76,79 @@
         {/if}
     </ul>
 </div>
+<input type="text" id="isPageBack" value="false" hidden="hidden"/>
+
 {include file="old/old_inc_footer.html"}
+<script>
+    var refer = document.referrer;
+    if(refer==''){
+        $('.top_left>a').click(function(e){
+            if ( e && e.preventDefault ){
+                e.preventDefault();
+            }else{
+                window.event.returnValue = false;
+            }
+            window.location.replace(APP_ROOT+'?ctl=old');
+        });
+    }
+</script>
+<!--<script>
+    window.onload = window.onunload=  createInterval;
+    /* 使用了2个定时器，一个是每分钟刷新页面，另一个是后退后刷新页面 */
+    var interval;
+
+    function refresh(force){
+        console.log(force)
+        if(force){
+            //alert("强制每分钟刷新！");
+            console.log('getflag:'+getFlag())
+            window.location.reload();
+
+        }else if("true"==getFlag()){
+            console.log("后退刷新...");
+            window.location.reload();
+        }
+    }
+
+    //flag="true"/"false" (后退状态/非后退状态)
+    function setFlag(flag){
+        document.getElementById("isPageBack").value= flag + "";
+    }
+
+    function getFlag(){
+        return document.getElementById("isPageBack").value;
+    }
+
+    //导航链接
+    function navigate(target){
+        doClearInterval();
+        setFlag(true);
+        forward(target);
+    }
+
+    //跳转到下个页面
+    function forward(target){
+        window.location.href="<ww:url value='/mobileNav!navigate.action'/>?navURL="+target;
+    }
+
+    function createInterval(){
+        if(interval==undefined){
+            console.log("在创建定时器："+interval);
+            interval = setInterval("refresh()", 500);
+        }
+    }
+
+    function doClearInterval(){
+        if(interval){
+            console.log("在清除定时器："+interval);
+            window.clearInterval(interval);
+        }
+    }
+</script>
+<script>
+
+    //每分钟刷新一次
+    setInterval("refresh(true)", 60000);
+</script>-->
 </body>
 <html>

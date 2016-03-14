@@ -35,11 +35,12 @@
                     <header class="change_title clearfix">
                                 <span class="change_title_left">
                                     <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" " border=0 width=15 class="img-circle">
-                                    {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}-状态：{$state}
+                                    {$good_list.to_user_data.user_name}
                                 </span>
                         <span class="change_title_right">{$good_list.create_time}</span>
                     </header>
                     <div class="change_body clearfix">
+                        <!--<em class="exchange_id">交换单号:000000019008000010</em>-->
                         <div class="change_body1">
                             {foreach from=$good_list.to_images_data.list item=img_list key=keyd}
                             {if $img_list.is_top eq 1}
@@ -60,6 +61,33 @@
                             {/foreach}
                         </div>
                     </div>
+                    <!--进度条-->
+                    {if $good_list.exchange_state eq 1 && $state neq 3}
+                    {if ($state eq 15) ||($state eq 18)||($state eq 18)||($state eq 18)||($state eq 35)||($state eq 38)||($state eq 29)||($state eq 32)||($state eq 39)||($state eq 42) ||($state eq 31)||($state eq 34)}<!-- 线上线下未完成 7Day-->
+                    <div class="change_progess clearfix">
+                        <span >还有{$good_list.rest_time.daytime}自动设为完成交换~</span>
+                        <div class="progress progress-striped process_height">
+                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: {$good_list.rest_time.daypercent}%;">
+                            </div>
+                        </div>
+                    </div>
+
+                    {else}
+                    <!--24h-->
+                    <div class="change_progess clearfix">
+                        <span >还有{$good_list.rest_time.time}本次交换失效~</span>
+                        <div class="progress progress-striped process_height">
+                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: {$good_list.rest_time.percent}%;">
+                            </div>
+                        </div>
+                    </div>
+                    {/if}
+                    {/if}
+                    <!--进度条END-->
                     <!--各种状态开始-->
                     {if $state eq 1}
                     <footer class="change_foot clearfix">
@@ -90,7 +118,7 @@
                         <footer class="change_foot clearfix">
                             <span>{$good_list.to_user_data.user_name}想用私下交换的方式和您交换物品，是否同意？</span>
                             <div class="change_foot_body">
-                                <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','from',{$user.id},'{$good_list.exchange_log.from_deposit}')">同意</a>
+                                <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','from',{$user.id},'{$good_list.exchange_log.to_deposit}',0)">同意</a>
                                 <a href="#" class="change_disagree" data-toggle="modal" data-target="#exMethodModal" data-exchange-id="{$good_list.id}" data-user-type="from" data-other-deposit="{$good_list.exchange_log.to_deposit}">更换交换方式</a>
                             </div>
                         </footer>
@@ -99,7 +127,7 @@
                     <footer class="change_foot clearfix">
                         <span>{$good_list.to_user_data.user_name}想用担保交换的方式和您交换物品，担保金额为¥{$good_list.exchange_log.to_deposit}，是否同意？</span><!--State 16-->
                         <div class="change_foot_body">
-                            <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','from',{$user.id},'{$good_list.exchange_log.from_deposit}')">同意</a>
+                            <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','from',{$user.id},'{$good_list.exchange_log.to_deposit}',1)">同意</a>
                             <a href="#" class="change_disagree" data-toggle="modal" data-target="#exMethodModal" data-exchange-id="{$good_list.id}" data-user-type="from" data-other-deposit="{$good_list.exchange_log.to_deposit}">更换交换方式</a>
                         </div>
                     </footer>
@@ -148,7 +176,7 @@
                         </div>
                     </footer>
                     {/if}
-                    {if $state eq 26}
+                    {if $state eq 19}
                     <footer class="change_foot clearfix">
                         <span>对方已填写了收件地址，为保证交换进度，请您快编辑地址。</span>
                         <div class="change_foot_body">
@@ -275,7 +303,7 @@
                             <span class="change_title_left">
                                 <img src="{function name="get_user_avatar" uid=$good_list.to_user_data.id type="middle"}" "" border=0 width=15 class="img-circle">
                                 <!--我的名字-->
-                                {$good_list.to_user_data.user_name}-HUAN单号:{$good_list.id}-状态：{$state}
+                                {$good_list.to_user_data.user_name}
                             </span>
                     <span class="change_title_right">{$good_list.create_time}</span>
                 </header>
@@ -301,6 +329,31 @@
                         {/foreach}
                     </div>
                 </div>
+                {if $good_list.exchange_state eq 1 && $state neq 3}
+                {if ($state eq 15) ||($state eq 18)||($state eq 18)||($state eq 18)||($state eq 35)||($state eq 38)||($state eq 29)||($state eq 32)||($state eq 39)||($state eq 42) ||($state eq 31)||($state eq 34)}<!-- 线上线下未完成 7Day-->
+                <div class="change_progess clearfix">
+                    <span >还有{$good_list.rest_time.daytime}自动设为完成交换～</span>
+                    <div class="progress progress-striped process_height">
+                        <div class="progress-bar progress-bar-info" role="progressbar"
+                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                             style="width: {$good_list.rest_time.daypercent}%;">
+                        </div>
+                    </div>
+                </div>
+
+                {else}
+                <!--24h-->
+                <div class="change_progess clearfix">
+                    <span >还有{$good_list.rest_time.time}本次交换失效~</span>
+                    <div class="progress progress-striped process_height">
+                        <div class="progress-bar progress-bar-info" role="progressbar"
+                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                             style="width: {$good_list.rest_time.percent}%;">
+                        </div>
+                    </div>
+                </div>
+                {/if}
+                {/if}
                 <!--各种状态开始-->
                 {if $state eq 2}
                 <footer class="change_foot clearfix">
@@ -327,15 +380,6 @@
                 </footer><!--State 6-->
                 {/if}
                 {if $state eq 8}
-                <div class="change_progess clearfix">
-                    <span >您还有{$good_list.from_rest_time.time}完成确认，quickly ~</span>
-                    <div class="progress progress-striped process_height">
-                        <div class="progress-bar progress-bar-info" role="progressbar"
-                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                             style="width: {$good_list.from_rest_time.percent}%;">
-                        </div>
-                    </div>
-                </div>
                 <footer class="change_foot clearfix">
                     <span>{$good_list.from_user_data.user_name}同意您的交换申请，请选择交换方式。</span>
                     <div  class="change_foot_body">
@@ -365,7 +409,7 @@
                 <footer class="change_foot clearfix">
                     <span>{$good_list.from_user_data.user_name}想将交换方式修改为私下交换，是否同意？</span>
                     <div class="change_foot_body">
-                        <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to',{$user.id},'{$good_list.exchange_log.to_deposit}')">同意</a>
+                        <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to',{$user.id},'{$good_list.exchange_log.from_deposit}',0)">同意</a>
                         <a href="javascript:void(0)" class="change_disagree" onclick="old.giveup_exchange(this,'{$good_list.id}','to')">放弃交换</a>
                     </div>
                 </footer>
@@ -374,7 +418,7 @@
                 <footer class="change_foot clearfix">
                     <span>{$good_list.from_user_data.user_name}想将交换方式修改为担保交换并且保证金为¥{$good_list.exchange_log.from_deposit}和您交换物品，是否同意？</span>
                     <div class="change_foot_body">
-                        <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to',{$user.id},'{$good_list.exchange_log.to_deposit}')">同意</a>
+                        <a href="javascript:void(0)" class="change_agree" onclick="old.agree_exchange_type('{$good_list.id}','to',{$user.id},'{$good_list.exchange_log.from_deposit}',1)">同意</a>
                         <a href="javascript:void(0)" class="change_agree" onclick="old.giveup_exchange(this,'{$good_list.id}','to')">放弃交换</a>
                     </div>
                 </footer>

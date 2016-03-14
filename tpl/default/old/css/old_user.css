@@ -68,16 +68,16 @@ body{
     font-size:14px;
     margin-bottom:3%;
 }
-.input_td.incorrect{
+.input_td.incorrect,.input_tel.incorrect{
     border:1px solid #ff5a5f;
     -webkit-box-shadow:0 0 10px rgba(255, 90, 95, .5);
     -moz-box-shadow:0 0 10px rgba(255, 90, 95, .5);
     box-shadow:0 0 10px rgba(255, 90, 95, .5);
 }
-.input_td.correct{
+.input_td.correct,.input_tel.correct,#verify_coder.correct{
     background-image: url(../images/filter_hover.png);
     background-repeat: no-repeat;
-    background-position: 90% 15px;
+    background-position: 100px 15px;!important;
     background-size: 18px;
     padding-right: 29px;
 }
@@ -211,4 +211,7 @@ a.pwd{float: right}
     left: 10%;
     bottom: 21%;
     color: #b3b3b3;
+}
+#verify_coder{
+    background-position: 96px -25px;
 }

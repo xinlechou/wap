@@ -81,6 +81,7 @@ body{
     /*transition: background-position 0.3s;*/
     line-height: 23px;
     margin: 0 10%;
+    height: 23px;
 }
 /*.filter label.checked{
     background-position: 0px -29px;

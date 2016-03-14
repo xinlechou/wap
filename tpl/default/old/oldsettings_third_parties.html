@@ -34,7 +34,7 @@
              var userid = "{$user.id}",unbindUrl = APP_ROOT+'/?ctl=ajax&userid='+userid+'&act=';
              $("#unbind").bind(EVENT_TYPE,function(e){
                  var url = unbindUrl+$(this).attr('data-act');
-                 $.showSuccess("确定解绑微信吗？",function(){
+                 $.showConfirm("确定解绑微信吗？",function(){
                      $("#loading").show();
                      $.ajax({url:url,dataType:"json",type:"get",
                          success:function(json){

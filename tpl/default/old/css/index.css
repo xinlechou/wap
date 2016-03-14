@@ -116,8 +116,11 @@
   color:#565a5c;
 }
 .content_list_bottoma>img{
-	/*vertical-align:middle;*/
-	width:12%;
+    /* vertical-align: middle; */
+    width: 12%;
+    display: inline-block;
+    margin-top: -3%;
+    margin-right: 2%;
 }
 .circle{
 	/*width:15;*/

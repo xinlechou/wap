@@ -39,6 +39,7 @@ var weChatUtils = {
     },
     getWechatUserInfo:function(){
         //临时地址
+        //var url = weChatUtils.urlPrefix+'getWechatAuthBaseHUAN';
         var url = weChatUtils.urlPrefix+'getWechatAuthBaseHUAN';
         //alert(url)
         console.log("开始注水："+url);

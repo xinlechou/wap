@@ -2,16 +2,13 @@
  * Created by admin on 16/2/17.
  */
 var EXSTATES = {
-    Bnotavailable: '您的物品不可交换',
-    Anotavailable: '对方的物品不可交换',
-    BOFF: '物品已下架',
-    AOFF: '物品已下架',
-    Bnotexist:'对方物品不存在',
-    Anotexist:'您的物品不存在',
+    Bnotavailable: '您选择的物品已被交换或下架',
+    Anotavailable: '您想换的物品已被交换或下架',
     EXcannotedit:'交换信息不可修改',
     EXEMPTY:'交换信息为空',
     EXIDEMPTY:'交换ID为空',
-    HAVEIGNORED:'两物品已申请过交换'
+    HAVEIGNORED:'两物品已申请过交换',
+    OTHER:'抱歉，请求开小差，请重试！'
 };
 var CARDSTATE = {
     1:'您已提交实名认证，请耐心等待审核通过',
@@ -148,13 +145,14 @@ old.add_goods = function(p,card_state,user_id){
     var url = old.interface+'?act=add_goods&user_id='+user_id;
 
     old.sendAjax(url,p,function(json){
+        //alert(json.error)
         if(json.error == 0){
             //提交成功,先进入预览页面
             if(card_state==0){
                 //需实名认证
-                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind&goods_id="+json.data.id;
+                window.location.replace(APP_ROOT+"/index.php?ctl=old&act=bind&goods_id="+json.data.id);
             }else{
-                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=preview&id="+json.data.id;
+                window.location.replace(APP_ROOT+"/index.php?ctl=old&act=preview&id="+json.data.id);
                 /*var goods_id = json.data.id;
                 //console.log(goods_id)
                 old.put_on_first(goods_id,function(json){
@@ -200,10 +198,9 @@ old.edit_goods = function(p,card_state,user_id){
 old.edit_online_goods = function(p,card_state,user_id){
     var url = old.interface+'?act=edit_online_goods&user_id='+user_id;
     old.sendAjax(url,p,function(json){
-        console.log(json);
         if(json.error == 0){
             //提交成功
-            window.location.href =  APP_ROOT+"/index.php?ctl=old&act=home_goods";
+            window.location.replace(APP_ROOT+"/index.php?ctl=old&act=home_goods");
             return;
             //window.location.href =  APP_ROOT+"/index.php?ctl=old&act=success";
         }else{
@@ -259,11 +256,11 @@ old.uploadFile = function(url,file_id,successFun,errorFun){
 }
 old.success = function(goods_id){
     //alert(goods_id)
-    window.location.href = APP_ROOT+"/index.php?ctl=old&act=success&goods_id="+goods_id;
+    window.location.replace(APP_ROOT+"/index.php?ctl=old&act=success&goods_id="+goods_id);
     return;
 }
 old.failed = function(){
-    window.location.href = APP_ROOT+"/index.php?ctl=old&act=failed";
+    window.location.replace(APP_ROOT+"/index.php?ctl=old&act=failed");
     return;
 }
 //----------------------------------------exchange
@@ -273,20 +270,27 @@ old.add_exchange = function(p){
     var url = old.interface+'?act=add_exchange';
     old.sendAjax(url,p,function(json){
         if(json.error == 0){
+            var indexUrl =  APP_ROOT+"/index.php?ctl=old";
             //提交成功
             //window.location.href =  APP_ROOT+"/index.php?ctl=old&act=home_exchange";
             //return false;
             var a = new dialog('请求已经通知给主人，接下来你想去干啥？','default',function(){
                 window.location.href =  APP_ROOT+"/index.php?ctl=old&act=home_exchange#my_exchange";
             },function(){
-                window.location.href =  APP_ROOT+"/index.php?ctl=old";
+                window.location.href =  indexUrl;
             },[{name:"看看我的申请",action:'confirm'},{name:"看看别的",action:'cancel'}]);
+            $('.top_left>a').attr('href',indexUrl);
+            //alert( $('.top_left>a').attr('href'))
         }else{
-            var msg = json.data.msg;
+            var msg = EXSTATES.OTHER;
             //console.log(json);
             switch (json.error){
+                case '-2':
                 case "-4":
-                    msg = EXSTATES.BOFF;break;
+                    msg = EXSTATES.Bnotavailable;break;
+                case '-3':
+                case '-5':
+                    msg = EXSTATES.Anotavailable;break;
                 case "-7":
                     msg = EXSTATES.HAVEIGNORED;break;
             }
@@ -314,13 +318,21 @@ old.set_exchange = function(exchange_id){
     old.sendAjax(url,'',function(json){
         if(json.error == 0){
             setTimeout(function(){
-                window.location.reload()
+                window.location.reload();
             },50);
         }else{
-            var msg = json.data.msg;
+            var msg = EXSTATES.OTHER;
             switch (json.error){
+                case "-8":
                 case "-6":
-                    msg = EXSTATES.AOFF;
+                case "-4":
+                    msg = EXSTATES.Anotavailable;
+                    break;
+                case "-9":
+                case "-7":
+                case "-5":
+                    msg = EXSTATES.Bnotavailable;
+                    break;
             }
             var d = new dialog(msg,'light',function(){})
         }
@@ -342,69 +354,53 @@ old.set_exchange_type = function(p,susseccFun,errorFun){
     })
 }
 //同意交换方式
-old.agree_exchange_type = function(exchange_id,user_type,user_id){
+old.agree_exchange_type = function(exchange_id,user_type,user_id,deposit,change_type){
     var url = old.interface+'?act=agree_exchange_type&exchange_id='+exchange_id+'&user_type='+user_type;
-    old.sendAjax(url,"",function(json){
-        console.log(json)
+    if(change_type){
+        //线上支付
+        var p = {exchange_id:exchange_id,user_id:user_id,deposit:deposit,bank_id:0,change_type:2};
+        localStorage.setItem("nowPayInfo", JSON.stringify(p));
 
-        if(json.error == 0){
-            //alert(json.data.from_change_type+'json.from_change_type');
-            // from_change_type: "2"时调用支付接口去支付保证金
-            if(json.data.from_change_type=="2"||json.data.from_change_type==2){
-                var deposit = json.data.from_deposit;
-                //用户点同意的时候如果发现以前交过钱就自动退款
-                /*if(originalPrice>0){
-                    deposit = json.data.from_deposit-originalPrice;
-                }*/
-                var p = {exchange_id:exchange_id,user_id:user_id,deposit:deposit,bank_id:0};
-                //alert('originalPrice:'+originalPrice+';from_deposit:'+json.data.from_deposit);
-                //alert('deposit'+p.deposit);
-                localStorage.setItem("nowPayInfo", JSON.stringify(p));
-                var is_refund = json.data.is_refund;
-                if(is_refund){
-                    $('#paymentModal').on('show.bs.modal', function (event) {
-                        $('#is_refund').html('不用担心，您之前支付的保证金已退还。')
-                    })
+       /* $('#paymentModal').on('show.bs.modal', function (event) {
+            $('#is_refund').html('hehehe')
+        })*/
+        $('#paymentModal').modal('show');
+        return;
+    }else{
+        old.sendAjax(url,"",function(json){
+            console.log(json)
+
+            if(json.error == 0){
+                //alert(json.data.from_change_type+'json.from_change_type');
+                // from_change_type: "2"时调用支付接口去支付保证金
+                if(json.data.from_change_type=="2"||json.data.from_change_type==2){
+                    var deposit = json.data.from_deposit;
+                    //用户点同意的时候如果发现以前交过钱就自动退款
+                    /*if(originalPrice>0){
+                     deposit = json.data.from_deposit-originalPrice;
+                     }*/
+                    var p = {exchange_id:exchange_id,user_id:user_id,deposit:deposit,bank_id:0};
+                    //alert('originalPrice:'+originalPrice+';from_deposit:'+json.data.from_deposit);
+                    //alert('deposit'+p.deposit);
+                    localStorage.setItem("nowPayInfo", JSON.stringify(p));
+                    var is_refund = json.data.is_refund;
+                    if(is_refund){
+                        $('#paymentModal').on('show.bs.modal', function (event) {
+                            $('#is_refund').html('不用担心，您之前支付的保证金已退还。')
+                        })
+                    }
+                    $('#paymentModal').modal('show');
+
+                    return;
                 }
-                $('#paymentModal').modal('show');
-
-                return;
+                window.location.reload();
+            }else{
+                var d = new dialog(msg,'light',function(){})
             }
-/*Object
-* exchange_id: "56"
- exchange_state: "1"
- exchange_time: "0"
- from_address: ""
- from_change_type: "2"
- from_city: ""
- from_consignee: ""
- from_deposit: "1111.00"
- from_express: ""
- from_is_paid: "0"
- from_last_set_time: "1456047456"
- from_mobile: ""
- from_province: ""
- from_user_state: "1"
- from_zip: ""
- id: "7"
- to_address: ""
- to_change_type: "2"
- to_city: ""
- to_consignee: ""
- to_deposit: "1111.00"
- to_express: ""
- to_is_paid: "0"
- to_last_set_time: "1456046795"
- to_mobile: ""
- to_province: ""
- to_user_state: "1"
- to_zip: ""*/
-            window.location.reload();
-        }else{
-            var d = new dialog(msg,'light',function(){})
-        }
-        console.log(json)
-    })
+            console.log(json)
+        })
+    }
+
 }
 //完成交换
 old.finish_exchange = function(obj,exchange_id,user_type){
@@ -436,7 +432,8 @@ old.giveup_exchange = function(obj,exchange_id,user_type){
     var url = old.interface+'?act=giveup_exchange&exchange_id='+exchange_id+'&user_type='+user_type;
     old.sendAjax(url,"",function(json) {
         if (json.error == 0) {
-            $(obj).parents('.change_foot_body').html('<a href="javascript:void(0)" class="change_disagree faild">交换失败</a>')
+            /*$(obj).parents('.change_foot_body').html('<a href="javascript:void(0)" class="change_disagree faild">交换失败</a>')*/
+            window.location.reload();
         } else {
             var d = new dialog(json.data.msg, 'light', function () {})
         }
@@ -474,15 +471,16 @@ old.add_order = function(p){
         if (json.error == 0) {
             var notice_id= json.data;
             //判断是否是微信浏览器
-            if(tools.isWeiXin()){
+           /* if(tools.isWeiXin()){
                 //跳转到支付页面
                 var url = APP_ROOT+'?ctl=old&act=wx_jspay&id='+notice_id;
                 window.location.href = url;
-            }else{
+            }else{*/
                 //扫码支付
                 var url = APP_ROOT+'?ctl=old&act=jump_wxzf&id='+notice_id;
+            //alert(url);
                 window.location.href = url;
-            }
+            //}
 
         } else {
             var d = new dialog(json.data.msg, 'light', function () {})
@@ -572,7 +570,8 @@ old.send_message = function(p,fun){
 old.get_message = function(p,fun){
     var url = old.interface+'?act=get_message';
     old.sendAjax(url,p,function(json) {
-        if (json.error == 0&& json.data.num.num>0) {
+        console.log(json)
+        if (json.error == 0&& json.data.num>0) {
             fun && fun(json.data.list);
         } else {
             //var d = new dialog(json.data.msg, 'light', function () {})
@@ -586,9 +585,8 @@ old.set_message_isread = function(user_id,dest_id){
 }
 //----------------------------------------verified
 //获取实名认证状态
-old.get_card_state = function(user_id){
+old.get_card_state = function(user_id,is_from_select){
     var url = APP_ROOT+'?ctl=old&act=get_user_state&id='+user_id;
-
     old.sendAjax(url,"",function(json) {
         switch (json.data){
             case '1':
@@ -605,7 +603,11 @@ old.get_card_state = function(user_id){
                 //没有提交过审核，有一次发布机会
             case '3':
                 //已通过实名认证
-                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=release";
+                var releaseUrl = APP_ROOT+"/index.php?ctl=old&act=release&is_from_select="+is_from_select;
+                if(is_from_select){
+                    releaseUrl += '&is_from_select='+is_from_select;
+                }
+                window.location.href = releaseUrl;
                 break;
             default :
                 window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind";

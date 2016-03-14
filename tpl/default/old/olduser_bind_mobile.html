@@ -42,7 +42,7 @@
          <div id="registerInput">
              <input class="input_td" name="confirm_user_pwd" id="confirm_user_pwd" type="password" placeholder="确认密码">
              <div style="position: relative">
-                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="输入短信验证码">
+                 <input class="input_td" name="verify_coder" id="verify_coder" type="text" placeholder="验证码">
                  <button type="button" href="javascript:void(0);" id="J_send_sms_verify" class="code code_numbera">发送验证码</button>
              </div>
 
@@ -53,7 +53,7 @@
      </div>
  </div>
 
-
+ {include file="old/modals.html"}
      {include file="old/old_inc_footer.html"}
      <script type="text/javascript" src="{$TMPL}/old/js/old_user.js"></script>
      <!--bind-->

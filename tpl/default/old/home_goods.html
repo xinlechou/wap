@@ -22,37 +22,37 @@
               <div class="tab-pane fade" id="on">
                     <ul class="cans clearfix">
                         {if $error}<div class="exchange_empty"><span>{$error}</span><a href="{url_wap r="old#release"}">发一个</a></div>{else}
-                        {foreach from=$goods item=good_list key=keyd}
-                        {if $good_list.online_state eq 1}
-                        <li>
-                           <div class="cans_left">
-                               <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
-                                   <img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy">
-                                   <div class="cans_left_left">
-                                       <span class="cans_left_top">{$good_list.name}</span>
-                                       <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
-                                   </div>
-                               </a>
+                            {foreach from=$goods item=good_list key=keyd}
+                            {if $good_list.online_state eq 1}
+                            <li>
+                               <div class="cans_left">
+                                   <a href="{url_wap r="old#detail" p="id=$good_list.id"}">
+                                       <img original="{$good_list.head_image}" src="{$TMPL}/old/images/holder.png" class="lazy">
+                                       <div class="cans_left_left">
+                                           <span class="cans_left_top">{$good_list.name}</span>
+                                           <span class="cans_left_bottom">{$good_list.exchange_num}申请交换</span>
+                                       </div>
+                                   </a>
 
-                           </div>
-                            {if $good_list.state eq 1}
-                           <div class="cans_right">
-                             <a href="#" onclick="javascript:old.pull_off(this,'{$good_list.id}')">下架</a>
-                           </div>
+                               </div>
+                                {if $good_list.state eq 1}
+                               <div class="cans_right">
+                                 <a href="#" onclick="javascript:old.pull_off(this,'{$good_list.id}')">下架</a>
+                               </div>
+                                {/if}
+                                {if $good_list.state eq 2}
+                                <div class="cans_right">
+                                    <a href="#" class="disabled">正在交换</a>
+                                </div>
+                                {/if}
+                                {if $good_list.state eq 3}
+                                <div class="cans_right">
+                                    <a href="#" class="disabled">已交换</a>
+                                </div>
+                                {/if}
+                            </li>
                             {/if}
-                            {if $good_list.state eq 2}
-                            <div class="cans_right">
-                                <a href="#" class="disabled">正在交换</a>
-                            </div>
-                            {/if}
-                            {if $good_list.state eq 3}
-                            <div class="cans_right">
-                                <a href="#" class="disabled">已交换</a>
-                            </div>
-                            {/if}
-                        </li>
-                        {/if}
-                        {/foreach}
+                            {/foreach}
                         {/if}
                     </ul>
               </div>

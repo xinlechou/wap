@@ -18,7 +18,7 @@
         {if $data.notice_sn}<div class="pay_info">订单编号<span>{$data.notice_sn}</span></div>{/if}
         <div class="pay_info">自动进入支付<span>¥{$data.money}</span></div>
         <ul id="buttom_div">
-            <li><a href="{url_wap r="index"}">返回首页</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old"}')">返回首页</a></li>
         </ul>
     </div>
     {/if}
@@ -27,8 +27,8 @@
         <img src="{$TMPL}/old/images/fail.jpg">
         <p>支付遇到问题</p>
         <ul>
-            <li><a href="{url_wap r="old#home_exchange"}">继续支付</a></li>
-            <li><a href="{url_wap r="old"}">返回首页</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old#home_exchange"}')">继续支付</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old"}')">返回首页</a></li>
         </ul>
     </div>
 
@@ -37,8 +37,8 @@
         <img src="{$TMPL}/old/images/sucess.jpg">
         <p>支付完成</p>
         <ul>
-            <li><a href="{url_wap r="old#home_exchange"}">查看申请</a></li>
-            <li><a href="{url_wap r="old"}">返回首页</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old#home_exchange"}')">查看申请</a></li>
+            <li><a href="javascript:void(0)" onclick="javascript:window.location.replace('{url_wap r="old"}')">返回首页</a></li>
         </ul>
     </div>
 
