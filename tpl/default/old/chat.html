@@ -1,5 +1,5 @@
 {include file="old/old_header.html"}
-<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/chat.css?1"/>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/chat.css"/>
 <div id="nav">
     <div class="top">
         <div class="top_left">
@@ -30,10 +30,10 @@
             <!--右边-->
         {if $list.create_time}<time>{$list.create_time}</time>{/if}
             <div class="chat_list_to">
-                <div class="chat_list_to_img">
+                <div class="chat_list_to_img flex2">
                     <img src="{$list.user_img}" class="img-circle circle">
                 </div>
-                <div class="chat_list_to_info">
+                <div class="chat_list_to_info flex1">
                     <span>{$list.message}</span>
                 </div>
 
@@ -126,7 +126,7 @@
         function appendGet(json){
             var htmlStr = "";
             for(var i=0;i<json.length;i++){
-//                console.log(json[i].message)
+                console.log(json[i].message)
                 htmlStr += '<div class="chat_list_from"><div class="chat_list_from_img"><img src="'+json[i].dest_user_img+'" class="img-circle circle"></div><div class="chat_list_from_info"><span>'+json[i].message+'</span></div></div>';
             }
 

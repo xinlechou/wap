@@ -317,9 +317,8 @@ old.set_exchange = function(exchange_id){
     var url = old.interface+'?act=set_exchange&exchange_id='+exchange_id;
     old.sendAjax(url,'',function(json){
         if(json.error == 0){
-            setTimeout(function(){
-                window.location.reload();
-            },50);
+        		var d = new dialog('交换信息更新成功！', 'light', function () {window.location.reload();})
+            
         }else{
             var msg = EXSTATES.OTHER;
             switch (json.error){

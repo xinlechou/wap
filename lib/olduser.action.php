@@ -724,6 +724,7 @@ class olduserModule{
         $pre = get_gopreview_old();
         $page_title = '绑定微信';
         if(!$wx_info['unionid']){
+//        if(!$wx_info['openid']){
             $GLOBALS['tmpl']->assign("error",'无法获取您的微信用户信息');
         }else{
             if($userinfo){
@@ -779,19 +780,72 @@ class olduserModule{
                 $this->showResult('绑定成功！',"",$url,0,"成功");
             }else{
                 $sql_user_info ="select a.*,b.userid from ".DB_PREFIX."user as a , ".DB_PREFIX."user_idx as b where a.id=b.userid and b.wechat_unionid='".$wx_info['unionid']."' limit 1";
-                    $wx_user_info = $GLOBALS['db']->getRow($sql_user_info);
-                    if($wx_user_info){
-                        if($wx_user_info['mobile']){
-                            require_once APP_ROOT_PATH . "system/libs/user.php";
-                            //如果会员存在，直接登录
-                            do_login_user($wx_user_info['mobile'], $wx_user_info['user_pwd']);
-                            //完成绑定跳转回个人中心
-                            $url = $pre?$pre:url_wap("oldsettings#thirdparties");
-                            app_redirect($url);
-                            exit;
-                        }
+                $wx_user_info = $GLOBALS['db']->getRow($sql_user_info);
+                if($wx_user_info){
+                    if($wx_user_info['mobile']){
+                        require_once APP_ROOT_PATH . "system/libs/user.php";
+                        //如果会员存在，直接登录
+                        do_login_user($wx_user_info['mobile'], $wx_user_info['user_pwd']);
+                        //完成绑定跳转回个人中心
+                        $url = $pre?$pre:url_wap("oldsettings#thirdparties");
+                        app_redirect($url);
+                        exit;
                     }
+                }else{
+                		//自动注册一个用户
+                		$sql_user_name_info ="select * from xlc_user where user_name='".$wx_info['nickname']."' limit 1";
+                    $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
+                    if($tmp_user_name_info){
+                    	$wx_info['nickname'] .= 'L';
+                    	$wx_info['nickname'] .= rand(111,999);
+                    }
+                    $mobile = '6'.rand(11,99).time();
+                    $new_user_info = array();
+										$new_user_info['user_name'] = $wx_info['nickname'];
+										$new_user_info['user_pwd'] = md5(111111);
+										$new_user_info['create_time'] = time();
+										$new_user_info['update_time'] = time();
+										$new_user_info['mobile'] = $mobile;
+										$new_user_info['is_effect'] = 1;
+										$new_user_info['login_time'] = time();
+										$new_user_info['login_ip'] = get_client_ip();
+										$new_user_info['sex'] = $wx_info['sex'];
+										$new_user_info['province'] = $wx_info['province'];
+										$new_user_info['city'] = $wx_info['city'];
+										$new_user_info['headimgurl'] = $wx_info['headimgurl'];
+										$new_user_info['money'] = 0;
+										$new_user_info['frozen_funds'] = 0;
+										$new_user_info['build_count'] = 0;
+										$new_user_info['support_count'] = 0;
+										$new_user_info['focus_count'] = 0;
+										$new_user_info['integrate_id'] = 0;
+										$new_user_info['user_level'] = 0;
+										$new_user_info['user_type'] = 0;
+										$new_user_info['is_has_send_success'] = 0;
+										$new_user_info['is_bank'] = 0;
+										$new_user_info['verify_setting_time'] = 0;
+										$new_user_info['mortgage_money'] = 0;
+										$sql_str = "";
+										foreach($new_user_info as $key=>$val){
+											if($key=='user_name' || $key=='mobile' || $key=='user_pwd' || $key=='province' || $key=='city' || $key=='headimgurl' || $key=='login_ip'){
+												$sql_str .= ", ".$key."='".$val."' ";
+											}else{
+												$sql_str .= ", ".$key."=".$val." ";
+											}
+										}
+										$sql_user_insert = "INSERT INTO `xlc_user` SET ".trim($sql_str,',');
+										$GLOBALS['db']->query($sql_user_insert);
+										$user_id = $GLOBALS['db']->insert_id();
+										$sql_user_idx_insert = "INSERT INTO `xlc_user_idx` SET userid=".$user_id.",nickname='".$wx_info['nickname']."',mobile='".$mobile."',wechat_".$wx_type."_openid='".$wx_info['openid']."',wechat_unionid='".$wx_info['unionid']."'";
+										$GLOBALS['db']->query($sql_user_idx_insert);
+										require_once APP_ROOT_PATH . "system/libs/user.php";
+                    //如果会员存在，直接登录
+                    do_login_user($mobile, $new_user_info['user_pwd']);
+                		//直接回到首页
+                		$url = $pre?$pre:url_wap("old");	
+                		$this->showResult('自动登录成功！',"",$url,0,"成功");
                 }
+            }
 
             $page_title = '绑定手机';
 

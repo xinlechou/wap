@@ -15,7 +15,8 @@
          <p class="login_register_font">{if $idx}当前账号：{$idx.nickname}{else}绑定状态：未绑定<br>绑定账号后，您将享受更好的服务<br>猛戳下面&nbsp;&#8659;{/if}</p>
          <div class="pay_bind_bottom">
              {if $idx}
-             <button class="pay_bind_acta" type="button" data-act="unbindWechat" id="unbind">点击解绑</button>
+             <!--<button class="pay_bind_acta" type="button" data-act="unbindWechat" id="unbind">点击解绑</button>-->
+             已绑定
              {else}
              <button class="pay_bind_acta" type="button" id="bind">绑定</button>
              {/if}
@@ -34,7 +35,7 @@
              var userid = "{$user.id}",unbindUrl = APP_ROOT+'/?ctl=ajax&userid='+userid+'&act=';
              $("#unbind").bind(EVENT_TYPE,function(e){
                  var url = unbindUrl+$(this).attr('data-act');
-                 $.showConfirm("确定解绑微信吗？",function(){
+                 $.showSuccess("确定解绑微信吗？",function(){
                      $("#loading").show();
                      $.ajax({url:url,dataType:"json",type:"get",
                          success:function(json){

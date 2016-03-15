@@ -31,8 +31,8 @@ var tools = {
             $('#shareModal').modal('show')
         }
     },
-    goback:function(){
-        var ignore = ['success','faild','user_bind_mobile','wx_jspay','']
+    goback:function(url){
+        //var ignore = ['success','faild','user_bind_mobile','wx_jspay','']
     },
     getFileType:function(id){
     //获取欲上传的文件路径
@@ -42,9 +42,8 @@ var tools = {
         var one=filename.split("#");//获取数组中最后一个，即文件名
         var two=one[one.length-1];
         var three=two.split(".");//再对文件名进行截取，以取得后缀名
-        alert(three);
         var last=three[three.length-1];//获取截取的最后一个字符串，即为后缀名
-        var tp ="jpg,gif,bmp,JPG,GIF,BMP,jpeg,JPEG,png,GN"; //添加需要判断的后缀名类型
+        var tp ="jpg,gif,bmp,JPG,GIF,BMP,jpeg,JPEG,png,PNG"; //添加需要判断的后缀名类型
         var rs=tp.indexOf(last);//返回符合条件的后缀名在字符串中的位置
         return (rs>=0);//如果返回的结果大于或等于0，说明包含允许上传的文件类型
     }
