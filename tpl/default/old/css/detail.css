@@ -1,3 +1,6 @@
+body{
+    background: #F5F5F5;
+}
 .detail{
 	margin:0 auto;
 	padding:2%;
@@ -78,7 +81,7 @@
 	width:100%;
 	margin:0 auto;
 	padding:2%;
-	
+    background: #F5F5F5;
 }
 .detail_content_title{
 	width:100%;

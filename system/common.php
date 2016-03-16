@@ -391,7 +391,7 @@ function check_verify_coder($verify_coder){
 function app_redirect($url,$time=0,$msg='')
 {
     //多行URL地址支持
-    $url = str_replace(array("\n", "\r"), '', $url);    
+    $url = str_replace(array("\n", "\r"), '', $url);
     if(empty($msg))
         $msg    =   "系统将在{$time}秒之后自动跳转到{$url}！";
     if (!headers_sent()) {

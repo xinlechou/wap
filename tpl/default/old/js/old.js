@@ -587,7 +587,7 @@ old.set_message_isread = function(user_id,dest_id){
 old.get_card_state = function(user_id,is_from_select){
     var url = APP_ROOT+'?ctl=old&act=get_user_state&id='+user_id;
     old.sendAjax(url,"",function(json) {
-        switch (json.data){
+        switch (json.data+''){
             case '1':
                  //正在审核
                 var d = new dialog(CARDSTATE[1], 'light', function () {})
@@ -609,7 +609,7 @@ old.get_card_state = function(user_id,is_from_select){
                 window.location.href = releaseUrl;
                 break;
             default :
-                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=bind";
+                window.location.href =  APP_ROOT+"/index.php?ctl=old&act=release";
                 break;
         }
     })

@@ -1,7 +1,7 @@
 <?php
 
 class oldModule{
-	function index(){
+    function index(){
         $p = $_REQUEST['p']?$_REQUEST['p']:"1";
         $is_ajax = $_REQUEST['ajax'];
         $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'10';
@@ -48,7 +48,7 @@ class oldModule{
         $GLOBALS['tmpl']->assign("pre",get_gopreview_old());
         $GLOBALS['tmpl']->assign("page_title",'HUAN');
         $GLOBALS['tmpl']->display("old/old_index.html");
-	}
+    }
     function home(){
         //个人管理
         if(!$GLOBALS['user_info']){
@@ -191,6 +191,12 @@ class oldModule{
         $card_state = $old_user_info['data']['card_state'];
         if($card_state==0&&$good_num){
             $card_state = 4;
+        }
+        //实名认证开关
+        $is_auth = $GLOBALS['db']->getOne("select is_open from old_user_card_switch");
+//        print_r($is_auth);exit;
+        if($is_auth==0){
+            $card_state=3;
         }
         if(!isset($_REQUEST['id'])){
             return $card_state;
@@ -377,7 +383,7 @@ class oldModule{
             /*if($goods_id){
                 $gopreview = url_wap('old#detail',array('id'=>$goods_id));
             }else{*/
-                $gopreview = url_wap('old');
+            $gopreview = url_wap('old');
 //            }
         }
         $GLOBALS['tmpl']->assign("page_title",'发布成功');

@@ -14,21 +14,21 @@ $(function(){
     })
     if(!a&&$("#qr_container").length > 0){
         //非微信浏览器获取微信登录二维码
-        weChatUtils.getWechatLoginQr();
+        /*weChatUtils.getWechatLoginQr();
         if(typeof WxLogin == 'undefined'){
             $('.wxtips').html('出问题啦。是不是网络没连上？');
-        };
+        };*/
     }
 })
 var weChatUtils = {
     urlPrefix:'http://'+window.location.host+'/wxpay_web/wxUtil.php?act=',
     //获取微信登录二维码
     getWechatLoginQr:function(){
-        var redirect_uri = encodeURIComponent("http://www.xinlechou.com/wxpay_web/wxUtil.php?act=getWechatAuthLoginHUAN");
+        var redirect_uri = encodeURIComponent("http://www.xinlechou.com/wxpay_web/wxUtil.php?act=getWechatAuthLoginHUAN&huan=1");
         if(typeof WxLogin !== 'undefined'){
             var obj = new WxLogin({
                 id:"qr_container",//二维码容器id
-                appid: "wx12b1f2142f7e8e7a",
+                appid: "wxf952196d018405ff",
                 scope: "snsapi_login",
                 redirect_uri: redirect_uri,
                 state: (new Date()).getTime(),
@@ -40,7 +40,7 @@ var weChatUtils = {
     getWechatUserInfo:function(){
         //临时地址
         //var url = weChatUtils.urlPrefix+'getWechatAuthBaseHUAN';
-        var url = weChatUtils.urlPrefix+'getWechatAuthBaseHUAN';
+        var url = weChatUtils.urlPrefix+'getWechatAuthBaseHUAN&huan=1';
         //alert(url)
         console.log("开始注水："+url);
         window.location.href = url;

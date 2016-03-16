@@ -20,7 +20,7 @@ img{
 	  }
 	  
 body{
-	background:#EFEFF4;
+	background:#F5F5F5;
     font-size:62.5%;
     -webkit-font-smoothing: antialiased;
 }
@@ -237,7 +237,7 @@ a:hover{text-decoration:none;}
     text-align: center;
 }
 .tab-pane .exchange_empty{
-    background:#EFEFF4;
+    background:#F5F5F5;
 }
 .exchange_empty a{
     display: block;
