@@ -42,6 +42,18 @@
                 {/foreach}
             </div>
         </div>
+        {assign var=wishs value=$detail.wish_list}
+        {if $wishs}
+        <div class="wish_list">
+            <h5>ta希望拿这玩意儿换：</h5>
+            <ul class="clearfix">
+
+                {foreach from=$wishs item=list key=keyd}
+                <li><label class="btn btn-default tags_gray">{$list.name}</label></li>
+                {/foreach}
+            </ul>
+        </div>
+        {/if}
     </div>
     <div class="detail_content">
         {if $ex}
@@ -77,7 +89,10 @@
             <a href="{url_wap r="old#chat" p="id=$detail.user_id"}"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
         </div>
         <div class="detail_foot_three">
-            <a href="javascript:void(0)" id="goSelect">我想要</a>
+            <a href="javascript:void(0)" id="goSelect">我要换
+               <!-- <img src="{$TMPL}/old/images/intro_detail_3.png" class="huan_btn">-->
+            </a>
+
         </div>
     </div>
     <!--<div id="toTop">
@@ -85,8 +100,11 @@
     </div>-->
 
 </div>
+
 {include file="old/old_inc_footer.html"}
 {include file="old/modals.html"}
+<div class="intro"></div>
+<script type="text/javascript" src="{$TMPL}/old/js/intro.js"></script>
  <!--<script type="text/javascript">
      /*回到顶部*/
  var topObj = document.getElementById("toTop");
@@ -122,7 +140,17 @@
             }
             window.location.href = seUrl+"&from_user_id="+ownerId+'&from_goods_id='+goods_id;
         });
+        setInterval(add_pulse,5000)
     })
+    function add_pulse(){
+        console.log('pulse')
+        var btn = $('.detail_foot_three');
+        if(btn.hasClass('pulse')){
+            btn.removeClass('pulse')
+        }else{
+            btn.addClass('pulse');
+        }
+    }
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>

@@ -471,3 +471,11 @@ i.delItem{
     -o-animation-name: pulse;
     animation-name: pulse;
 }
+#setCoverBtn{
+    float: left;
+    margin:0;
+}
+#filterBtn{
+    float: right;
+    margin:0;
+}

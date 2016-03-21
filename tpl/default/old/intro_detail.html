@@ -1,0 +1,39 @@
+<style>
+    .intro{
+        width: 100%;
+    }
+    .intro_bottom{
+        width: 70%;
+        position: fixed;
+        right: 35px;
+        bottom: 60px;
+        text-align: right;
+    }
+    @media screen and ( min-width: 768px ) {
+        .intro_bottom{
+            width: 30%;
+            right:5%;
+            bottom: 60px;
+        }
+    }
+</style>
+<div class="share" id="intro_detail">
+    <div class="intro">
+        <img src="{$TMPL}/old/images/intro_detail_1.png" class="intro_bottom" />
+        <!--<img src="{$TMPL}/old/images/intro_detail_2.png" class="intro_bottom_btn" />-->
+    </div>
+    <div class="detail_foot" style="background: transparent">
+        <div class="detail_foot_one" style="visibility: hidden">
+            <a href="{url_wap r="old"}" class='home'>首页</a>
+        </div>
+        <div class="detail_foot_two detail_foot_two_right" style="visibility: hidden">
+            <a href="{url_wap r="old#chat" p="id=$detail.user_id"}"><!--<img src="{$TMPL}/old/images/mesa.png" width=10>-->私信</a>
+        </div>
+        <div class="detail_foot_three">
+            <a href="javascript:void(0)" id="goSelect">我要换
+                <!--<img src="{$TMPL}/old/images/intro_detail_3.png" class="huan_btn">-->
+            </a>
+
+        </div>
+    </div>
+</div>

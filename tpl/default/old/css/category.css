@@ -1,0 +1,24 @@
+.category_list{
+    background-color: #fff;
+    width: 100%;
+}
+.category_list li{
+    font-size: 15px;
+    width: 100%;
+    border-bottom: 1px solid #D2D2D2;
+}
+.category_list li a,.category_list li a:visited,.category_list li a:hover{
+    color: #565a5c;
+    padding: 12px 5% 16px 5%;
+    width: 100%;
+    display: inline-block;
+    font-weight: 200;
+}
+.category_list li a.next:after{
+    content: "\e258";
+    display: inline-block;
+    float: right;
+    color: #7F7F7F;
+    font-size: 15px;
+    margin-top: 2px;
+}

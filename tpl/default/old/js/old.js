@@ -179,8 +179,8 @@ old.edit_goods = function(p,card_state,user_id){
         if(json.error == 0){
             //提交成功
             var goods_id = json.data.id;
-            window.location.href =  APP_ROOT+"/index.php?ctl=old&act=preview&id="+goods_id;
-            console.log(goods_id)
+            window.location.replace(APP_ROOT+"/index.php?ctl=old&act=preview&id="+goods_id);
+            //console.log(goods_id)
             /*old.put_on_first(goods_id,function(json){
                 if(json.error==0){
                     old.success();

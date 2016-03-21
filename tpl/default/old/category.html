@@ -1,0 +1,32 @@
+{include file="old/old_header.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/old/css/category.css"/>
+<div id="nav">
+    <div class="top">
+        <div class="top_left">
+            {if $cate_id}
+            <a href="{url_wap r="old#category"}"><img src="{$TMPL}/old/images/exit.png"></a>
+            {else}
+            <a href="{url_wap r="old"}"><img src="{$TMPL}/old/images/exit.png"></a>
+            {/if}
+        </div>
+        <div class="top_center">{$page_title}</div>
+        <div class="top_right"></div>
+    </div>
+</div>
+<div class="box category">
+    <ul class="category_list">
+        {if $cate_id}
+        <!--二级的-->
+        {foreach from=$cates item=list key=keyd}
+        <li><a class="glyphicon" href="{url_wap r="old" p="cate_id=$list.id"}">{$list.name}</a></li>
+        {/foreach}
+        {else}
+        <!--一级的-->
+        {foreach from=$cates item=list key=keyd}
+        <li><a  class="glyphicon  {if $list.next}next{/if}" href={if $list.next}"{url_wap r="old#category" p="id=$list.id"}"{else}"{url_wap r="old" p="cate_id=$list.id"}"{/if}>{$list.name}</a></li>
+        {/foreach}
+        <li><a class="glyphicon" href="{url_wap r="old"}">全部</a></li>
+        {/if}
+    </ul>
+</div>
+{include file="old/old_inc_footer.html"}

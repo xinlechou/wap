@@ -187,15 +187,20 @@ body{
 	float:left;
 	text-align:center;
 	color:#fff;
-	
+   /* animation-duration: 1s;
+    animation-delay: .2s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;*/
+    /*border-radius: 3px;*/
 }
 .detail_foot_three a,.detail_foot_three a:hover{
 	color:#fff;
-	font-size:1.2em;
+	font-size:13px;
 	text-decoration:none;
     line-height:40px;
     display: inline-block;
     width: 100%;
+    /*padding-right: 30%;*/
 }
 #toTop{
     position: fixed;
@@ -210,4 +215,19 @@ body{
     margin: 0;
     padding: 0;
     padding-bottom: 50px;
+}
+/*增加一个巨大的换*/
+.huan_btn{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 27%;
+}
+@media screen and ( min-width: 768px ) {
+    .huan_btn{
+        width: 10%;
+    }
+    .detail_foot_three a,.detail_foot_three a:hover{
+        padding-right: 13%;
+    }
 }

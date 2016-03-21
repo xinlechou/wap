@@ -7,9 +7,10 @@
         <div class="modal-content cont_bg">
             <div class="modal-header cont_bg">
                 <ul class="model_ul">
-                    <li><a href="{url_wap r="old"}">浏览<img src="{$TMPL}/old/images/home.png"></a></li>
-                    <li><a href="{url_wap r="old#notify"}">消息<img src="{$TMPL}/old/images/mes.png"></a></li>
-                    <li><a href="{url_wap r="old#home"}">管理<img src="{$TMPL}/old/images/lead.png"></a></li>
+                    <li id="footer_index"><a href="{url_wap r="old"}">首页<img src="{$TMPL}/old/images/home.png"></a></li>
+                    <li id="footer_category"><a href="{url_wap r="old#category"}">分类<img src="{$TMPL}/old/images/icon_cate.png"></a></li>
+                    <li id="footer_notify"><a href="{url_wap r="old#notify"}">消息<img src="{$TMPL}/old/images/mes.png"></a></li>
+                    <li id="footer_home"><a href="{url_wap r="old#home"}">管理<img src="{$TMPL}/old/images/lead.png"></a></li>
                     <li><a {if $user.id}onclick="old.get_card_state('{$user.id}');" {else} href="{url_wap r="old#release"}"{/if}>发布<img src="{$TMPL}/old/images/pub.png"></a></li>
                     <!--<li><a href="{url_wap r="olduser#login"}">个人中心<img src="{$TMPL}/old/images/pub.png"></a></li>-->
                 </ul>
@@ -38,6 +39,17 @@
         })
     }
     $(document).ready(function(){
+        var url = window.location.href;
+        var act = url.query('act'),ctl=url.query('ctl');
+        act = act?act:'index';
+        if($('#footer_'+act).length&&ctl=='old'){
+            if(act=='index'){
+                var cate = url.query('cate_id');
+                act = cate?'category':'index';
+            }
+            $('#footer_'+act).remove();
+        }
+//        console.log($('#footer_'+act).length)
         initFooter();
     });
 </script>

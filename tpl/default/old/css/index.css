@@ -24,11 +24,15 @@
     transition:  all .8s;
 }
 .content_add_item {
-    -moz-transition:  all .8s; /* Firefox 4 */
-    -webkit-transition:  all .8s; /* Safari 和 Chrome */
-    -o-transition:  all .8s; /* Opera */
-    transition:  all .8s;
+    -moz-transition:  all .8s ease-out; /* Firefox 4 */
+    -webkit-transition:  all .8s ease-out; /* Safari 和 Chrome */
+    -o-transition:  all .8s ease-out; /* Opera */
+    transition:  all .8s ease-out;
     opacity: 0;
+    /*-webkit-transition: top 0.2s ease-out, left 0.2s ease-out,
+    box-shadow 0.2s ease-out, border 0.2s ease-out;
+    transition: top 0.2s ease-out, left 0.2s ease-out,
+    box-shadow 0.2s ease-out, border 0.2s ease-out;*/
 }
 
 
@@ -136,39 +140,7 @@
 }
 
 
-@-webkit-keyframes pulse {
-    0% { -webkit-transform: scale(1); }
-    50% { -webkit-transform: scale(1.1); }
-    100% { -webkit-transform: scale(1); }
-}
-@-moz-keyframes pulse {
-    0% { -moz-transform: scale(1); }
-    50% { -moz-transform: scale(1.1); }
-    100% { -moz-transform: scale(1); }
-}
-@-ms-keyframes pulse {
-    0% { -ms-transform: scale(1); }
-    50% { -ms-transform: scale(1.1); }
-    100% { -ms-transform: scale(1); }
-}
-@-o-keyframes pulse {
-    0% { -o-transform: scale(1); }
-    50% { -o-transform: scale(1.1); }
-    100% { -o-transform: scale(1); }
-}
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
 
-.pulse {
-    -webkit-animation-name: pulse;
-    -moz-animation-name: pulse;
-    -ms-animation-name: pulse;
-    -o-animation-name: pulse;
-    animation-name: pulse;
-}
 /*
 .content_list{
     -webkit-animation-duration: 1s;

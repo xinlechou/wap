@@ -723,6 +723,7 @@ class olduserModule{
         $wx_type = $wx_Login_info?'login':'auth';
         $pre = get_gopreview_old();
         $page_title = '绑定微信';
+        $wx_info['nickname'] = preg_replace_callback('/[\xf0-\xf7].{3}/', function($r) { return '';}, $wx_info['nickname']);
         if(!$wx_info['unionid']){
 //        if(!$wx_info['openid']){
             $GLOBALS['tmpl']->assign("error",'无法获取您的微信用户信息');
@@ -794,12 +795,14 @@ class olduserModule{
                 }else{
                 		//自动注册一个用户
                 		$sql_user_name_info ="select * from xlc_user where user_name='".$wx_info['nickname']."' limit 1";
-                    $tmp_user_name_info = $GLOBALS['db']->query($sql_user_name_info);
+                    $tmp_user_name_info = $GLOBALS['db']->getRow($sql_user_name_info);
                     if($tmp_user_name_info){
                     	$wx_info['nickname'] .= 'L';
                     	$wx_info['nickname'] .= rand(111,999);
                     }
-                    $mobile = '6'.rand(11,99).time();
+                    $mobile = '6';
+                    $mobile .= rand(11,99);
+                    $mobile .= time();
                     $new_user_info = array();
 										$new_user_info['user_name'] = $wx_info['nickname'];
 										$new_user_info['user_pwd'] = md5(111111);
@@ -1052,6 +1055,61 @@ class olduserModule{
             exit;
         }
     }
+    
+    function strFilter($str){
+    $str = str_replace('`', '', $str);
+    $str = str_replace('·', '', $str);
+    $str = str_replace('~', '', $str);
+    $str = str_replace('!', '', $str);
+    $str = str_replace('！', '', $str);
+    $str = str_replace('@', '', $str);
+    $str = str_replace('#', '', $str);
+    $str = str_replace('$', '', $str);
+    $str = str_replace('￥', '', $str);
+    $str = str_replace('%', '', $str);
+    $str = str_replace('^', '', $str);
+    $str = str_replace('……', '', $str);
+    $str = str_replace('&', '', $str);
+    $str = str_replace('*', '', $str);
+    $str = str_replace('(', '', $str);
+    $str = str_replace(')', '', $str);
+    $str = str_replace('（', '', $str);
+    $str = str_replace('）', '', $str);
+    $str = str_replace('-', '', $str);
+    $str = str_replace('_', '', $str);
+    $str = str_replace('——', '', $str);
+    $str = str_replace('+', '', $str);
+    $str = str_replace('=', '', $str);
+    $str = str_replace('|', '', $str);
+    $str = str_replace('\\', '', $str);
+    $str = str_replace('[', '', $str);
+    $str = str_replace(']', '', $str);
+    $str = str_replace('【', '', $str);
+    $str = str_replace('】', '', $str);
+    $str = str_replace('{', '', $str);
+    $str = str_replace('}', '', $str);
+    $str = str_replace(';', '', $str);
+    $str = str_replace('；', '', $str);
+    $str = str_replace(':', '', $str);
+    $str = str_replace('：', '', $str);
+    $str = str_replace('\'', '', $str);
+    $str = str_replace('"', '', $str);
+    $str = str_replace('“', '', $str);
+    $str = str_replace('”', '', $str);
+    $str = str_replace(',', '', $str);
+    $str = str_replace('，', '', $str);
+    $str = str_replace('<', '', $str);
+    $str = str_replace('>', '', $str);
+    $str = str_replace('《', '', $str);
+    $str = str_replace('》', '', $str);
+    $str = str_replace('.', '', $str);
+    $str = str_replace('。', '', $str);
+    $str = str_replace('/', '', $str);
+    $str = str_replace('、', '', $str);
+    $str = str_replace('?', '', $str);
+    $str = str_replace('？', '', $str);
+    return trim($str);
+}
 
 }
 ?>

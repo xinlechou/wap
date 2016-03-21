@@ -164,6 +164,7 @@ a:hover{text-decoration:none;}
 	color:#fff;
 	font-size:13px;
 	text-decoration:none;
+    letter-spacing: 3px;
 }
 .model_ul li a:hover{
 	text-decoration:none;
@@ -221,9 +222,42 @@ a:hover{text-decoration:none;}
     -ms-filter: contrast(1.3);
     filter: contrast(1.3);
 }
+@-webkit-keyframes pulse {
+    0% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale(1.1); }
+    100% { -webkit-transform: scale(1); }
+}
+@-moz-keyframes pulse {
+    0% { -moz-transform: scale(1); }
+    50% { -moz-transform: scale(1.1); }
+    100% { -moz-transform: scale(1); }
+}
+@-ms-keyframes pulse {
+    0% { -ms-transform: scale(1); }
+    50% { -ms-transform: scale(1.1); }
+    100% { -ms-transform: scale(1); }
+}
+@-o-keyframes pulse {
+    0% { -o-transform: scale(1); }
+    50% { -o-transform: scale(1.1); }
+    100% { -o-transform: scale(1); }
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    -webkit-animation-name: pulse;
+    -moz-animation-name: pulse;
+    -ms-animation-name: pulse;
+    -o-animation-name: pulse;
+    animation-name: pulse;
+}
 /*主容器*/
 .box{
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     /*margin-top: 5em;*/
     font-size:1.6em;
 }
@@ -338,6 +372,9 @@ a:hover{text-decoration:none;}
     margin: 0 auto;
 }
 /*一个默认贴底按钮*/
+.one_btn_footer.not_fixed{
+    position: relative;
+}
 .one_btn_footer{
     width: 100%;
     position: fixed;
@@ -351,7 +388,8 @@ a:hover{text-decoration:none;}
     background: #ff5a5f;
     border: none;
     color: #fff;
-    font-size: 13px;
+    font-size: 16px;
+    letter-spacing: 3px;
 }
 .one_btn_footer a{display: inline-block;text-align: center;}
 .question_mark{
@@ -380,4 +418,37 @@ p#lightModal{
     border-radius: 5px;
     color: #565a5c;
     font-size: 13px;
+}
+/*tags*/
+.tags,.tags_gray{
+    background: transparent;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.tags_gray{
+    color: #565a5c;
+    border-color: #565a5c;
+}
+/*wishlist*/
+.wish_list{
+    width: 96%;
+    margin: 2%;
+    margin-bottom: 8%;
+}
+.wish_list ul li{float: left;margin: 1% 2%;  }
+.wish_list input[type="checkbox"]:checked+label{
+    color: #fff;
+    background-color: #ff5a5f;
+    border-color: #ff5a5f;
+}
+.wish_list p input{
+    width: 96%;
+    display: block;
+    margin: 0 auto;
+    height: 30px;
+    line-height: 30px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 12px;
 }

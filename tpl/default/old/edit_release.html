@@ -9,7 +9,7 @@
         </div>
         <div class="top_center">{$page_title}</div>
         <div class="top_right">
-            <a href="javascript:void(0)" id="submit">{if $is_new}编辑并上架{else}保存{/if}</a>
+            <!--<a href="javascript:void(0)" id="submit">{if $is_new}编辑并上架{else}保存{/if}</a>-->
         </div>
     </div>
 </div>
@@ -59,7 +59,20 @@
 <div class="issue_des">
     <textarea class="issue_des_textarea" name="info" rows=5 placeholder="请填写物品描述：物品描述不超过500个字(必填)" >{$goods.info}</textarea>
 </div>
-
+<!--wishList-->
+<div class="wish_list ">
+    <h5>你想拿它换什么(可多选)</h5>
+    <ul class="clearfix">
+        {foreach from=$wishs item=list key=keyd}
+        <li><input type="checkbox" name="wish" hidden="hidden" id="wish_{$list.id}" value="{$list.name}" {if $list.checked}checked{/if}><label class="btn btn-default tags" for="wish_{$list.id}">{$list.name}</label></li>
+        {/foreach}
+    </ul>
+    <p><input type="text" value="{$add_wish}" name="add_wish" class="gray" placeholder="添加新标签(不超过10个字)"></p>
+</div>
+<!--发布按钮-->
+<div class="one_btn_footer not_fixed">
+    <button type="button" id="submit">{if $is_new}编辑并上架{else}保&nbsp;&nbsp;存{/if}</button>
+</div>
 {include file="old/old_inc_footer.html"}
 <script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
 <script>
@@ -121,7 +134,14 @@
                     top_img_num =$('input[name="top_img_num"]:checked').val(),
                     images = [],
                     catchList = CachedFileBox.getFileItem(),
-                    card_state = "{$card_state}";
+                    card_state = "{$card_state}",
+                    wish_list = [];
+            //增加wishlist
+            $('input[name="wish"]:checked').each(function(){
+                wish_list.push($(this).val());
+            })
+            var add = $('input[name="add_wish"]').val();
+            if(add){wish_list.push(add);}
 //console.log(catchList);
             if(catchList.length){
                 for(var i=0;i<catchList.length;i++){
@@ -129,7 +149,7 @@
                 }
             }
             info = ((info.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"<br>");
-            var p = {name:name,info:info,top_img_num:top_img_num,images:images.toString(),is_filter:is_filter,id:"{$goods.id}"};
+            var p = {name:name,info:info,top_img_num:top_img_num,images:images.toString(),is_filter:is_filter,id:"{$goods.id}",wish_list:wish_list.toString()};
 //console.log(release.checkForm(p));
             if(release.checkForm(p)){
                 {if $is_new}

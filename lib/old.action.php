@@ -2,13 +2,16 @@
 
 class oldModule{
     function index(){
-        $p = $_REQUEST['p']?$_REQUEST['p']:"1";
-        $is_ajax = $_REQUEST['ajax'];
-        $pagesize = $_REQUEST['pagesize']?$_REQUEST['pagesize']:'10';
+        $p = $_GET['p']?$_GET['p']:"1";
+        $is_ajax = $_GET['ajax'];
+        $pagesize = $_GET['pagesize']?$_GET['pagesize']:'10';
+        $cate_id = $_GET['cate_id'];
         //获取物品列表
         $url = $this->getUrl().'act=get_goods_list&p='.$p.'&pagesize='.$pagesize;
+        $url.=$cate_id?'&cate='.$cate_id:'';
+//echo $url;
         $goods = json_decode($this->getCurl($url),true);
-
+//print_r($goods['data']);
         if(strval($goods['error'])!=='0'){
             $GLOBALS['tmpl']->assign("error",$goods['msg']);
         }else{
@@ -41,7 +44,11 @@ class oldModule{
             ajax_return($data);
             exit;
         }
-//        print_r($goods['data']);
+//        print_r($goods);
+        if($cate_id){
+            $GLOBALS['tmpl']->assign("cate_name",$goods['cate']['name']);
+            $GLOBALS['tmpl']->assign("cate_pid",$goods['cate']['pid']);
+        }
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
         $GLOBALS['tmpl']->assign("goods",$goods['data']);
         $GLOBALS['tmpl']->assign("page",$p);
@@ -71,7 +78,7 @@ class oldModule{
         if(!$GLOBALS['user_info']){
             app_redirect_huan(url_wap("olduser#login"));
         }
-        $p = $_REQUEST['p']?$_REQUEST['p']:1;
+        $p = $_GET['p']?$_GET['p']:1;
         $url = $this->getUrl().'act=get_user_goods_list&p='.$p.'&user_id='.$GLOBALS['user_info']['id'];
 //        echo $url;
         $goods = json_decode($this->getCurl($url),true);
@@ -120,7 +127,7 @@ class oldModule{
         }
 //        get_from_exchange_list
 //        print_r($GLOBALS['user_info']);
-        $p = $_REQUEST['p']?$_REQUEST['p']:1;
+        $p = $_GET['p']?$_GET['p']:1;
         //-----------别人向我申请的
         $from_url = $this->getUrl().'act=get_from_exchange_list&p='.$p.'&user_id='.$GLOBALS['user_info']['id'];
         $from_user_goods = json_decode($this->getCurl($from_url),true);
@@ -177,7 +184,12 @@ class oldModule{
         if($card_state==2||$card_state==1){
             app_redirect(url_wap("old#failed",array('msg'=>urlencode('对不起，您还没有完成实名认证，不能发布新物品！'))));
         }
+        //获取wishlist
+        $wishs_url = $this->getUrl().'act=get_wish_list';
+        $wishs = json_decode($this->getCurl($wishs_url),true);
+//        print_r($wishs);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
+        $GLOBALS['tmpl']->assign("wishs",$wishs['data']);
         $GLOBALS['tmpl']->assign("card_state",$card_state);
         $GLOBALS['tmpl']->assign("page_title",'发布物品');
         $GLOBALS['tmpl']->display("old/release.html");
@@ -198,7 +210,7 @@ class oldModule{
         if($is_auth==0){
             $card_state=3;
         }
-        if(!isset($_REQUEST['id'])){
+        if(!isset($_GET['id'])){
             return $card_state;
         }else{
             ajax_return(array('data'=>$card_state));
@@ -209,8 +221,8 @@ class oldModule{
         if(!$GLOBALS['user_info']){
             app_redirect_huan(url_wap("olduser#login"));
         }
-        $id = $_REQUEST['id'];
-        $is_new = $_REQUEST['is_new'];//用来判断是编辑旧id的物品（edit_goods）还是生成新id的物品（edit_online_goods）
+        $id = $_GET['id'];
+        $is_new = $_GET['is_new'];//用来判断是编辑旧id的物品（edit_goods）还是生成新id的物品（edit_online_goods）
         $url = $this->getUrl().'act=get_goods_info&id='.$id;
         $goods_info = json_decode($this->getCurl($url),true);
         $goods_info = $this->get_cover($goods_info);
@@ -219,8 +231,23 @@ class oldModule{
         }
         //get_goods_info
         $goods_info['data']['info'] = str_replace('<br>',"\n",$goods_info['data']['info'] );
-//        print_r($goods_info['data']['info']);
+        //获取wishlist
+        $wishs_url = $this->getUrl().'act=get_wish_list';
+        $wishs = json_decode($this->getCurl($wishs_url),true);
+        $add_wish = '';
+        foreach($wishs['data'] as $k=>$v){
+            foreach($goods_info['data']['wish_list'] as $mywishkey =>$mywishValue){
+                if($v['name']==$mywishValue['name']){
+                    $wishs['data'][$k]['checked'] =1;
+                }else{
+                    $add_wish = $mywishValue;
+                }
+            }
+        }
+//        print_r($add_wish['name']);
         $GLOBALS['tmpl']->assign("user",$GLOBALS['user_info']);
+        $GLOBALS['tmpl']->assign("wishs",$wishs['data']);
+        $GLOBALS['tmpl']->assign("add_wish",$add_wish['name']);
         $GLOBALS['tmpl']->assign("goods",$goods_info['data']);
         $GLOBALS['tmpl']->assign("is_new",$is_new);
         $GLOBALS['tmpl']->assign("num",$goods_info['data']['images_data']['num']['num']);
@@ -228,8 +255,8 @@ class oldModule{
         $GLOBALS['tmpl']->display("old/edit_release.html");
     }
     function notify(){
-        $p = $_REQUEST['p'];
-        $pagesize = $_REQUEST['pagesize'];
+        $p = $_GET['p'];
+        $pagesize = $_GET['pagesize'];
         if(!$GLOBALS['user_info']){
             app_redirect_huan(url_wap("olduser#login"));
         }
@@ -272,9 +299,9 @@ class oldModule{
             app_redirect_huan(url_wap("olduser#login"));
         }
         //获取物品列表
-        $p = $_REQUEST['p']?$_REQUEST['p']:1;
-        $from_user_id = $_REQUEST['from_user_id'];
-        $from_goods_id = $_REQUEST['from_goods_id'];
+        $p = $_GET['p']?$_GET['p']:1;
+        $from_user_id = $_GET['from_user_id'];
+        $from_goods_id = $_GET['from_goods_id'];
         $url = $this->getUrl().'act=get_user_goods_list&p='.$p.'&user_id='.$GLOBALS['user_info']['id'];
         $goods = json_decode($this->getCurl($url),true);
 //        print_r($goods);
@@ -291,7 +318,7 @@ class oldModule{
     }
     function detail(){
         //物品详情
-        $id=$_REQUEST['id'];
+        $id=$_GET['id'];
         //获取物品列表
         $url = $this->getUrl().'act=get_goods_info&id='.$id;
         if($id){
@@ -337,7 +364,7 @@ class oldModule{
     }
     function preview(){
         //物品详情
-        $id=$_REQUEST['id'];
+        $id=$_GET['id'];
         //获取物品列表
         $url = $this->getUrl().'act=get_goods_info&id='.$id;
         if($id){
@@ -367,7 +394,7 @@ class oldModule{
         $GLOBALS['tmpl']->display("old/preview.html");
     }
     function success(){
-        $goods_id = $_REQUEST['goods_id'];
+        $goods_id = $_GET['goods_id'];
         $from = es_session::get('from_goods_id');
 
         if($goods_id){
@@ -677,6 +704,32 @@ class oldModule{
             exit;
         }
     }
-
+    function category(){
+        if(isset($_GET['id'])){
+            //获取子类sub
+            $id=$_GET['id'];
+            $url = $this->getUrl().'act=get_goods_cate&pid='.$id;
+            $GLOBALS['tmpl']->assign('cate_id',$id);
+        }else{
+            //获取一级分类
+            $url = $this->getUrl().'act=get_goods_cate&pid=0';
+        }
+//        echo $url;
+        $cates = json_decode($this->getCurl($url),true);
+        foreach($cates['data'] as $k=>$v){
+           $sub_num =  $GLOBALS['db']->getOne("select COUNT(*) from old_goods_cate where pid = ".$v['id']);
+            if($sub_num){
+                $cates['data'][$k]['next'] = 1;
+            }
+        }
+        $GLOBALS['tmpl']->assign('cates',$cates['data']);
+        $GLOBALS['tmpl']->assign('page_title','选择分类');
+        $GLOBALS['tmpl']->display("old/category.html");
+    }
+    function intro(){
+        $type = $_REQUEST['type'];
+        $html = 'old/intro_'.$type.'.html';
+        $GLOBALS['tmpl']->display($html);
+    }
 }
 ?>
